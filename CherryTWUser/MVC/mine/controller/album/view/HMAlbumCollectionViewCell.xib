@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="HMAlbumCollectionViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="154" height="158"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="154" height="158"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="womanDefault" translatesAutoresizingMaskIntoConstraints="NO" id="Nmp-iZ-bjT">
+                        <rect key="frame" x="0.0" y="0.0" width="154" height="158"/>
+                    </imageView>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="playIcon" translatesAutoresizingMaskIntoConstraints="NO" id="iFn-Zu-pEi">
+                        <rect key="frame" x="65" y="67" width="24" height="24"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="24" id="qIo-EJ-3ID"/>
+                            <constraint firstAttribute="width" constant="24" id="sFc-Wq-Jbi"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="审核中" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B65-Gj-34f">
+                        <rect key="frame" x="0.0" y="0.0" width="154" height="158"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="displayP3"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <nil key="highlightedColor"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="string" keyPath="xibLocKey" value="审核中"/>
+                        </userDefinedRuntimeAttributes>
+                    </label>
+                    <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5U6-8e-E5Z">
+                        <rect key="frame" x="112" y="116" width="42" height="42"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="42" id="J0V-I7-Isz"/>
+                            <constraint firstAttribute="height" constant="42" id="Lr7-bn-bnr"/>
+                        </constraints>
+                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                        <state key="normal" image="delete_photo_icon"/>
+                        <connections>
+                            <action selector="deleteBtnAction:" destination="gTV-IL-0wX" eventType="touchUpInside" id="UVD-zu-USq"/>
+                        </connections>
+                    </button>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="SEy-5g-ep8"/>
+            <constraints>
+                <constraint firstItem="Nmp-iZ-bjT" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="0q4-vf-9jc"/>
+                <constraint firstAttribute="trailing" secondItem="Nmp-iZ-bjT" secondAttribute="trailing" id="5Te-18-88b"/>
+                <constraint firstAttribute="trailing" secondItem="B65-Gj-34f" secondAttribute="trailing" id="5Xb-NW-4Ey"/>
+                <constraint firstAttribute="bottom" secondItem="B65-Gj-34f" secondAttribute="bottom" id="HOX-Bi-F4K"/>
+                <constraint firstItem="B65-Gj-34f" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="IgG-tE-bnr"/>
+                <constraint firstAttribute="bottom" secondItem="Nmp-iZ-bjT" secondAttribute="bottom" id="QiM-iJ-vDe"/>
+                <constraint firstAttribute="bottom" secondItem="5U6-8e-E5Z" secondAttribute="bottom" id="TGk-L5-GIf"/>
+                <constraint firstAttribute="trailing" secondItem="5U6-8e-E5Z" secondAttribute="trailing" id="VnN-Rn-yub"/>
+                <constraint firstItem="Nmp-iZ-bjT" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="hFy-hK-11F"/>
+                <constraint firstItem="B65-Gj-34f" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="mOH-pP-Bwz"/>
+                <constraint firstItem="iFn-Zu-pEi" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="pjf-5E-Aqg"/>
+                <constraint firstItem="iFn-Zu-pEi" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="qj1-Xv-t4l"/>
+            </constraints>
+            <size key="customSize" width="154" height="158"/>
+            <connections>
+                <outlet property="deleteBtn" destination="5U6-8e-E5Z" id="5K3-c6-4Ht"/>
+                <outlet property="imgIcon" destination="Nmp-iZ-bjT" id="Rka-77-eVR"/>
+                <outlet property="playImg" destination="iFn-Zu-pEi" id="aKE-Bb-nJE"/>
+                <outlet property="statusLabel" destination="B65-Gj-34f" id="bls-3w-Hye"/>
+            </connections>
+            <point key="canvasLocation" x="141.98473282442748" y="58.450704225352112"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="delete_photo_icon" width="42" height="42"/>
+        <image name="playIcon" width="22.333333969116211" height="22.333333969116211"/>
+        <image name="womanDefault" width="80" height="80"/>
+    </resources>
+</document>
