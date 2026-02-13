@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="97" id="KGk-i7-Jjw" customClass="PGPersonalVideoPriceTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="97"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="97"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="视频价格" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bFT-k8-mTk">
+                        <rect key="frame" x="14.999999999999996" y="13" width="63.666666666666657" height="22"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="22" id="ooT-Jm-YIH"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8As-Ek-owH" customClass="QMUIButton">
+                        <rect key="frame" x="15.999999999999993" y="45" width="106.33333333333331" height="29"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="29" id="UP9-FW-7Zq"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                        <state key="normal" title="188/10分钟" image="diamonds">
+                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        </state>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="hCornerRadius">
+                                <real key="value" value="5"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="hBorderColor">
+                                <color key="value" red="0.0" green="0.0" blue="0.0" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="displayP3"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="hBorderWidth">
+                                <integer key="value" value="1"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="spacingBetweenImageAndTitle">
+                                <real key="value" value="3"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </button>
+                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vKH-p6-KIY" customClass="QMUIButton">
+                        <rect key="frame" x="134.33333333333334" y="45" width="106.33333333333334" height="29"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                        <state key="normal" title="288/20分钟" image="diamonds">
+                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        </state>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="hCornerRadius">
+                                <real key="value" value="5"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="hBorderColor">
+                                <color key="value" red="0.0" green="0.0" blue="0.0" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="displayP3"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="hBorderWidth">
+                                <integer key="value" value="1"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="spacingBetweenImageAndTitle">
+                                <real key="value" value="3"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </button>
+                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Agt-D7-2P4" customClass="QMUIButton">
+                        <rect key="frame" x="252.66666666666666" y="45" width="106.33333333333334" height="29"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                        <state key="normal" title="388/30分钟" image="diamonds">
+                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        </state>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="hCornerRadius">
+                                <real key="value" value="5"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="hBorderColor">
+                                <color key="value" red="0.0" green="0.0" blue="0.0" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="displayP3"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="hBorderWidth">
+                                <integer key="value" value="1"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="spacingBetweenImageAndTitle">
+                                <real key="value" value="3"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="Agt-D7-2P4" secondAttribute="trailing" constant="16" id="41d-YZ-qFY"/>
+                    <constraint firstItem="Agt-D7-2P4" firstAttribute="width" secondItem="8As-Ek-owH" secondAttribute="width" id="C43-Eh-fWy"/>
+                    <constraint firstItem="vKH-p6-KIY" firstAttribute="height" secondItem="8As-Ek-owH" secondAttribute="height" id="M5N-3s-8CZ"/>
+                    <constraint firstItem="bFT-k8-mTk" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="13" id="NwD-QO-m7s"/>
+                    <constraint firstItem="vKH-p6-KIY" firstAttribute="width" secondItem="8As-Ek-owH" secondAttribute="width" id="QZp-Rg-AYg"/>
+                    <constraint firstAttribute="bottom" secondItem="8As-Ek-owH" secondAttribute="bottom" constant="15" id="X8F-2I-kft"/>
+                    <constraint firstItem="bFT-k8-mTk" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="ai2-7H-DRt"/>
+                    <constraint firstItem="8As-Ek-owH" firstAttribute="top" secondItem="bFT-k8-mTk" secondAttribute="bottom" constant="10" id="eco-s3-ify"/>
+                    <constraint firstItem="Agt-D7-2P4" firstAttribute="leading" secondItem="vKH-p6-KIY" secondAttribute="trailing" constant="12" id="nMm-Pb-J7x"/>
+                    <constraint firstItem="8As-Ek-owH" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="pOj-cg-V8j"/>
+                    <constraint firstItem="vKH-p6-KIY" firstAttribute="leading" secondItem="8As-Ek-owH" secondAttribute="trailing" constant="12" id="rAF-Li-Nfi"/>
+                    <constraint firstItem="Agt-D7-2P4" firstAttribute="top" secondItem="8As-Ek-owH" secondAttribute="top" id="wS5-Pw-zg0"/>
+                    <constraint firstItem="vKH-p6-KIY" firstAttribute="top" secondItem="8As-Ek-owH" secondAttribute="top" id="xbC-YB-Te2"/>
+                    <constraint firstItem="Agt-D7-2P4" firstAttribute="height" secondItem="8As-Ek-owH" secondAttribute="height" id="yiI-KI-9ql"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
+            <userDefinedRuntimeAttributes>
+                <userDefinedRuntimeAttribute type="number" keyPath="hCornerRadius">
+                    <real key="value" value="20"/>
+                </userDefinedRuntimeAttribute>
+            </userDefinedRuntimeAttributes>
+            <connections>
+                <outlet property="videoPriceBtnOne" destination="8As-Ek-owH" id="k4M-O2-ww1"/>
+                <outlet property="videoPriceBtnThree" destination="Agt-D7-2P4" id="AGB-ZW-a7d"/>
+                <outlet property="videoPriceBtnTwo" destination="vKH-p6-KIY" id="pbo-kJ-4gf"/>
+            </connections>
+            <point key="canvasLocation" x="122.90076335877862" y="30.633802816901412"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="diamonds" width="15" height="15"/>
+    </resources>
+</document>

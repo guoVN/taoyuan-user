@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PGEditNicknameViewController">
+            <connections>
+                <outlet property="textField" destination="oYO-Me-r2h" id="PSL-OC-oUt"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hWL-uB-Cdg">
+                    <rect key="frame" x="0.0" y="168" width="393" height="50"/>
+                    <subviews>
+                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="oYO-Me-r2h" customClass="QMUITextField">
+                            <rect key="frame" x="15" y="0.0" width="363" height="50"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
+                                    <color key="value" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </textField>
+                    </subviews>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                    <constraints>
+                        <constraint firstItem="oYO-Me-r2h" firstAttribute="top" secondItem="hWL-uB-Cdg" secondAttribute="top" id="2SU-gt-6fn"/>
+                        <constraint firstItem="oYO-Me-r2h" firstAttribute="leading" secondItem="hWL-uB-Cdg" secondAttribute="leading" constant="15" id="385-24-FZw"/>
+                        <constraint firstAttribute="height" constant="50" id="50B-Dm-yoo"/>
+                        <constraint firstAttribute="bottom" secondItem="oYO-Me-r2h" secondAttribute="bottom" id="Za1-yF-jdf"/>
+                        <constraint firstAttribute="trailing" secondItem="oYO-Me-r2h" secondAttribute="trailing" constant="15" id="qBD-je-5be"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="Q5M-cg-NOt"/>
+            <color key="backgroundColor" red="0.92941176470588238" green="0.93333333333333335" blue="0.94901960784313721" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <constraints>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="hWL-uB-Cdg" secondAttribute="trailing" id="LAO-3I-e3W"/>
+                <constraint firstItem="hWL-uB-Cdg" firstAttribute="top" secondItem="Q5M-cg-NOt" secondAttribute="top" constant="50" id="ncP-S9-0U7"/>
+                <constraint firstItem="hWL-uB-Cdg" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" id="p0v-mO-zOE"/>
+            </constraints>
+            <point key="canvasLocation" x="42" y="20"/>
+        </view>
+    </objects>
+</document>

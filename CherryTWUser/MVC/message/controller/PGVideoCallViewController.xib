@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PGVideoCallViewController">
+            <connections>
+                <outlet property="cameraSwitchBtn" destination="QlM-DA-St9" id="4zV-vD-ExG"/>
+                <outlet property="hangSenderBtn" destination="hRP-PB-tQN" id="WC2-SI-Ars"/>
+                <outlet property="localView" destination="Cbb-Gr-zlD" id="jnc-yq-PWH"/>
+                <outlet property="remoteView" destination="p5t-Lw-sRf" id="xTK-LD-XeS"/>
+                <outlet property="videoTimeLabel" destination="hbS-xd-Yki" id="zHq-C6-pOU"/>
+                <outlet property="view" destination="iN0-l3-epB" id="Tp2-k4-SWy"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="p5t-Lw-sRf">
+                    <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                    <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </imageView>
+                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cbb-Gr-zlD">
+                    <rect key="frame" x="258" y="188" width="120" height="160"/>
+                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="120" id="M9R-1f-Dhm"/>
+                        <constraint firstAttribute="height" constant="160" id="ZBO-ff-9QS"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="hCornerRadius">
+                            <real key="value" value="10"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00：00：00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hbS-xd-Yki">
+                    <rect key="frame" x="16" y="118" width="135" height="40"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="displayP3"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="135" id="hal-ag-96h"/>
+                        <constraint firstAttribute="height" constant="40" id="xBZ-AQ-6mf"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                    <nil key="highlightedColor"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="hCornerRadius">
+                            <real key="value" value="20"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MNY-i9-mV2">
+                    <rect key="frame" x="0.0" y="732" width="393" height="52"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QlM-DA-St9" customClass="QMUIButton">
+                            <rect key="frame" x="15" y="0.0" width="52" height="52"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="52" id="exg-1G-oD5"/>
+                                <constraint firstAttribute="height" constant="52" id="fsL-ww-FK2"/>
+                            </constraints>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" image="closeCamera"/>
+                            <state key="selected" image="openCamera"/>
+                            <connections>
+                                <action selector="cameraSwitchAction:" destination="-1" eventType="touchUpInside" id="ea8-lw-uLV"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hRP-PB-tQN" customClass="QMUIButton">
+                            <rect key="frame" x="326" y="0.0" width="52" height="52"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="52" id="Ntf-SC-EeY"/>
+                                <constraint firstAttribute="width" constant="52" id="USH-0I-Lmh"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="14"/>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" image="guaduan"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="spacingBetweenImageAndTitle">
+                                    <real key="value" value="5"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                            <connections>
+                                <action selector="hangUpAction:" destination="-1" eventType="touchUpInside" id="87f-P3-SNQ"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tKC-dA-bru">
+                            <rect key="frame" x="87" y="0.0" width="52" height="52"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="52" id="Edf-Hn-7ql"/>
+                                <constraint firstAttribute="width" constant="52" id="fd7-uh-Gc5"/>
+                            </constraints>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" image="liwu"/>
+                            <connections>
+                                <action selector="chooseGiftAction:" destination="-1" eventType="touchUpInside" id="qt5-s1-Kva"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PHJ-Q5-mEN">
+                            <rect key="frame" x="159" y="0.0" width="52" height="52"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="52" id="97A-px-yt8"/>
+                                <constraint firstAttribute="height" constant="52" id="VUP-dk-oQd"/>
+                            </constraints>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" image="caidan"/>
+                            <connections>
+                                <action selector="checkMeunAction:" destination="-1" eventType="touchUpInside" id="ziL-jk-WC0"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="QlM-DA-St9" firstAttribute="leading" secondItem="MNY-i9-mV2" secondAttribute="leading" constant="15" id="4ad-JR-Iey"/>
+                        <constraint firstItem="tKC-dA-bru" firstAttribute="top" secondItem="MNY-i9-mV2" secondAttribute="top" id="Jqk-Yh-kbn"/>
+                        <constraint firstItem="hRP-PB-tQN" firstAttribute="top" secondItem="MNY-i9-mV2" secondAttribute="top" id="Jvn-57-WOV"/>
+                        <constraint firstAttribute="trailing" secondItem="hRP-PB-tQN" secondAttribute="trailing" constant="15" id="SfI-YQ-4hv"/>
+                        <constraint firstItem="QlM-DA-St9" firstAttribute="top" secondItem="MNY-i9-mV2" secondAttribute="top" id="a4n-rw-ib2"/>
+                        <constraint firstAttribute="bottom" secondItem="tKC-dA-bru" secondAttribute="bottom" id="fcp-Ug-axB"/>
+                        <constraint firstItem="PHJ-Q5-mEN" firstAttribute="leading" secondItem="tKC-dA-bru" secondAttribute="trailing" constant="20" id="ieI-DA-3fH"/>
+                        <constraint firstItem="tKC-dA-bru" firstAttribute="leading" secondItem="QlM-DA-St9" secondAttribute="trailing" constant="20" id="jMo-Oc-cnB"/>
+                        <constraint firstAttribute="height" constant="52" id="mci-Rq-MPa"/>
+                        <constraint firstAttribute="bottom" secondItem="hRP-PB-tQN" secondAttribute="bottom" id="sOp-wI-jqm"/>
+                        <constraint firstItem="PHJ-Q5-mEN" firstAttribute="top" secondItem="MNY-i9-mV2" secondAttribute="top" id="yQp-ZJ-AHv"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="hbS-xd-Yki" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="2Os-SZ-zGf"/>
+                <constraint firstAttribute="bottom" secondItem="p5t-Lw-sRf" secondAttribute="bottom" id="8UI-xl-0vG"/>
+                <constraint firstItem="p5t-Lw-sRf" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="DaJ-Qp-prB"/>
+                <constraint firstItem="MNY-i9-mV2" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="NJX-Nh-QNL"/>
+                <constraint firstItem="MNY-i9-mV2" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="TH3-x5-typ"/>
+                <constraint firstItem="hbS-xd-Yki" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="VKJ-4V-QrV"/>
+                <constraint firstItem="p5t-Lw-sRf" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="eUJ-J1-rno"/>
+                <constraint firstItem="Cbb-Gr-zlD" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="70" id="mLn-Ob-EDW"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="p5t-Lw-sRf" secondAttribute="trailing" id="mwj-jS-5Z7"/>
+                <constraint firstItem="MNY-i9-mV2" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="nKJ-X0-BxO"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="Cbb-Gr-zlD" secondAttribute="trailing" constant="15" id="vfF-mQ-Y26"/>
+            </constraints>
+            <point key="canvasLocation" x="13" y="20"/>
+        </view>
+        <tapGestureRecognizer id="2Db-Vg-LwI">
+            <connections>
+                <action selector="goRechargeAction:" destination="-1" id="Um1-tA-e9V"/>
+            </connections>
+        </tapGestureRecognizer>
+    </objects>
+    <resources>
+        <image name="caidan" width="52" height="52"/>
+        <image name="closeCamera" width="52" height="52"/>
+        <image name="guaduan" width="52" height="52"/>
+        <image name="liwu" width="52" height="52"/>
+        <image name="openCamera" width="52" height="52"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

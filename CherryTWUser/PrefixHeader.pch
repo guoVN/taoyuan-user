@@ -1,0 +1,93 @@
+//
+//  PrefixHeader.pch
+//  CherryTWUser
+//
+//  Created by guo on 2024/4/8.
+//
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+#import "NotificationHeader.h"
+#import "UIColorHeader.h"
+#import "UIImage+MP.h"
+#import "UIViewController+MPEX.h"
+#import "Masonry.h"
+#import "PGUtils.h"
+#import <QMUIKit/QMUIKit.h>
+#import "UIView+MPView.h"
+#import <IQKeyboardManager/IQKeyboardManager.h>
+#import "PGCountDownButton.h"
+#import "PGAPIService.h"
+#import <SDWebImage/UIImageView+WebCache.h>
+#import <AgoraRtcKit/AgoraRtcKit.h>
+#import <AgoraChat/AgoraChat.h>
+#import <MJExtension/MJExtension.h>
+#import "MJRefresh/MJRefresh.h"
+#import <Realm/Realm.h>
+#import "PGVideoCardAlertView.h"
+#import <HUPhotoBrowser/HUPhotoBrowser.h>
+#import "PGTabbarViewController.h"
+#import <AlipaySDK/AlipaySDK.h>
+#import <JXCategoryView/JXCategoryView.h>
+#import <WMZDialog/WMZDialog.h>
+#import <JKCategories/JKCategories.h>
+#import "PGManager.h"
+#import <DZNEmptyDataSet/DZNEmptyDataSet-umbrella.h>
+#import "PGParameterSignTool.h"
+#import <TZImagePickerController/TZImagePickerController.h>
+#import "HMNetworking.h"
+#import "UITableViewCell+PGCellShaow.h"
+
+//弱引用
+#define WeakSelf(type)     __weak typeof(type) weak##type = type;
+//强引用
+#define StrongSelf(type)   __strong typeof(type) strong##type = type;
+#define ScreenWidth  [UIScreen mainScreen].bounds.size.width
+#define ScreenHeight  [UIScreen mainScreen].bounds.size.height
+#define SafeTop (([[UIScreen mainScreen] bounds].size.height<812) ? 20 : 44)
+#define SafeBottom (([[UIScreen mainScreen] bounds].size.height<812) ? 0 : 34)
+#define STATUS_H_F \
+({\
+CGFloat statusBarHeight = 0;\
+if (@available(iOS 13.0, *)) {\
+    CGFloat topPadding = [UIApplication sharedApplication].windows.firstObject.safeAreaInsets.top;\
+    statusBarHeight = topPadding == 0 ? 20.0 : topPadding;\
+}\
+(statusBarHeight);\
+})   //状态栏高度
+
+#define Localized(key)  [[NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"appLanguage"]] ofType:@"lproj"]] localizedStringForKey:key value:nil table:@"Localizable"]
+
+//字符串长度和高度计算
+#define getSize(str,h,font)  [str boundingRectWithSize:CGSizeMake(10000, h) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:font]} context:nil].size
+
+#define getBoldSize(str,h,font)  [str boundingRectWithSize:CGSizeMake(10000, h) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:font]} context:nil].size
+
+#define getStrHeight(str,width,font)  [str boundingRectWithSize:CGSizeMake(width, 10000) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:font]} context:nil].size.height
+
+#define getStrBoldHeight(str,width,font)  [str boundingRectWithSize:CGSizeMake(width, 10000) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:font]} context:nil].size.height
+
+#define getStrParaStyleHeight(str,width,font,paraStyle) [str boundingRectWithSize:CGSizeMake(width, 10000) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:font],NSParagraphStyleAttributeName:paraStyle} context:nil].size.height
+
+#define getStrParaStyleBoldHeight(str,width,font,paraStyle) [str boundingRectWithSize:CGSizeMake(width, 10000) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:font],NSParagraphStyleAttributeName:paraStyle} context:nil].size.height
+
+#if DEBUG
+#define AgroaAppidRTC_Use @"d164e2a3dc6043ffabe812902fb9b584"
+#define AgroaAppid @"c58a63684055400f80c1ac3b1229bcd9"
+#define AgroaIMcertificate  @"" //@"tw_dev_anchor"
+#define AliyunOSSHttp @"http://test.hainanyihong.cn:7080"
+#else
+#define AgroaAppidRTC_Use @"c58a63684055400f80c1ac3b1229bcd9"
+#define AgroaAppid @"c58a63684055400f80c1ac3b1229bcd9"
+#define AgroaIMcertificate @""
+#define AliyunOSSHttp @"http://ou.hainanyihong.cn"
+#endif
+
+#define Package_Name @"com.ntdlaz.date"
+#define Channel_Name @"gf001"
+#define versionCode @"3066"
+
+#endif /* PrefixHeader_pch */

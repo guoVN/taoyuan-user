@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="154" id="KGk-i7-Jjw" customClass="PGEditHeadTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="154"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="154"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="lId-Qg-UbY">
+                        <rect key="frame" x="142.66666666666666" y="20" width="90" height="90"/>
+                        <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="90" id="czu-VE-bya"/>
+                            <constraint firstAttribute="height" constant="90" id="hz8-0r-VgH"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="hCornerRadius">
+                                <real key="value" value="24"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="上传本人头像" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="995-KM-Zbg">
+                        <rect key="frame" x="132" y="118" width="111" height="18"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="18" id="Pjq-ot-7KL"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                        <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yup-Qr-MlM">
+                        <rect key="frame" x="190.66666666666666" y="68" width="32" height="32"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="32" id="BZJ-AF-81o"/>
+                            <constraint firstAttribute="width" constant="32" id="Vrg-w4-yGd"/>
+                        </constraints>
+                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                        <state key="normal" image="ic_xiangji"/>
+                        <connections>
+                            <action selector="chooseImgAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="4S7-W4-bKA"/>
+                        </connections>
+                    </button>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y0I-IG-sCA">
+                        <rect key="frame" x="22" y="157" width="335" height="1"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.050000000000000003" colorSpace="custom" customColorSpace="displayP3"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="hui-0Y-eZy"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="lId-Qg-UbY" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="33U-wK-Zu3"/>
+                    <constraint firstItem="lId-Qg-UbY" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="20" id="3oE-2h-AH6"/>
+                    <constraint firstAttribute="bottom" secondItem="y0I-IG-sCA" secondAttribute="bottom" id="JWd-En-eVx"/>
+                    <constraint firstItem="y0I-IG-sCA" firstAttribute="top" secondItem="995-KM-Zbg" secondAttribute="bottom" constant="21" id="JdX-Oy-XHJ"/>
+                    <constraint firstItem="yup-Qr-MlM" firstAttribute="bottom" secondItem="lId-Qg-UbY" secondAttribute="bottom" constant="-10" id="P4I-AB-Lsf"/>
+                    <constraint firstItem="995-KM-Zbg" firstAttribute="top" secondItem="lId-Qg-UbY" secondAttribute="bottom" constant="8" id="Ttr-H5-HbW"/>
+                    <constraint firstItem="y0I-IG-sCA" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="22" id="gt6-US-TK5"/>
+                    <constraint firstItem="yup-Qr-MlM" firstAttribute="trailing" secondItem="lId-Qg-UbY" secondAttribute="trailing" constant="-10" id="hVf-oV-XtZ"/>
+                    <constraint firstItem="995-KM-Zbg" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="n3f-0F-bum"/>
+                    <constraint firstAttribute="trailing" secondItem="y0I-IG-sCA" secondAttribute="trailing" constant="18" id="pbs-AO-AeF"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
+            <connections>
+                <outlet property="headImg" destination="lId-Qg-UbY" id="bTY-YZ-wu5"/>
+            </connections>
+            <point key="canvasLocation" x="81.679389312977094" y="58.450704225352112"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="ic_xiangji" width="32" height="32"/>
+    </resources>
+</document>

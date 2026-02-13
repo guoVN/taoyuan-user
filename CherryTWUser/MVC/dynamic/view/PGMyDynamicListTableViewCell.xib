@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="247" id="KGk-i7-Jjw" customClass="PGMyDynamicListTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="247"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="247"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="NqF-lv-lUz">
+                        <rect key="frame" x="20" y="20" width="65" height="65"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="65" id="IJr-HY-nKw"/>
+                            <constraint firstAttribute="width" constant="65" id="vBi-tU-aZS"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="hCornerRadius">
+                                <real key="value" value="10"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="笑颜猫" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l1Y-Bm-Doa">
+                        <rect key="frame" x="97" y="40" width="260" height="25"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="25" id="Nat-Ge-FFW"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="18"/>
+                        <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="理想归理想 剩生活归生活" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h7P-XR-taH">
+                        <rect key="frame" x="97" y="81" width="184" height="15"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                        <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eCg-Kw-SZA">
+                        <rect key="frame" x="97" y="106" width="260" height="80"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="80" id="dQK-2Q-YTt"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="hCornerRadius">
+                                <real key="value" value="10"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1JQ-pJ-v6P" customClass="QMUIButton">
+                        <rect key="frame" x="329" y="206" width="28" height="20"/>
+                        <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="16"/>
+                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                        <state key="normal" title="0" image="praise">
+                            <color key="titleColor" red="0.7725490196" green="0.7725490196" blue="0.7725490196" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        </state>
+                        <state key="selected" image="praised"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="spacingBetweenImageAndTitle">
+                                <real key="value" value="3"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                        <connections>
+                            <action selector="praiseAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="wfD-kY-y2Q"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pgy-gZ-rag" customClass="QMUIButton">
+                        <rect key="frame" x="97" y="206" width="57" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="sv2-Fy-Gjv"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                        <state key="normal" title="2min前" image="icon_time">
+                            <color key="titleColor" red="0.7725490196" green="0.7725490196" blue="0.7725490196" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        </state>
+                        <state key="selected" image="praised"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="spacingBetweenImageAndTitle">
+                                <real key="value" value="3"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0P5-HM-AhC" customClass="QMUIButton">
+                        <rect key="frame" x="174" y="208.66666666666666" width="71" height="15"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                        <state key="normal" title="浏览20次" image="icon_view">
+                            <color key="titleColor" red="0.7725490196" green="0.7725490196" blue="0.7725490196" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        </state>
+                        <state key="selected" image="praised"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="spacingBetweenImageAndTitle">
+                                <real key="value" value="3"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </button>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vdM-wj-b86">
+                        <rect key="frame" x="96" y="246" width="259" height="1"/>
+                        <color key="backgroundColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="jj5-ek-zq5"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="0P5-HM-AhC" firstAttribute="leading" secondItem="pgy-gZ-rag" secondAttribute="trailing" constant="20" id="6eo-Tq-ezU"/>
+                    <constraint firstItem="pgy-gZ-rag" firstAttribute="centerY" secondItem="1JQ-pJ-v6P" secondAttribute="centerY" id="901-MJ-L3f"/>
+                    <constraint firstItem="h7P-XR-taH" firstAttribute="leading" secondItem="l1Y-Bm-Doa" secondAttribute="leading" id="BI1-an-rXf"/>
+                    <constraint firstItem="vdM-wj-b86" firstAttribute="top" secondItem="pgy-gZ-rag" secondAttribute="bottom" constant="20" id="GGW-Pj-bG2"/>
+                    <constraint firstItem="pgy-gZ-rag" firstAttribute="leading" secondItem="l1Y-Bm-Doa" secondAttribute="leading" id="I59-Jw-rRP"/>
+                    <constraint firstAttribute="trailing" secondItem="1JQ-pJ-v6P" secondAttribute="trailing" constant="18" id="IPc-lq-XlG"/>
+                    <constraint firstItem="h7P-XR-taH" firstAttribute="top" secondItem="l1Y-Bm-Doa" secondAttribute="bottom" constant="16" id="IUv-s4-5cl"/>
+                    <constraint firstItem="vdM-wj-b86" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="96" id="OFx-d4-SZZ"/>
+                    <constraint firstItem="l1Y-Bm-Doa" firstAttribute="leading" secondItem="NqF-lv-lUz" secondAttribute="trailing" constant="12" id="QNH-5L-Cux"/>
+                    <constraint firstAttribute="bottom" secondItem="vdM-wj-b86" secondAttribute="bottom" id="SCy-gI-Ffq"/>
+                    <constraint firstItem="NqF-lv-lUz" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="20" id="Xge-Dp-AlY"/>
+                    <constraint firstItem="NqF-lv-lUz" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="Yjl-Rb-ue7"/>
+                    <constraint firstItem="eCg-Kw-SZA" firstAttribute="leading" secondItem="h7P-XR-taH" secondAttribute="leading" id="Zxc-Zo-8yN"/>
+                    <constraint firstAttribute="trailing" secondItem="eCg-Kw-SZA" secondAttribute="trailing" constant="18" id="aJ1-GF-SfQ"/>
+                    <constraint firstItem="1JQ-pJ-v6P" firstAttribute="top" secondItem="eCg-Kw-SZA" secondAttribute="bottom" constant="20" id="fby-80-5uU"/>
+                    <constraint firstItem="eCg-Kw-SZA" firstAttribute="top" secondItem="h7P-XR-taH" secondAttribute="bottom" constant="10" id="gdy-qC-epW"/>
+                    <constraint firstItem="0P5-HM-AhC" firstAttribute="centerY" secondItem="1JQ-pJ-v6P" secondAttribute="centerY" id="jeI-sM-haf"/>
+                    <constraint firstAttribute="trailing" secondItem="vdM-wj-b86" secondAttribute="trailing" constant="20" id="lff-oR-Dq5"/>
+                    <constraint firstAttribute="trailing" secondItem="l1Y-Bm-Doa" secondAttribute="trailing" constant="18" id="m1q-uB-jk0"/>
+                    <constraint firstItem="l1Y-Bm-Doa" firstAttribute="top" secondItem="NqF-lv-lUz" secondAttribute="top" constant="20" id="ybj-fC-rLY"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
+            <connections>
+                <outlet property="contentLabel" destination="h7P-XR-taH" id="geB-JF-cOM"/>
+                <outlet property="headImg" destination="NqF-lv-lUz" id="8IG-VR-4wQ"/>
+                <outlet property="imageShowView" destination="eCg-Kw-SZA" id="kZM-SQ-vcQ"/>
+                <outlet property="imgShowViewHC" destination="dQK-2Q-YTt" id="1fH-WB-tmR"/>
+                <outlet property="lineView" destination="vdM-wj-b86" id="47v-gc-vWb"/>
+                <outlet property="nameLabel" destination="l1Y-Bm-Doa" id="dja-De-wzg"/>
+                <outlet property="praiseBtn" destination="1JQ-pJ-v6P" id="tT8-8o-exd"/>
+                <outlet property="timeBtn" destination="pgy-gZ-rag" id="ge3-qu-w2z"/>
+                <outlet property="viewBtn" destination="0P5-HM-AhC" id="M5T-qw-ea8"/>
+            </connections>
+            <point key="canvasLocation" x="101.5267175572519" y="91.197183098591552"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="icon_time" width="14.666666984558105" height="14.666666984558105"/>
+        <image name="icon_view" width="15.333333015441895" height="10.333333015441895"/>
+        <image name="praise" width="16" height="15.666666984558105"/>
+        <image name="praised" width="16" height="15.666666984558105"/>
+    </resources>
+</document>

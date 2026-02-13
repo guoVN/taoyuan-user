@@ -1,0 +1,24 @@
+//
+//  PGChoosePayAlertView.h
+//  CherryTWUser
+//
+//  Created by guo on 2025/11/3.
+//  Copyright © 2025 guo. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+NS_ASSUME_NONNULL_BEGIN
+
+@interface PGChoosePayAlertView : UIView
+
+@property (nonatomic, strong) UILabel * titleLabel;
+@property (nonatomic, strong) UITableView * tableView;
+@property (nonatomic, strong) UIButton * sureBtn;
+
+
+- (instancetype)initWithFrame:(CGRect)frame superView:(UIView*)superView;
+
+@end
+
+NS_ASSUME_NONNULL_END

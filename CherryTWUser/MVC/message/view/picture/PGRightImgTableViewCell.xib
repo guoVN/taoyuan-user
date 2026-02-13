@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="131" id="KGk-i7-Jjw" customClass="PGRightImgTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="131"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="131"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Qwp-re-MfC">
+                        <rect key="frame" x="317" y="0.0" width="38" height="38"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="38" id="KUy-lp-DYK"/>
+                            <constraint firstAttribute="width" constant="38" id="n7O-yq-9cR"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="hCornerRadius">
+                                <real key="value" value="6"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </imageView>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="triangleR" translatesAutoresizingMaskIntoConstraints="NO" id="FMj-3K-9iw">
+                        <rect key="frame" x="294" y="14" width="10" height="10"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="10" id="Ld0-jk-iTh"/>
+                            <constraint firstAttribute="width" constant="10" id="YZ4-gL-KSd"/>
+                        </constraints>
+                    </imageView>
+                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P41-jt-OrI">
+                        <rect key="frame" x="194" y="0.0" width="104" height="127"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="lGO-cC-iFE">
+                                <rect key="frame" x="0.0" y="0.0" width="104" height="127"/>
+                                <gestureRecognizers/>
+                            </imageView>
+                            <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v8w-bx-DDc">
+                                <rect key="frame" x="36.666666666666657" y="48" width="31" height="31"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="31" id="0c7-zV-RFe"/>
+                                    <constraint firstAttribute="width" constant="31" id="uxf-ze-br4"/>
+                                </constraints>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" image="shipin@2x"/>
+                                <connections>
+                                    <action selector="playBtnAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="6rD-gu-5i7"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.79607843140000001" green="0.7843137255" blue="0.78039215689999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <constraints>
+                            <constraint firstItem="v8w-bx-DDc" firstAttribute="centerX" secondItem="P41-jt-OrI" secondAttribute="centerX" id="G9f-cG-Nz4"/>
+                            <constraint firstAttribute="trailing" secondItem="lGO-cC-iFE" secondAttribute="trailing" id="Ocq-e4-L1b"/>
+                            <constraint firstItem="v8w-bx-DDc" firstAttribute="centerY" secondItem="P41-jt-OrI" secondAttribute="centerY" id="PGi-hC-Pfc"/>
+                            <constraint firstItem="lGO-cC-iFE" firstAttribute="leading" secondItem="P41-jt-OrI" secondAttribute="leading" id="Xlt-S9-Ivm"/>
+                            <constraint firstAttribute="height" constant="127" id="Y2q-Wa-SHB"/>
+                            <constraint firstItem="lGO-cC-iFE" firstAttribute="top" secondItem="P41-jt-OrI" secondAttribute="top" id="hoL-cx-3oe"/>
+                            <constraint firstAttribute="bottom" secondItem="lGO-cC-iFE" secondAttribute="bottom" id="qzd-ze-3wg"/>
+                            <constraint firstAttribute="width" constant="104" id="zGj-NU-dc4"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="hCornerRadius">
+                                <real key="value" value="8"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="Qwp-re-MfC" secondAttribute="trailing" constant="20" id="1a0-Fn-kHo"/>
+                    <constraint firstItem="P41-jt-OrI" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="CEy-H7-DnG"/>
+                    <constraint firstItem="FMj-3K-9iw" firstAttribute="centerY" secondItem="Qwp-re-MfC" secondAttribute="centerY" id="ImC-dq-IAk"/>
+                    <constraint firstItem="Qwp-re-MfC" firstAttribute="leading" secondItem="P41-jt-OrI" secondAttribute="trailing" constant="19" id="Nkx-We-a0R"/>
+                    <constraint firstItem="P41-jt-OrI" firstAttribute="trailing" secondItem="FMj-3K-9iw" secondAttribute="trailing" constant="-6" id="led-s2-kV2"/>
+                    <constraint firstItem="Qwp-re-MfC" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="qCq-j8-9tU"/>
+                    <constraint firstAttribute="bottom" secondItem="P41-jt-OrI" secondAttribute="bottom" id="zr3-Bh-Ox0"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <connections>
+                <outlet property="conImg" destination="lGO-cC-iFE" id="RYk-AT-PLm"/>
+                <outlet property="headImg" destination="Qwp-re-MfC" id="52s-ik-L6B"/>
+                <outlet property="playBtn" destination="v8w-bx-DDc" id="Mbz-kf-gq7"/>
+            </connections>
+            <point key="canvasLocation" x="127.48091603053435" y="72.183098591549296"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="shipin@2x" width="31" height="31"/>
+        <image name="triangleR" width="4.6666665077209473" height="7.6666665077209473"/>
+    </resources>
+</document>
