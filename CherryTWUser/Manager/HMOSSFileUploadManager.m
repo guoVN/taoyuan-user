@@ -11,7 +11,6 @@
 @implementation HMOSSFileUploadManager
 
 //需要的一些基本信息
-//
 //OssUploadUtils.authServerUrl = "https://o.hnstylor.cn"
 //OssUploadUtils.downloadUrl = "http://cdn.hnstylor.cn"
 
