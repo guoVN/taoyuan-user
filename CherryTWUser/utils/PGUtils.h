@@ -82,6 +82,8 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSString *)formatNumber:(double)number;
 ///登录im
 + (void)loginIM:(PGLoginModel *)model;
+/// 播放
++ (void)changeAVAudioSessionState;
 
 @end
 

@@ -40,6 +40,7 @@
 #import <TZImagePickerController/TZImagePickerController.h>
 #import "HMNetworking.h"
 #import "UITableViewCell+PGCellShaow.h"
+#import "YBImageView.h"
 
 //弱引用
 #define WeakSelf(type)     __weak typeof(type) weak##type = type;

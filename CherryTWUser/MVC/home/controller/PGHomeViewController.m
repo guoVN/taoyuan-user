@@ -305,9 +305,9 @@
         _jxCategoryView.titles = self.segArray;
         _jxCategoryView.defaultSelectedIndex = 0;
         _jxCategoryView.indicators = @[self.lineView];
-        _jxCategoryView.titleFont = MPFont(14);
+        _jxCategoryView.titleFont = MPFont(18);
         _jxCategoryView.titleColor = HEX(#000000);
-        _jxCategoryView.titleSelectedFont = MPSemiboldFont(18);
+        _jxCategoryView.titleSelectedFont = MPSemiboldFont(20);
         _jxCategoryView.titleSelectedColor = HEX(#000000);
         _jxCategoryView.contentEdgeInsetLeft = 20;
         _jxCategoryView.averageCellSpacingEnabled = NO;

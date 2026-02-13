@@ -1983,5 +1983,125 @@
         failureBlock(50000,@"Network error");
     }];
 }
+/// 我的相册
++ (void)myAlbumWithParameters:(NSDictionary *)parametersDic Success:(void (^)(id data))successBlock
+                          failure:(void (^)(NSInteger code, NSString* message))failureBlock
+{
+    NSString * urlStr = [NSString stringWithFormat:@"%@%@",[PGManager shareModel].baseUrl,@"api/photo/v2/list"];
+    NSMutableDictionary * headerDic = [NSMutableDictionary dictionaryWithDictionary:[self getCommonHeaderOfSubclasses:parametersDic]];
+    [headerDic setValue:@"application/json" forKey:@"Content-Type"];
+    NSData * bodyData = [NSJSONSerialization dataWithJSONObject:parametersDic options:NSJSONWritingPrettyPrinted error:nil];
+    [[HMNetworking sharedClient] postBody:urlStr bodyData:bodyData headers:headerDic success:^(id  _Nullable responseObject) {
+        NSDictionary *responseDict = responseObject;
+        if([responseDict[@"code"] integerValue] == 0){
+            successBlock(responseDict);
+        }else{
+            NSString * msg = responseDict[@"msg"];
+            failureBlock([responseDict[@"code"] integerValue],msg);
+        }
+    } failure:^(NSError * _Nonnull error) {
+        failureBlock(50000,@"Network error");
+    }];
+}
+
+/// 上传到相册
++ (void)uploadPhotoToAlbumWithParameters:(NSDictionary *)parametersDic Success:(void (^)(id data))successBlock
+                          failure:(void (^)(NSInteger code, NSString* message))failureBlock
+{
+    NSString * urlStr = [NSString stringWithFormat:@"%@%@",[PGManager shareModel].baseUrl,@"api/album/v2/upload"];
+    NSMutableDictionary * headerDic = [NSMutableDictionary dictionaryWithDictionary:[self getCommonHeaderOfSubclasses:parametersDic]];
+    [headerDic setValue:@"application/json" forKey:@"Content-Type"];
+    NSData * bodyData = [NSJSONSerialization dataWithJSONObject:parametersDic options:NSJSONWritingPrettyPrinted error:nil];
+    [[HMNetworking sharedClient] postBody:urlStr bodyData:bodyData headers:headerDic success:^(id  _Nullable responseObject) {
+        NSDictionary *responseDict = responseObject;
+        if([responseDict[@"code"] integerValue] == 0){
+            successBlock(responseDict);
+        }else{
+            NSString * msg = responseDict[@"msg"];
+            failureBlock([responseDict[@"code"] integerValue],msg);
+        }
+    } failure:^(NSError * _Nonnull error) {
+        failureBlock(50000,@"Network error");
+    }];
+}
+
+/// 删除相册照片
++ (void)deletePhotoAtAlbumWithParameters:(NSDictionary *)parametersDic Success:(void (^)(id data))successBlock
+                          failure:(void (^)(NSInteger code, NSString* message))failureBlock
+{
+    NSString * urlStr = [NSString stringWithFormat:@"%@%@",[PGManager shareModel].baseUrl,@"api/photo/v2/delete"];
+    NSMutableDictionary * headerDic = [NSMutableDictionary dictionaryWithDictionary:[self getCommonHeaderOfSubclasses:parametersDic]];
+    [headerDic setValue:@"application/json" forKey:@"Content-Type"];
+    NSData * bodyData = [NSJSONSerialization dataWithJSONObject:parametersDic options:NSJSONWritingPrettyPrinted error:nil];
+    [[HMNetworking sharedClient] postBody:urlStr bodyData:bodyData headers:headerDic success:^(id  _Nullable responseObject) {
+        NSDictionary *responseDict = responseObject;
+        if([responseDict[@"code"] integerValue] == 0){
+            successBlock(responseDict);
+        }else{
+            NSString * msg = responseDict[@"msg"];
+            failureBlock([responseDict[@"code"] integerValue],msg);
+        }
+    } failure:^(NSError * _Nonnull error) {
+        failureBlock(50000,@"Network error");
+    }];
+}
+/// 我的视频
++ (void)myVideoWithParameters:(NSDictionary *)parametersDic Success:(void (^)(id data))successBlock
+                          failure:(void (^)(NSInteger code, NSString* message))failureBlock
+{
+    NSString * urlStr = [NSString stringWithFormat:@"%@%@",[PGManager shareModel].baseUrl,@"api/video/list"];
+    NSDictionary * headerDic = [self getCommonHeaderOfSubclasses:parametersDic];
+    [[HMNetworking sharedClient] postForm:urlStr parameters:parametersDic headers:headerDic success:^(id  _Nullable responseObject) {
+        NSDictionary *responseDict = responseObject;
+        if([responseDict[@"code"] integerValue] == 0){
+            successBlock(responseDict);
+        }else{
+            NSString * msg = responseDict[@"msg"];
+            failureBlock([responseDict[@"code"] integerValue],msg);
+        }
+    } failure:^(NSError * _Nonnull error) {
+        failureBlock(50000,@"Network error");
+    }];
+}
+
+/// 上传到视频
++ (void)uploadVideoToVideoWithParameters:(NSDictionary *)parametersDic Success:(void (^)(id data))successBlock
+                          failure:(void (^)(NSInteger code, NSString* message))failureBlock
+{
+    NSString * urlStr = [NSString stringWithFormat:@"%@%@",[PGManager shareModel].baseUrl,@"api/video/v2/check/upload"];
+    NSMutableDictionary * headerDic = [NSMutableDictionary dictionaryWithDictionary:[self getCommonHeaderOfSubclasses:parametersDic]];
+    [headerDic setValue:@"application/json" forKey:@"Content-Type"];
+    NSData * bodyData = [NSJSONSerialization dataWithJSONObject:parametersDic options:NSJSONWritingPrettyPrinted error:nil];
+    [[HMNetworking sharedClient] postBody:urlStr bodyData:bodyData headers:headerDic success:^(id  _Nullable responseObject) {
+        NSDictionary *responseDict = responseObject;
+        if([responseDict[@"code"] integerValue] == 0){
+            successBlock(responseDict);
+        }else{
+            NSString * msg = responseDict[@"msg"];
+            failureBlock([responseDict[@"code"] integerValue],msg);
+        }
+    } failure:^(NSError * _Nonnull error) {
+        failureBlock(50000,@"Network error");
+    }];
+}
+
+/// 删除视频
++ (void)deleteVideoAtVideoWithParameters:(NSDictionary *)parametersDic Success:(void (^)(id data))successBlock
+                          failure:(void (^)(NSInteger code, NSString* message))failureBlock
+{
+    NSString * urlStr = [NSString stringWithFormat:@"%@%@",[PGManager shareModel].baseUrl,@"api/video/delete"];
+    NSDictionary * headerDic = [self getCommonHeaderOfSubclasses:parametersDic];
+    [[HMNetworking sharedClient] postForm:urlStr parameters:parametersDic headers:headerDic success:^(id  _Nullable responseObject) {
+        NSDictionary *responseDict = responseObject;
+        if([responseDict[@"code"] integerValue] == 0){
+            successBlock(responseDict);
+        }else{
+            NSString * msg = responseDict[@"msg"];
+            failureBlock([responseDict[@"code"] integerValue],msg);
+        }
+    } failure:^(NSError * _Nonnull error) {
+        failureBlock(50000,@"Network error");
+    }];
+}
 
 @end

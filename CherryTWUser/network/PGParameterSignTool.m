@@ -44,6 +44,10 @@
         }
     }
     
+    if (returnStr.length == 0) {
+        returnStr = @"{";
+    }
+    
     /*拼接上key得到stringSignTemp*/
     returnStr = [NSString stringWithFormat:@"%@}&ts=%@&signKey=%@",returnStr,timeSp,signKey];
     /*md5加密*/

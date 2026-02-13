@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *tallLabel;
 @property (weak, nonatomic) IBOutlet UILabel *ageLabel;
 @property (weak, nonatomic) IBOutlet UILabel *looksLevelLabel;
+@property (weak, nonatomic) IBOutlet UILabel *purposeLabel;
 
 @property (nonatomic, strong) PGAnchorModel * detailModel;
 

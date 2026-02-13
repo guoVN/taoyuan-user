@@ -6,7 +6,6 @@
 #import <ZFPlayer/ZFPlayer.h>
 #import <ZFPlayer/ZFIJKPlayerManager.h>
 #import <ZFPlayer/ZFAVPlayerManager.h>
-#import "HMNetService.h"
 
 @interface YBShowBigVideoVC (){
     UIView *naviView;
@@ -76,7 +75,7 @@
     };
     [self.player playTheIndex:0];
     
-    [HMUtils changeAVAudioSessionState];
+    [PGUtils changeAVAudioSessionState];
 
     [self creatView];
 }

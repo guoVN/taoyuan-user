@@ -100,7 +100,7 @@
     }
     [AgoraChatClient.sharedClient.chatManager pinConversation:self.model.conversationId isPinned:sender.selected completionBlock:^(AgoraChatError * _Nullable error) {
     }];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"GETNEWMSG" object:nil userInfo:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"RefreshMsg" object:nil userInfo:nil];
 }
 
 - (void)clickHead:(UITapGestureRecognizer *)tap

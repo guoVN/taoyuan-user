@@ -638,5 +638,15 @@
     // 3. 转换并返回结果
     return [formatter stringFromNumber:@(number)] ?: [NSString stringWithFormat:@"%g", number];
 }
+/// 播放
++ (void)changeAVAudioSessionState{
+    BOOL iscall = [[NSUserDefaults standardUserDefaults] boolForKey:@"isStartCall"];
+    AVAudioSession *session = [AVAudioSession sharedInstance];
+    if (iscall) {
+        [session setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
+    }else{
+        [session setCategory:AVAudioSessionCategoryPlayback error:nil];
+    }
+}
 
 @end

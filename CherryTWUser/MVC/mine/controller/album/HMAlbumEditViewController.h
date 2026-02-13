@@ -5,11 +5,11 @@
 //  Created by guo on 2025/8/28.
 //
 
-#import "HMBaseViewController.h"
+#import "PGBaseViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface HMAlbumEditViewController : HMBaseViewController
+@interface HMAlbumEditViewController : PGBaseViewController
 
 @property (nonatomic, strong) NSMutableArray * photoArray;
 

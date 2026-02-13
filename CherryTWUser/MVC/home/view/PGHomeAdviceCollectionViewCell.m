@@ -20,6 +20,7 @@
 {
     _listModel = listModel;
     [self.headImg sd_setImageWithURL:[NSURL URLWithString:listModel.photoUrl] placeholderImage:MPImage(@"netFaild")];
+    [self.headImg acs_radiusWithRadius:25 corner:UIRectCornerBottomLeft|UIRectCornerBottomRight];
     self.nameLabel.text = listModel.name;
     self.onlineLabel.text = listModel.onlineState;
     if ([listModel.onlineState isEqualToString:@"在线"]) {

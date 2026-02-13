@@ -23,7 +23,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) QMUITextField * inputField;
 @property (nonatomic, strong) UIButton * recordBtn;
 @property (nonatomic, strong) UIButton * sendBtn;
+@property (nonatomic, strong) UIStackView * menuStackView;
 @property (nonatomic, strong) UIButton * giftBtn;
+@property (nonatomic, strong) UIButton * albumBtn;
 @property (nonatomic, strong) UIButton * videoCallBtn;
 @property (nonatomic, strong) UIButton * emojiBtn;
 @property (nonatomic, strong) UIView * lockView;
@@ -33,6 +35,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString * channelId;
 
 @property (nonatomic, copy) void(^sendBlock)(NSString * sendContent);
+@property (nonatomic, copy) void(^sendImgBlock)(NSString * imgUrl);
 @property (nonatomic, copy) void(^sendVideoCallBlock)(void);
 @property (nonatomic, copy) void(^chooseGiftBlock)(void);
 

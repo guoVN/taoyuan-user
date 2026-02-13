@@ -1,24 +1,25 @@
 //
-//  HMAlbumEditViewController.m
-//  HoneyMelonAnchor
+//  HMEditVideoViewController.m
+//  CherryTWanchor
 //
-//  Created by guo on 2025/8/28.
+//  Created by guo on 2025/8/30.
 //
 
-#import "HMAlbumEditViewController.h"
+#import "HMEditVideoViewController.h"
 #import "HMAlbumCollectionViewCell.h"
 #import "HMChooseImgCollectionViewCell.h"
+#import "YBShowBigVideoVC.h"
 
 #define photoCount 10
 
-@interface HMAlbumEditViewController ()<UICollectionViewDataSource,UICollectionViewDelegate>
+@interface HMEditVideoViewController ()<UICollectionViewDataSource,UICollectionViewDelegate>
 
 @property (nonatomic, strong) UICollectionView * collectionView;
 @property (nonatomic, strong) UICollectionViewFlowLayout * flowLayout;
 
 @end
 
-@implementation HMAlbumEditViewController
+@implementation HMEditVideoViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -27,7 +28,7 @@
 }
 - (void)loadUI
 {
-    self.titleStr = Localized(@"相册修改");
+    self.titleStr = Localized(@"视频修改");
     self.view.backgroundColor = UIColor.whiteColor;
     [self.naviView.navImg setImage:MPImage(@"liushuiBavBg")];
     self.naviView.showNavImg = YES;
@@ -42,20 +43,22 @@
     return 1;
 }
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    return self.photoArray.count + 1;
+    return self.videoArray.count + 1;
 }
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     WeakSelf(self)
-    if (indexPath.row == self.photoArray.count) {
+    if (indexPath.row == self.videoArray.count) {
         HMChooseImgCollectionViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass(HMChooseImgCollectionViewCell.class) forIndexPath:indexPath];
-        
+        [cell.iconImg setImage:MPImage(@"uploadVideo")];
+        cell.titleLabel.text = Localized(@"上传视频");
         return cell;
     }else{
         HMAlbumCollectionViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass(HMAlbumCollectionViewCell.class) forIndexPath:indexPath];
+        cell.isVideo = YES;
         cell.isEidtPage = YES;
-        cell.model = self.photoArray[indexPath.row];
+        cell.videoModel = self.videoArray[indexPath.row];
         cell.deleteImgBlock = ^{
-            [weakself.photoArray removeObjectAtIndex:indexPath.row];
+            [weakself.videoArray removeObjectAtIndex:indexPath.row];
             [weakself.collectionView reloadData];
         };
         return cell;
@@ -89,82 +92,103 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     WeakSelf(self)
-    if (indexPath.row == self.photoArray.count) {
-        if (self.photoArray.count == photoCount) {
-            [QMUITips showWithText:Localized(@"相册照片不能多于十张")];
+    if (indexPath.row == self.videoArray.count) {
+        if (self.videoArray.count == photoCount) {
+            [QMUITips showWithText:Localized(@"视频不能多于十个")];
             return;
         }
-        [[PGManager shareModel] chooseMediaWith:1 count:1 withCrop:NO selectImg:^(NSArray *imgArr) {
+        [[PGManager shareModel] chooseMediaWith:2 count:1 withCrop:NO selectImg:^(NSArray * _Nonnull imgArr) {
+                    
+        } selectVideo:^(UIImage * _Nonnull coverImg, NSURL * _Nonnull videoUrl) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                [weakself.photoArray addObjectsFromArray:imgArr];
-                [weakself uploadImg:imgArr];
+                NSDictionary * dic = @{@"img":coverImg,@"url":videoUrl};
+                [weakself.videoArray addObject:dic];
+                [weakself uploadCoverImg:coverImg video:videoUrl];
                 [weakself.collectionView reloadData];
              });
-        } selectVideo:^(UIImage *coverImg, NSURL *videoUrl) {
         }];
     }else{
-        NSMutableArray * imgArr = [NSMutableArray array];
-        for (NSInteger i=0; i<self.photoArray.count; i++) {
-            id model = self.photoArray[i];
-            if ([model isKindOfClass:[HMAlbumListModel class]]) {
-                HMAlbumListModel * mm = model;
-                [imgArr addObject:mm.photoUrl];
-            }else if ([model isKindOfClass:[UIImage class]]){
-                [imgArr addObject:model];
-            }
+        id videoModel = self.videoArray[indexPath.row];
+        YBShowBigVideoVC *vc = [[YBShowBigVideoVC alloc]init];
+        if ([videoModel isKindOfClass:[HMVideoListModel class]]) {
+            HMVideoListModel * vv = videoModel;
+            vc.isHttpVideo = YES;
+            vc.videoPath = vv.videoUrl;
+            vc.coverThumbStr = vv.thumbnailUrl;
+        }else if ([videoModel isKindOfClass:[NSDictionary class]]){
+            NSDictionary * dic = videoModel;
+            NSURL * videoUrl = dic[@"url"];
+            vc.isHttpVideo = NO;
+            vc.videoPath = videoUrl.absoluteString;
+            vc.coverImage = dic[@"img"];
         }
-        YBImageView *imgView = [[YBImageView alloc] initWithImageArray:imgArr andIndex:indexPath.row andBlock:^(NSArray * _Nonnull array) {
-        }];
-        [[UIApplication sharedApplication].delegate.window addSubview:imgView];
+        vc.block = ^{
+            
+        };
+        [self.navigationController pushViewController:vc animated:NO];
     }
 }
-
-- (void)uploadImg:(NSArray *)imgArr
+- (void)uploadCoverImg:(UIImage *)coverImg video:(NSURL *)videoUrl
 {
     WeakSelf(self)
     [QMUITips showLoadingInView:self.view];
-    [PGAPIService uploadFileWithImages:imgArr Success:^(id  _Nonnull data) {
-        [weakself checkImg:data[@"data"]];
+    [PGAPIService uploadFileWithImages:@[coverImg] Success:^(id  _Nonnull data) {
+        NSArray * imgDataArr = data[@"data"];
+        NSMutableArray * photoArr = [NSMutableArray array];
+        for (NSString * str in imgDataArr) {
+            [photoArr addObject:str];
+        }
+        NSString * imgStr = [photoArr componentsJoinedByString:@","];
+        [weakself shumeiThumbCheck:imgStr video:videoUrl];
     } failure:^(NSInteger code, NSString * _Nonnull message) {
         [QMUITips hideAllTips];
     }];
 }
-- (void)checkImg:(NSArray *)imgDataArr
+- (void)shumeiThumbCheck:(NSString *)imgStr video:(NSURL *)videoUrl
 {
-    NSMutableArray * photoArr = [NSMutableArray array];
-    for (NSString * str in imgDataArr) {
-        [photoArr addObject:str];
-    }
-    NSString * imgStr = [photoArr componentsJoinedByString:@","];
-    [self doUploadAction:imgStr];
+    [self uploadVideo:videoUrl withThumb:imgStr];
 //    WeakSelf(self)
 //    NSMutableDictionary * dic = [NSMutableDictionary dictionary];
 //    [dic setValue:@"IMAGE" forKey:@"eventId"];
 //    [dic setValue:imgStr forKey:@"img"];
 //    [dic setValue:[HMManager shareModel].userInfo.userid forKey:@"userid"];
 //    [HMNetService shumeiImgCheckWithParameters:dic Success:^(id  _Nonnull data) {
-//        [QMUITips hideAllTips];
-//        [weakself doUploadAction:imgStr];
+//        [weakself uploadVideo:videoUrl withThumb:imgStr];
 //    } failure:^(NSInteger code, NSString * _Nonnull message) {
 //        [QMUITips hideAllTips];
 //        [QMUITips showWithText:message];
 //    }];
 }
-- (void)doUploadAction:(NSString *)imgStr
+- (void)uploadVideo:(NSURL *)videoUrl withThumb:(NSString *)imgStr
 {
+    WeakSelf(self)
+    [PGAPIService uploadVideoFileWithImages:@[videoUrl] Success:^(id  _Nonnull data) {
+        [weakself doVideoUpload:data[@"data"] thumb:imgStr];
+    } failure:^(NSInteger code, NSString * _Nonnull message) {
+        [QMUITips hideAllTips];
+    }];
+}
+- (void)doVideoUpload:(NSArray *)videoArr thumb:(NSString *)thumbStr
+{
+    NSMutableArray * videoDataArr = [NSMutableArray array];
+    for (NSString * str in videoArr) {
+        [videoDataArr addObject:str];
+    }
+    NSString * videoStr = [videoDataArr componentsJoinedByString:@","];
+    
     NSMutableDictionary * dic = [NSMutableDictionary dictionary];
-    [dic setValue:imgStr forKey:@"imgUrl"];
+    [dic setValue:videoStr forKey:@"imgUrl"];
     [dic setValue:@"0" forKey:@"isDynamic"];
+    [dic setValue:thumbStr forKey:@"thumbnailUrl"];
     [dic setValue:[PGManager shareModel].userInfo.userid forKey:@"userId"];
     WeakSelf(self)
-    [PGAPIService uploadPhotoToAlbumWithParameters:dic Success:^(id  _Nonnull data) {
+    [PGAPIService uploadVideoToVideoWithParameters:dic Success:^(id  _Nonnull data) {
         [QMUITips hideAllTips];
-        NSArray * items = [HMAlbumListModel mj_objectArrayWithKeyValuesArray:data[@"data"]];
-        [weakself.photoArray replaceObjectAtIndex:weakself.photoArray.count-1 withObject:items.firstObject];
+        HMVideoListModel * model = [HMVideoListModel mj_objectWithKeyValues:data[@"data"]];
+        [weakself.videoArray replaceObjectAtIndex:weakself.videoArray.count-1 withObject:model];
         [weakself.collectionView reloadData];
     } failure:^(NSInteger code, NSString * _Nonnull message) {
         [QMUITips hideAllTips];
-        [QMUITips showWithText:message];
     }];
 }
 
@@ -192,12 +216,12 @@
     }
     return _flowLayout;
 }
-- (NSMutableArray *)photoArray
+- (NSMutableArray *)videoArray
 {
-    if (!_photoArray) {
-        _photoArray = [NSMutableArray array];
+    if (!_videoArray) {
+        _videoArray = [NSMutableArray array];
     }
-    return _photoArray;
+    return _videoArray;
 }
 
 /*

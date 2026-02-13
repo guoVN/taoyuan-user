@@ -64,7 +64,7 @@
     WeakSelf(self)
     if (self.isVideo) {
         if ([self.videoModel isKindOfClass:[HMVideoListModel class]]) {
-            [HMNetService deleteVideoAtVideoWithParameters:@{@"videoid":@(self.videoModel.videoid)} Success:^(id  _Nonnull data) {
+            [PGAPIService deleteVideoAtVideoWithParameters:@{@"videoid":@(self.videoModel.videoid)} Success:^(id  _Nonnull data) {
                 if (weakself.deleteImgBlock) {
                     weakself.deleteImgBlock();
                 }
@@ -78,7 +78,7 @@
         }
     }else{
         if ([self.model isKindOfClass:[HMAlbumListModel class]]) {
-            [HMNetService deletePhotoAtAlbumWithParameters:@{@"photoId":self.model.photoid} Success:^(id  _Nonnull data) {
+            [PGAPIService deletePhotoAtAlbumWithParameters:@{@"photoId":self.model.photoid} Success:^(id  _Nonnull data) {
                 if (weakself.deleteImgBlock) {
                     weakself.deleteImgBlock();
                 }

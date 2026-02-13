@@ -216,6 +216,22 @@
 		BF889B032CFEB77800812159 /* PGCountDownButton.m in Sources */ = {isa = PBXBuildFile; fileRef = BF889B022CFEB77800812159 /* PGCountDownButton.m */; };
 		BF889B072CFEFCF600812159 /* PGLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF889B052CFEFCF600812159 /* PGLoginViewController.m */; };
 		BF889B082CFEFCF600812159 /* PGLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF889B062CFEFCF600812159 /* PGLoginViewController.xib */; };
+		BF8DB2FE2F3F050900E8E9A4 /* HMAlbumCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF8DB2EF2F3F050900E8E9A4 /* HMAlbumCollectionViewCell.xib */; };
+		BF8DB2FF2F3F050900E8E9A4 /* HMAlbumAndVideoCollectionReusableFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF8DB2F72F3F050900E8E9A4 /* HMAlbumAndVideoCollectionReusableFooterView.xib */; };
+		BF8DB3002F3F050900E8E9A4 /* HMChooseImgCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF8DB2F22F3F050900E8E9A4 /* HMChooseImgCollectionViewCell.xib */; };
+		BF8DB3012F3F050900E8E9A4 /* HMAlbumEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8DB2FC2F3F050900E8E9A4 /* HMAlbumEditViewController.m */; };
+		BF8DB3022F3F050900E8E9A4 /* HMAlbumAndVideoCollectionReusableFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8DB2F62F3F050900E8E9A4 /* HMAlbumAndVideoCollectionReusableFooterView.m */; };
+		BF8DB3032F3F050900E8E9A4 /* HMAlbumCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8DB2EE2F3F050900E8E9A4 /* HMAlbumCollectionViewCell.m */; };
+		BF8DB3042F3F050900E8E9A4 /* HMAlbumAndVideoCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8DB2F42F3F050900E8E9A4 /* HMAlbumAndVideoCollectionReusableView.m */; };
+		BF8DB3052F3F050900E8E9A4 /* HMAlbumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8DB2FA2F3F050900E8E9A4 /* HMAlbumViewController.m */; };
+		BF8DB3062F3F050900E8E9A4 /* HMChooseImgCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8DB2F12F3F050900E8E9A4 /* HMChooseImgCollectionViewCell.m */; };
+		BF8DB3072F3F050900E8E9A4 /* HMAlbumListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8DB2EB2F3F050900E8E9A4 /* HMAlbumListModel.m */; };
+		BF8DB3102F3F05A600E8E9A4 /* HMVideoListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8DB3092F3F05A600E8E9A4 /* HMVideoListModel.m */; };
+		BF8DB3112F3F05A600E8E9A4 /* HMChooseVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8DB30C2F3F05A600E8E9A4 /* HMChooseVideoViewController.m */; };
+		BF8DB3122F3F05A600E8E9A4 /* HMEditVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8DB30E2F3F05A600E8E9A4 /* HMEditVideoViewController.m */; };
+		BF8DB3152F3F05EE00E8E9A4 /* YBShowBigVideoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8DB3142F3F05EE00E8E9A4 /* YBShowBigVideoVC.m */; };
+		BF8DB31A2F3F090500E8E9A4 /* YBImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8DB3172F3F090500E8E9A4 /* YBImageView.m */; };
+		BF8DB31B2F3F090500E8E9A4 /* YBShowBigImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8DB3192F3F090500E8E9A4 /* YBShowBigImageView.m */; };
 		BF8E5D212F39FF1E008362DC /* HMOSSFileUploadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8E5D202F39FF1E008362DC /* HMOSSFileUploadManager.m */; };
 		BF9338DD2EC4D7BC00A7666F /* HMMaskCircleHoleView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF9338DC2EC4D7BC00A7666F /* HMMaskCircleHoleView.m */; };
 		BF9338E02EC4DFC400A7666F /* HMNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = BF9338DF2EC4DFC400A7666F /* HMNetworking.m */; };
@@ -671,6 +687,35 @@
 		BF889B042CFEFCF600812159 /* PGLoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PGLoginViewController.h; sourceTree = "<group>"; };
 		BF889B052CFEFCF600812159 /* PGLoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PGLoginViewController.m; sourceTree = "<group>"; };
 		BF889B062CFEFCF600812159 /* PGLoginViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PGLoginViewController.xib; sourceTree = "<group>"; };
+		BF8DB2EA2F3F050900E8E9A4 /* HMAlbumListModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HMAlbumListModel.h; sourceTree = "<group>"; };
+		BF8DB2EB2F3F050900E8E9A4 /* HMAlbumListModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HMAlbumListModel.m; sourceTree = "<group>"; };
+		BF8DB2ED2F3F050900E8E9A4 /* HMAlbumCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HMAlbumCollectionViewCell.h; sourceTree = "<group>"; };
+		BF8DB2EE2F3F050900E8E9A4 /* HMAlbumCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HMAlbumCollectionViewCell.m; sourceTree = "<group>"; };
+		BF8DB2EF2F3F050900E8E9A4 /* HMAlbumCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HMAlbumCollectionViewCell.xib; sourceTree = "<group>"; };
+		BF8DB2F02F3F050900E8E9A4 /* HMChooseImgCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HMChooseImgCollectionViewCell.h; sourceTree = "<group>"; };
+		BF8DB2F12F3F050900E8E9A4 /* HMChooseImgCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HMChooseImgCollectionViewCell.m; sourceTree = "<group>"; };
+		BF8DB2F22F3F050900E8E9A4 /* HMChooseImgCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HMChooseImgCollectionViewCell.xib; sourceTree = "<group>"; };
+		BF8DB2F32F3F050900E8E9A4 /* HMAlbumAndVideoCollectionReusableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HMAlbumAndVideoCollectionReusableView.h; sourceTree = "<group>"; };
+		BF8DB2F42F3F050900E8E9A4 /* HMAlbumAndVideoCollectionReusableView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HMAlbumAndVideoCollectionReusableView.m; sourceTree = "<group>"; };
+		BF8DB2F52F3F050900E8E9A4 /* HMAlbumAndVideoCollectionReusableFooterView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HMAlbumAndVideoCollectionReusableFooterView.h; sourceTree = "<group>"; };
+		BF8DB2F62F3F050900E8E9A4 /* HMAlbumAndVideoCollectionReusableFooterView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HMAlbumAndVideoCollectionReusableFooterView.m; sourceTree = "<group>"; };
+		BF8DB2F72F3F050900E8E9A4 /* HMAlbumAndVideoCollectionReusableFooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HMAlbumAndVideoCollectionReusableFooterView.xib; sourceTree = "<group>"; };
+		BF8DB2F92F3F050900E8E9A4 /* HMAlbumViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HMAlbumViewController.h; sourceTree = "<group>"; };
+		BF8DB2FA2F3F050900E8E9A4 /* HMAlbumViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HMAlbumViewController.m; sourceTree = "<group>"; };
+		BF8DB2FB2F3F050900E8E9A4 /* HMAlbumEditViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HMAlbumEditViewController.h; sourceTree = "<group>"; };
+		BF8DB2FC2F3F050900E8E9A4 /* HMAlbumEditViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HMAlbumEditViewController.m; sourceTree = "<group>"; };
+		BF8DB3082F3F05A600E8E9A4 /* HMVideoListModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HMVideoListModel.h; sourceTree = "<group>"; };
+		BF8DB3092F3F05A600E8E9A4 /* HMVideoListModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HMVideoListModel.m; sourceTree = "<group>"; };
+		BF8DB30B2F3F05A600E8E9A4 /* HMChooseVideoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HMChooseVideoViewController.h; sourceTree = "<group>"; };
+		BF8DB30C2F3F05A600E8E9A4 /* HMChooseVideoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HMChooseVideoViewController.m; sourceTree = "<group>"; };
+		BF8DB30D2F3F05A600E8E9A4 /* HMEditVideoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HMEditVideoViewController.h; sourceTree = "<group>"; };
+		BF8DB30E2F3F05A600E8E9A4 /* HMEditVideoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HMEditVideoViewController.m; sourceTree = "<group>"; };
+		BF8DB3132F3F05EE00E8E9A4 /* YBShowBigVideoVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YBShowBigVideoVC.h; sourceTree = "<group>"; };
+		BF8DB3142F3F05EE00E8E9A4 /* YBShowBigVideoVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YBShowBigVideoVC.m; sourceTree = "<group>"; };
+		BF8DB3162F3F090500E8E9A4 /* YBImageView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YBImageView.h; sourceTree = "<group>"; };
+		BF8DB3172F3F090500E8E9A4 /* YBImageView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YBImageView.m; sourceTree = "<group>"; };
+		BF8DB3182F3F090500E8E9A4 /* YBShowBigImageView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YBShowBigImageView.h; sourceTree = "<group>"; };
+		BF8DB3192F3F090500E8E9A4 /* YBShowBigImageView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YBShowBigImageView.m; sourceTree = "<group>"; };
 		BF8E5D1F2F39FF1E008362DC /* HMOSSFileUploadManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HMOSSFileUploadManager.h; sourceTree = "<group>"; };
 		BF8E5D202F39FF1E008362DC /* HMOSSFileUploadManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HMOSSFileUploadManager.m; sourceTree = "<group>"; };
 		BF9338DB2EC4D7BC00A7666F /* HMMaskCircleHoleView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HMMaskCircleHoleView.h; sourceTree = "<group>"; };
@@ -976,6 +1021,8 @@
 		4385820B29E1B8800059A69D /* controller */ = {
 			isa = PBXGroup;
 			children = (
+				BF8DB30F2F3F05A600E8E9A4 /* video */,
+				BF8DB2FD2F3F050900E8E9A4 /* album */,
 				BF66CB8A2EABD6DB002FC6A1 /* yuyue */,
 				BF66CB7D2EABC4A4002FC6A1 /* followAndFans */,
 				BFF812522D3E1CF9009E07AD /* withdrawal */,
@@ -1352,6 +1399,12 @@
 				BF5E893B2D56E6AB0030A109 /* PGScreenShieldView.m */,
 				BF5441692EC61BC9006C6212 /* PGWaterFollowLayout.h */,
 				BF54416A2EC61BC9006C6212 /* PGWaterFollowLayout.m */,
+				BF8DB3162F3F090500E8E9A4 /* YBImageView.h */,
+				BF8DB3172F3F090500E8E9A4 /* YBImageView.m */,
+				BF8DB3182F3F090500E8E9A4 /* YBShowBigImageView.h */,
+				BF8DB3192F3F090500E8E9A4 /* YBShowBigImageView.m */,
+				BF8DB3132F3F05EE00E8E9A4 /* YBShowBigVideoVC.h */,
+				BF8DB3142F3F05EE00E8E9A4 /* YBShowBigVideoVC.m */,
 			);
 			path = public;
 			sourceTree = "<group>";
@@ -1700,6 +1753,67 @@
 			path = view;
 			sourceTree = "<group>";
 		};
+		BF8DB2EC2F3F050900E8E9A4 /* model */ = {
+			isa = PBXGroup;
+			children = (
+				BF8DB2EA2F3F050900E8E9A4 /* HMAlbumListModel.h */,
+				BF8DB2EB2F3F050900E8E9A4 /* HMAlbumListModel.m */,
+			);
+			path = model;
+			sourceTree = "<group>";
+		};
+		BF8DB2F82F3F050900E8E9A4 /* view */ = {
+			isa = PBXGroup;
+			children = (
+				BF8DB2ED2F3F050900E8E9A4 /* HMAlbumCollectionViewCell.h */,
+				BF8DB2EE2F3F050900E8E9A4 /* HMAlbumCollectionViewCell.m */,
+				BF8DB2EF2F3F050900E8E9A4 /* HMAlbumCollectionViewCell.xib */,
+				BF8DB2F02F3F050900E8E9A4 /* HMChooseImgCollectionViewCell.h */,
+				BF8DB2F12F3F050900E8E9A4 /* HMChooseImgCollectionViewCell.m */,
+				BF8DB2F22F3F050900E8E9A4 /* HMChooseImgCollectionViewCell.xib */,
+				BF8DB2F32F3F050900E8E9A4 /* HMAlbumAndVideoCollectionReusableView.h */,
+				BF8DB2F42F3F050900E8E9A4 /* HMAlbumAndVideoCollectionReusableView.m */,
+				BF8DB2F52F3F050900E8E9A4 /* HMAlbumAndVideoCollectionReusableFooterView.h */,
+				BF8DB2F62F3F050900E8E9A4 /* HMAlbumAndVideoCollectionReusableFooterView.m */,
+				BF8DB2F72F3F050900E8E9A4 /* HMAlbumAndVideoCollectionReusableFooterView.xib */,
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
+		BF8DB2FD2F3F050900E8E9A4 /* album */ = {
+			isa = PBXGroup;
+			children = (
+				BF8DB2EC2F3F050900E8E9A4 /* model */,
+				BF8DB2F82F3F050900E8E9A4 /* view */,
+				BF8DB2F92F3F050900E8E9A4 /* HMAlbumViewController.h */,
+				BF8DB2FA2F3F050900E8E9A4 /* HMAlbumViewController.m */,
+				BF8DB2FB2F3F050900E8E9A4 /* HMAlbumEditViewController.h */,
+				BF8DB2FC2F3F050900E8E9A4 /* HMAlbumEditViewController.m */,
+			);
+			path = album;
+			sourceTree = "<group>";
+		};
+		BF8DB30A2F3F05A600E8E9A4 /* model */ = {
+			isa = PBXGroup;
+			children = (
+				BF8DB3082F3F05A600E8E9A4 /* HMVideoListModel.h */,
+				BF8DB3092F3F05A600E8E9A4 /* HMVideoListModel.m */,
+			);
+			path = model;
+			sourceTree = "<group>";
+		};
+		BF8DB30F2F3F05A600E8E9A4 /* video */ = {
+			isa = PBXGroup;
+			children = (
+				BF8DB30A2F3F05A600E8E9A4 /* model */,
+				BF8DB30B2F3F05A600E8E9A4 /* HMChooseVideoViewController.h */,
+				BF8DB30C2F3F05A600E8E9A4 /* HMChooseVideoViewController.m */,
+				BF8DB30D2F3F05A600E8E9A4 /* HMEditVideoViewController.h */,
+				BF8DB30E2F3F05A600E8E9A4 /* HMEditVideoViewController.m */,
+			);
+			path = video;
+			sourceTree = "<group>";
+		};
 		BF9EAE632ED042E500067864 /* model */ = {
 			isa = PBXGroup;
 			children = (
@@ -2030,6 +2144,9 @@
 				BF50EC812D0A7DCF008C9C9E /* PGChatLeftTableViewCell.xib in Resources */,
 				BFC52AAB2D059A2E0078CCAD /* PGRechargeTableViewCell.xib in Resources */,
 				BF2BA20F2CFDF30700E28E88 /* PGWriteInfoViewController.xib in Resources */,
+				BF8DB2FE2F3F050900E8E9A4 /* HMAlbumCollectionViewCell.xib in Resources */,
+				BF8DB2FF2F3F050900E8E9A4 /* HMAlbumAndVideoCollectionReusableFooterView.xib in Resources */,
+				BF8DB3002F3F050900E8E9A4 /* HMChooseImgCollectionViewCell.xib in Resources */,
 				BFBDE38F2D21478F005B7AD2 /* PGLeftAudioTableViewCell.xib in Resources */,
 				BFE94A662EC97FA000580041 /* PGPersonalVideoPriceTableViewCell.xib in Resources */,
 				BF70655F2D261C6100D5932C /* PGLeftImgTableViewCell.xib in Resources */,
@@ -2111,9 +2228,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-CherryTWUser/Pods-CherryTWUser-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-CherryTWUser/Pods-CherryTWUser-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2128,9 +2249,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-CherryTWUser/Pods-CherryTWUser-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-CherryTWUser/Pods-CherryTWUser-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2149,6 +2274,9 @@
 				BFE70D892D00084100B8FFAA /* PGPersonalTaDynamicCollectionViewCell.m in Sources */,
 				BF6087212EAB5A92003AAB11 /* PGNoticeViewController.m in Sources */,
 				BF5DD7502D0156F600CA61F7 /* UIImage+Category.m in Sources */,
+				BF8DB3102F3F05A600E8E9A4 /* HMVideoListModel.m in Sources */,
+				BF8DB3112F3F05A600E8E9A4 /* HMChooseVideoViewController.m in Sources */,
+				BF8DB3122F3F05A600E8E9A4 /* HMEditVideoViewController.m in Sources */,
 				BFC52A9F2D0593530078CCAD /* PGDiamondsCollectionViewCell.m in Sources */,
 				BF5F84452D0AC6E300D49017 /* PGAnchorModel.m in Sources */,
 				BF9D18982D219DC40031D1DB /* ToastView.swift in Sources */,
@@ -2192,6 +2320,7 @@
 				BFE94A622EC97DE200580041 /* PGPersonalIntroTableViewCell.m in Sources */,
 				BF4987B82D06E58E000BE1F6 /* PGInviteFriendListViewController.m in Sources */,
 				BF889B072CFEFCF600812159 /* PGLoginViewController.m in Sources */,
+				BF8DB3152F3F05EE00E8E9A4 /* YBShowBigVideoVC.m in Sources */,
 				BF60144C2D096E7700CB6A96 /* PGLoginModel.m in Sources */,
 				BFB85DD72D1E9EBD0021FFCF /* PGGiftView.m in Sources */,
 				BFF8125C2D3E1F0C009E07AD /* PGWithdrawalTableViewCell.m in Sources */,
@@ -2263,6 +2392,15 @@
 				BF5C666C2D00A18A005A0DA7 /* PGDynamicNoticeViewController.m in Sources */,
 				BF6E84A52EAB1E0000B3DF5E /* HMProjectMenuTableViewCell.m in Sources */,
 				BF5FCF392D564D8500475FF6 /* PGAnchorDynamicListViewController.m in Sources */,
+				BF8DB3012F3F050900E8E9A4 /* HMAlbumEditViewController.m in Sources */,
+				BF8DB3022F3F050900E8E9A4 /* HMAlbumAndVideoCollectionReusableFooterView.m in Sources */,
+				BF8DB3032F3F050900E8E9A4 /* HMAlbumCollectionViewCell.m in Sources */,
+				BF8DB31A2F3F090500E8E9A4 /* YBImageView.m in Sources */,
+				BF8DB31B2F3F090500E8E9A4 /* YBShowBigImageView.m in Sources */,
+				BF8DB3042F3F050900E8E9A4 /* HMAlbumAndVideoCollectionReusableView.m in Sources */,
+				BF8DB3052F3F050900E8E9A4 /* HMAlbumViewController.m in Sources */,
+				BF8DB3062F3F050900E8E9A4 /* HMChooseImgCollectionViewCell.m in Sources */,
+				BF8DB3072F3F050900E8E9A4 /* HMAlbumListModel.m in Sources */,
 				BF2BA20B2CFDF13600E28E88 /* PGBaseNavigationView.m in Sources */,
 				BF5B7B9A2CFFE0EA0051676D /* PGSearchResultViewController.m in Sources */,
 				BF5B7BAC2CFFF7860051676D /* PGPageControl.m in Sources */,

@@ -1,24 +1,25 @@
 //
-//  HMAlbumViewController.m
+//  HMChooseVideoViewController.m
 //  CherryTWanchor
 //
-//  Created by guo on 2025/8/28.
+//  Created by guo on 2025/8/30.
 //
 
-#import "HMAlbumViewController.h"
-#import "HMAlbumEditViewController.h"
+#import "HMChooseVideoViewController.h"
 #import "HMAlbumCollectionViewCell.h"
-#import "HMAlbumListModel.h"
+#import "HMEditVideoViewController.h"
+#import "HMVideoListModel.h"
+#import "YBShowBigVideoVC.h"
 
-@interface HMAlbumViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
+@interface HMChooseVideoViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
 
 @property (nonatomic, strong) UICollectionView * collectionView;
 @property (nonatomic, strong) UICollectionViewFlowLayout * flowLayout;
-@property (nonatomic, strong) NSMutableArray * photoArray;
+@property (nonatomic, strong) NSMutableArray * videoArray;
 
 @end
 
-@implementation HMAlbumViewController
+@implementation HMChooseVideoViewController
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -33,7 +34,7 @@
 }
 - (void)loadUI
 {
-    self.titleStr = Localized(@"相册管理");
+    self.titleStr = Localized(@"视频管理");
     self.view.backgroundColor = UIColor.whiteColor;
     [self.naviView.navImg setImage:MPImage(@"liushuiBavBg")];
     self.naviView.showNavImg = YES;
@@ -50,9 +51,9 @@
 {
     WeakSelf(self)
     [QMUITips showLoadingInView:self.view];
-    [PGAPIService myAlbumWithParameters:@{@"userId":[PGManager shareModel].userInfo.userid} Success:^(id  _Nonnull data) {
+    [PGAPIService myVideoWithParameters:@{@"userid":[PGManager shareModel].userInfo.userid} Success:^(id  _Nonnull data) {
         [QMUITips hideAllTips];
-        weakself.photoArray = [HMAlbumListModel mj_objectArrayWithKeyValuesArray:data[@"data"]];
+        weakself.videoArray = [HMVideoListModel mj_objectArrayWithKeyValuesArray:data[@"data"]];
         [weakself.collectionView reloadData];
     } failure:^(NSInteger code, NSString * _Nonnull message) {
         [QMUITips hideAllTips];
@@ -64,11 +65,12 @@
     return 1;
 }
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    return self.photoArray.count;
+    return self.videoArray.count;
 }
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     HMAlbumCollectionViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass(HMAlbumCollectionViewCell.class) forIndexPath:indexPath];
-    cell.model = self.photoArray[indexPath.row];
+    cell.isVideo = YES;
+    cell.videoModel = self.videoArray[indexPath.row];
     return cell;
 }
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
@@ -98,19 +100,20 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSMutableArray * imgArr = [NSMutableArray array];
-    for (NSInteger i=0; i<self.photoArray.count; i++) {
-        HMAlbumListModel * model = self.photoArray[i];
-        [imgArr addObject:model.photoUrl];
-    }
-    YBImageView *imgView = [[YBImageView alloc] initWithImageArray:imgArr andIndex:indexPath.row andBlock:^(NSArray * _Nonnull array) {
-    }];
-    [[UIApplication sharedApplication].delegate.window addSubview:imgView];
+    HMVideoListModel * videoModel = self.videoArray[indexPath.row];
+    YBShowBigVideoVC *vc = [[YBShowBigVideoVC alloc]init];
+    vc.isHttpVideo = YES;
+    vc.videoPath = videoModel.videoUrl;
+    vc.coverThumbStr = videoModel.thumbnailUrl;
+    vc.block = ^{
+        
+    };
+    [[PGUtils getCurrentVC].navigationController pushViewController:vc animated:NO];
 }
 /// 空数据UI
 /// @param scrollView tableview
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
-    NSString *text = Localized(@"暂无图片");
+    NSString *text = Localized(@"暂无视频");
     NSDictionary *attributes = @{NSFontAttributeName: MPFont(16),
                                  NSForegroundColorAttributeName: HEX(#000000)};
     
@@ -132,8 +135,8 @@
 
 - (void)rightBntAction
 {
-    HMAlbumEditViewController * vc = [[HMAlbumEditViewController alloc] init];
-    vc.photoArray = self.photoArray;
+    HMEditVideoViewController * vc = [[HMEditVideoViewController alloc] init];
+    vc.videoArray = self.videoArray;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -162,12 +165,12 @@
     }
     return _flowLayout;
 }
-- (NSMutableArray *)photoArray
+- (NSMutableArray *)videoArray
 {
-    if (!_photoArray) {
-        _photoArray = [NSMutableArray array];
+    if (!_videoArray) {
+        _videoArray = [NSMutableArray array];
     }
-    return _photoArray;
+    return _videoArray;
 }
 
 /*

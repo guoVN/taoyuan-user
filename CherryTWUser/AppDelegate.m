@@ -386,7 +386,7 @@
         
     }
     [self unReadMsgCount];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"GETNEWMSG" object:nil userInfo:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"RefreshMsg" object:nil userInfo:nil];
 }
 - (void)unReadMsgCount
 {

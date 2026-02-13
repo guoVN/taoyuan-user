@@ -18,6 +18,7 @@
 #import "PGNoticeViewController.h"
 #import "PGFollowAndFansViewController.h"
 #import "PGYuYueRecordViewController.h"
+#import "HMAlbumViewController.h"
 //view
 #import "PGMineTableViewCell.h"
 #import "PGRechargeAlertView.h"
@@ -99,7 +100,7 @@
     self.nameLabel.text = [PGManager shareModel].userInfo.nickName;
     self.IDLabel.text = [NSString stringWithFormat:@"ID：%@",[PGManager shareModel].userInfo.userid];
     self.dataArray = [@[@{@"img":@"icon_recharge",@"name":@"充值"},
-                        @{@"img":@"icon_yuyue",@"name":@"预约"},
+                        @{@"img":@"icon_yuyue",@"name":@"相册"},
                         @{@"img":@"icon_service",@"name":@"客服"},
                         @{@"img":@"icon_invite",@"name":@"邀请好友"},
                         @{@"img":@"icon_set",@"name":@"设置"}] mutableCopy];
@@ -214,6 +215,9 @@
         [self.navigationController pushViewController:vc animated:YES];
     }else if ([titleStr isEqualToString:@"设置"]){
         PGSetViewController * vc = [[PGSetViewController alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
+    }else if ([titleStr isEqualToString:@"相册"]){
+        HMAlbumViewController * vc = [[HMAlbumViewController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
     }
 }

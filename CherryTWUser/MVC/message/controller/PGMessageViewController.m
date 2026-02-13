@@ -77,6 +77,9 @@
 
     PGNavigationViewController * nav = (PGNavigationViewController *)[UIApplication sharedApplication].delegate.window.rootViewController;
     PGContainerVC * tabbarVC = (PGContainerVC *)nav.topViewController;
+    if (![tabbarVC isKindOfClass:[PGContainerVC class]]) {
+        return;
+    }
     [tabbarVC.floatingTabBar setBadgeValue:[NSString stringWithFormat:@"%ld",unreadCount] forIndex:2];
     if (unreadCount == 0) {
         [tabbarVC.floatingTabBar setBadgeValue:nil forIndex:2];

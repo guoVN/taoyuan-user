@@ -44,9 +44,11 @@
     [self addSubview:self.inputField];
 //    [self addSubview:self.recordBtn];
     [self addSubview:self.sendBtn];
-    [self addSubview:self.giftBtn];
-    [self addSubview:self.videoCallBtn];
-    [self addSubview:self.emojiBtn];
+    [self addSubview:self.menuStackView];
+//    [self.menuStackView addArrangedSubview:self.giftBtn];
+    [self.menuStackView addArrangedSubview:self.albumBtn];
+    [self.menuStackView addArrangedSubview:self.videoCallBtn];
+    [self.menuStackView addArrangedSubview:self.emojiBtn];
     [self addSubview:self.lockView];
     [self.lockView addSubview:self.lockBtn];
 }
@@ -74,20 +76,23 @@
         make.right.mas_equalTo(-10);
         make.size.mas_equalTo(CGSizeMake(67, 34));
     }];
-    [self.giftBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(47);
+    [self.menuStackView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.inputField.mas_bottom).offset(20);
-        make.width.height.mas_equalTo(30);
+        make.left.mas_equalTo(15);
+        make.right.mas_equalTo(-15);
+        make.height.mas_equalTo(28);
+    }];
+//    [self.giftBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.width.height.mas_equalTo(28);
+//    }];
+    [self.albumBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.height.mas_equalTo(28);
     }];
     [self.videoCallBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.mas_equalTo(0);
-        make.top.equalTo(self.inputField.mas_bottom).offset(20);
-        make.width.height.mas_equalTo(30);
+        make.width.height.mas_equalTo(28);
     }];
     [self.emojiBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.mas_equalTo(-47);
-        make.top.equalTo(self.inputField.mas_bottom).offset(20);
-        make.width.height.mas_equalTo(30);
+        make.width.height.mas_equalTo(28);
     }];
     [self.lockView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.mas_equalTo(0);
@@ -145,6 +150,16 @@
 //        self.inputField.text = @"";
     }
 }
+- (void)albumBtnAction
+{
+    [self.inputField resignFirstResponder];
+    WeakSelf(self)
+    [[PGManager shareModel] chooseMediaWith:1 count:1 withCrop:NO selectImg:^(NSArray * _Nonnull imgArr) {
+        [weakself updateHeadImg:imgArr];
+    } selectVideo:^(UIImage * _Nonnull coverImg, NSURL * _Nonnull videoUrl) {
+    }];
+}
+
 - (void)emojiBtnAction:(UIButton *)sender
 {
     sender.selected = !sender.selected;
@@ -365,20 +380,25 @@
     return YES;
 }
 #pragma mark===上传图片
-- (void)updateHeadImg:(UIImage *)image
+- (void)updateHeadImg:(NSArray *)imgArr
 {
-//    WeakSelf(self)
-    [QMUITips showLoading:@"图片发送中" inView:[PGUtils getCurrentVC].view];
-    [PGAPIService uploadFileWithImages:@[image] Success:^(id  _Nonnull data) {
-        [QMUITips hideAllTips];
-//        NSString * imgStr = data[@"data"];
-//        if (weakself.sendImgBlock) {
-//            weakself.sendImgBlock(imgStr);
-//        }
+    WeakSelf(self)
+    [PGAPIService uploadFileWithImages:imgArr Success:^(id  _Nonnull data) {
+        [weakself checkImg:data[@"data"]];
     } failure:^(NSInteger code, NSString * _Nonnull message) {
-        [QMUITips hideAllTips];
-        [QMUITips showWithText:@"发送失败"];
+        [QMUITips showWithText:message];
     }];
+}
+- (void)checkImg:(NSArray *)imgDataArr
+{
+    NSMutableArray * photoArr = [NSMutableArray array];
+    for (NSString * str in imgDataArr) {
+        [photoArr addObject:str];
+    }
+    NSString * imgStr = [photoArr componentsJoinedByString:@","];
+    if (self.sendImgBlock) {
+        self.sendImgBlock(imgStr);
+    }
 }
 
 #pragma mark===懒加载
@@ -445,6 +465,15 @@
     }
     return _sendBtn;
 }
+- (UIStackView *)menuStackView
+{
+    if (!_menuStackView) {
+        _menuStackView = [[UIStackView alloc] init];
+        _menuStackView.axis = UILayoutConstraintAxisHorizontal;
+        _menuStackView.distribution = UIStackViewDistributionEqualSpacing;
+    }
+    return _menuStackView;
+}
 - (UIButton *)giftBtn
 {
     if (!_giftBtn) {
@@ -453,6 +482,15 @@
         [_giftBtn addTarget:self action:@selector(giftBtnAction) forControlEvents:UIControlEventTouchUpInside];
     }
     return _giftBtn;
+}
+- (UIButton *)albumBtn
+{
+    if (!_albumBtn) {
+        _albumBtn = [[UIButton alloc] init];
+        [_albumBtn setImage:MPImage(@"chatImgIcon") forState:UIControlStateNormal];
+        [_albumBtn addTarget:self action:@selector(albumBtnAction) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _albumBtn;
 }
 - (UIButton *)videoCallBtn
 {

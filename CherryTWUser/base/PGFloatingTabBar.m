@@ -131,8 +131,8 @@
        if (!badgeLabel.hidden) {
            CGSize badgeSize = [self calculateBadgeSizeWithText:badgeLabel.text];
            // 角标位置：右上角，x 偏移 2pt，y 偏移 2pt
-           CGFloat badgeX = button.bounds.size.width - badgeSize.width - 20;
-           CGFloat badgeY = 6;
+           CGFloat badgeX = button.bounds.size.width - badgeSize.width - 26;
+           CGFloat badgeY = 10;
            badgeLabel.frame = CGRectMake(badgeX, badgeY, badgeSize.width, badgeSize.height);
        }
     }

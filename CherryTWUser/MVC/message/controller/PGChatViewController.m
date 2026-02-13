@@ -594,9 +594,9 @@
             [weakself sendMsgWith:sendContent withType:@"文字"];
             weakself.chatInputView.inputField.text = @"";
         };
-//        _chatInputView.sendImgBlock = ^(NSString * _Nonnull imgUrl) {
-//            [weakself sendMsgWith:imgUrl withType:@"文字"];
-//        };
+        _chatInputView.sendImgBlock = ^(NSString * _Nonnull imgUrl) {
+            [weakself sendMsgWith:imgUrl withType:@"文字"];
+        };
         _chatInputView.sendVideoCallBlock = ^{
             [weakself sendMsgWith:@"" withType:@"视频"];
         };

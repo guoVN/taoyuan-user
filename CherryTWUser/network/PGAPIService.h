@@ -39,6 +39,10 @@ NS_ASSUME_NONNULL_BEGIN
 ///上传图片
 + (void)uploadFileWithImages:(NSArray<UIImage *> *)image Success:(void (^)(id data))successBlock failure:(void (^)(NSInteger code, NSString* message))failureBlock;
 
+///视频上传
++ (void)uploadVideoFileWithImages:(NSArray<NSURL *> *)video Success:(void (^)(id data))successBlock
+                          failure:(void (^)(NSInteger code, NSString* message))failureBlock;
+
 ///首页推荐列表
 + (void)homeRemandWithParameters:(NSDictionary *)parametersDic Success:(void (^)(id data))successBlock
                           failure:(void (^)(NSInteger code, NSString* message))failureBlock;
@@ -355,6 +359,30 @@ NS_ASSUME_NONNULL_BEGIN
 
 ///获取阿里云配置
 + (void)getAliOSSInfoWithParameters:(NSDictionary *)parametersDic Success:(void (^)(id data))successBlock failure:(void (^)(NSInteger code, NSString* message))failureBlock;
+
+/// 我的相册
++ (void)myAlbumWithParameters:(NSDictionary *)parametersDic Success:(void (^)(id data))successBlock
+                          failure:(void (^)(NSInteger code, NSString* message))failureBlock;
+
+/// 上传到相册
++ (void)uploadPhotoToAlbumWithParameters:(NSDictionary *)parametersDic Success:(void (^)(id data))successBlock
+                          failure:(void (^)(NSInteger code, NSString* message))failureBlock;
+
+/// 删除相册照片
++ (void)deletePhotoAtAlbumWithParameters:(NSDictionary *)parametersDic Success:(void (^)(id data))successBlock
+                                 failure:(void (^)(NSInteger code, NSString* message))failureBlock;
+
+/// 我的视频
++ (void)myVideoWithParameters:(NSDictionary *)parametersDic Success:(void (^)(id data))successBlock
+                          failure:(void (^)(NSInteger code, NSString* message))failureBlock;
+
+/// 上传到视频
++ (void)uploadVideoToVideoWithParameters:(NSDictionary *)parametersDic Success:(void (^)(id data))successBlock
+                          failure:(void (^)(NSInteger code, NSString* message))failureBlock;
+
+/// 删除视频
++ (void)deleteVideoAtVideoWithParameters:(NSDictionary *)parametersDic Success:(void (^)(id data))successBlock
+                          failure:(void (^)(NSInteger code, NSString* message))failureBlock;
 
 @end
 
