@@ -40,9 +40,13 @@
 }
 - (void)initSubView
 {
-//    [self addSubview:self.changeBtn];
+    self.layer.shadowColor = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:0.0700].CGColor;
+    self.layer.shadowOffset = CGSizeMake(0,-2);
+    self.layer.shadowOpacity = 1;
+    self.layer.shadowRadius = 4;
+    [self addSubview:self.changeBtn];
     [self addSubview:self.inputField];
-//    [self addSubview:self.recordBtn];
+    [self addSubview:self.recordBtn];
     [self addSubview:self.sendBtn];
     [self addSubview:self.menuStackView];
 //    [self.menuStackView addArrangedSubview:self.giftBtn];
@@ -54,23 +58,23 @@
 }
 - (void)snapSubView
 {
-//    [self.changeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.left.mas_equalTo(10);
-//        make.top.mas_equalTo(16);
-//        make.width.height.mas_equalTo(25);
-//    }];
+    [self.changeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(10);
+        make.top.mas_equalTo(16);
+        make.width.height.mas_equalTo(25);
+    }];
     [self.inputField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(12);
-        make.right.equalTo(self.sendBtn.mas_left).offset(-10);
+        make.left.equalTo(self.changeBtn.mas_right).offset(13);
+        make.right.equalTo(self.sendBtn.mas_left).offset(-13);
         make.top.mas_equalTo(12);
         make.height.mas_equalTo(34);
     }];
-//    [self.recordBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.left.equalTo(self.changeBtn.mas_right).offset(13);
-//        make.right.equalTo(self.sendBtn.mas_left).offset(-13);
-//        make.top.mas_equalTo(12);
-//        make.height.mas_equalTo(32);
-//    }];
+    [self.recordBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.changeBtn.mas_right).offset(13);
+        make.right.equalTo(self.sendBtn.mas_left).offset(-13);
+        make.top.mas_equalTo(12);
+        make.height.mas_equalTo(32);
+    }];
     [self.sendBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(13);
         make.right.mas_equalTo(-10);
@@ -447,6 +451,10 @@
         [_recordBtn addTarget:self action:@selector(onRecordButtonTouchCancel:) forControlEvents:UIControlEventTouchUpOutside | UIControlEventTouchCancel];
         [_recordBtn addTarget:self action:@selector(onRecordButtonTouchDragExit:) forControlEvents:UIControlEventTouchDragExit];
         [_recordBtn addTarget:self action:@selector(onRecordButtonTouchDragEnter:) forControlEvents:UIControlEventTouchDragEnter];
+        _recordBtn.layer.borderWidth = 1;
+        _recordBtn.layer.borderColor = HEX(#CCCCCC).CGColor;
+        _recordBtn.layer.cornerRadius = 10;
+        _recordBtn.layer.masksToBounds = YES;
         _recordBtn.alpha = 0;
     }
     return _recordBtn;

@@ -8,6 +8,7 @@
 
 #import "PGLeftAudioTableViewCell.h"
 #import "PGPersonalDetailViewController.h"
+#import "PGRightAudioTableViewCell.h"
 
 @interface PGLeftAudioTableViewCell ()<AVAudioPlayerDelegate>
 
@@ -23,6 +24,14 @@
     [self.audioView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(playAudio)]];
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
     [self.headImg addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(headClick)]];
+    // 监听停止动画的通知
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(stopVoiceMessage)
+                                                     name:kShouldStopVoiceMessageNotification
+                                                   object:nil];
+}
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -58,21 +67,54 @@
     }
     self.audioPlayer.delegate = self;
 }
-- (void)downAudio:(NSString *)path
+ */
+
+- (void)setMsdDic:(NSDictionary *)msdDic
+{
+    _msdDic = msdDic;
+    NSString * contentStr = msdDic[@"content"];
+    [self.headImg sd_setImageWithURL:[NSURL URLWithString:[PGManager shareModel].userInfo.photo] placeholderImage:MPImage(@"womanDefault")];
+    NSURL *fileUrl = [NSURL URLWithString:contentStr];
+    NSString *fileName = fileUrl.lastPathComponent;
+
+    // 获取 Caches 目录下的 fshyAudio 文件夹作为下载目录
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    NSString *cachesPath = [paths lastObject];
+    NSString *audioDir = [cachesPath stringByAppendingPathComponent:@"fshyAudio"];
+
+    // 本地完整文件路径
+    NSString *localFilePath = [audioDir stringByAppendingPathComponent:fileName];
+    
+    if ([[NSFileManager defaultManager] fileExistsAtPath:localFilePath]) {
+        NSData *data = [NSData dataWithContentsOfFile:localFilePath];
+        self.audioPlayer = [[AVAudioPlayer alloc] initWithData:data error:nil];
+        bool result = [self.audioPlayer prepareToPlay];
+        self.secondLabel.text = [NSString stringWithFormat:@"%.0f''",self.audioPlayer.duration];
+        self.audioViewWC.constant = self.audioPlayer.duration/60.0*60+64;
+        if (!result) {
+            [self downAudio:contentStr filePath:audioDir];
+        }
+    }else{
+        [self downAudio:contentStr filePath:audioDir];
+    }
+    self.audioPlayer.delegate = self;
+}
+
+- (void)downAudio:(NSString *)url filePath:(NSString *)path
 {
     WeakSelf(self)
-    [PGAPIService downFileWithUrl:self.chatModel.contenStr filePath:path Success:^(id  _Nonnull data) {
+    [PGAPIService downFileWithUrl:url filePath:path Success:^(id  _Nonnull data) {
         NSURL *url = [NSURL URLWithString:data];
         weakself.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:nil];
         [weakself.audioPlayer prepareToPlay];
         weakself.secondLabel.text = [NSString stringWithFormat:@"%.0f''",weakself.audioPlayer.duration];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            weakself.chatModel = weakself.chatModel;
+            
         });
     } failure:^(NSInteger code, NSString * _Nonnull message) {
         
     }];
-}*/
+}
 - (void)setFriendHead:(NSString *)friendHead
 {
     _friendHead = friendHead;
@@ -80,9 +122,13 @@
 }
 - (void)playAudio
 {
+    // 让所有正在播放动画的 cell 停止
+    [[NSNotificationCenter defaultCenter] postNotificationName:kShouldStopVoiceMessageNotification object:nil];
+    
     self.audioPlayer.delegate = self;
     [[PGManager shareModel].audioPlayer stop];
     [PGManager shareModel].audioPlayer = self.audioPlayer;
+    [PGManager shareModel].audioPlayer.currentTime = 0;
     [[PGManager shareModel].audioPlayer play];
     
     NSMutableArray *images = [NSMutableArray array];

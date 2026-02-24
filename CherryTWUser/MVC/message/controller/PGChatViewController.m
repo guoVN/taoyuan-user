@@ -90,7 +90,7 @@
     [self.varifyBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.mas_equalTo(-20);
         make.bottom.equalTo(self.chatInputView.mas_top).offset(-30);
-        make.size.mas_equalTo(CGSizeMake(45, 64));
+        make.size.mas_equalTo(CGSizeMake(48, 48));
     }];
 }
 - (void)dealTableView:(BOOL)animated
@@ -346,8 +346,8 @@
 {
     WeakSelf(self)
     [PGAPIService uploadFileWithAudio:path Success:^(id  _Nonnull data) {
-        NSString * audioUrl = data[@"data"];
-        [weakself sendMsgWith:audioUrl withType:@"文字"];
+        NSArray * audioArr = data[@"data"];
+        [weakself sendMsgWith:audioArr.firstObject withType:@"文字"];
     } failure:^(NSInteger code, NSString * _Nonnull message) {
         [QMUITips showWithText:@"语音发送失败"];
     }];
@@ -393,7 +393,7 @@
         BOOL isBlackAnchor = [dataDic[@"senderBlockRecipient"] boolValue];
         BOOL isBeBlack = [dataDic[@"recipientBlockSender"] boolValue];
         if (!isBlackAnchor && !isBeBlack) {
-            [weakself doSendMsgActionWith:sendContent withType:type];
+            [weakself sendMsgCheckPre:sendContent withType:type];
         }else{
             if (isBlackAnchor) {
                 [QMUITips showWithText:@"你已拉黑对方"];
@@ -475,13 +475,16 @@
                 nav.modalPresentationStyle = 0;
                 [weakself presentViewController:nav animated:YES completion:nil];
             }else{
+                [weakself messageChargeAction:sendContent withType:type];
                 [weakself.dataArray addObject:message];
                 [weakself.tableView reloadData];
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.01 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    [self dealTableView:NO];
+                    [weakself dealTableView:NO];
                 });
             }
-            [weakself addMsgRecord:sendContent];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [weakself addMsgRecord:sendContent];
+            });
         }
     }];
 }
@@ -496,6 +499,25 @@
             
     } failure:^(NSInteger code, NSString * _Nonnull message) {
         
+    }];
+}
+#pragma mark===文字消息扣费
+- (void)messageChargeAction:(NSString *)sendContent withType:(NSString *)type
+{
+    WeakSelf(self)
+    NSMutableDictionary * dic = [NSMutableDictionary dictionary];
+    [dic setValue:self.channelId forKey:@"recipientId"];
+    [dic setValue:self.anchorDetailModel.textChatCoin forKey:@"coin"];
+    [dic setValue:[PGManager shareModel].userInfo.userid forKey:@"senderId"];
+    [dic setValue:sendContent forKey:@"messageContent"];
+    [dic setValue:@"" forKey:@"virtualAnchorId"];
+    [PGAPIService messageChargeWithParameters:dic Success:^(id  _Nonnull data) {
+        [QMUITips hideAllTips];
+        weakself.chatInputView.inputField.text = @"";
+        weakself.chatInputView.sendBtn.enabled = YES;
+    } failure:^(NSInteger code, NSString * _Nonnull message) {
+        [QMUITips hideAllTips];
+        [QMUITips showWithText:message];
     }];
 }
 #pragma mark===举报拉黑
@@ -527,25 +549,25 @@
 #pragma mark===颜值验证
 - (void)varifyBtnAction
 {
-    WeakSelf(self)
-    [[PGManager shareModel].mainControlAlert closeView];
-    [PGManager shareModel].mainControlAlert = Dialog()
-        .wLevelSet(999)
-        .wTagSet(random()%100000)
-        .wTypeSet(DialogTypeMyView)
-        .wShowAnimationSet(AninatonZoomInCombin)
-        .wHideAnimationSet(AninatonZoomOut)
-        .wShadowCanTapSet(YES)
-        .wMyDiaLogViewSet(^UIView *(UIView *mainView) {
-            mainView.backgroundColor = [UIColor clearColor];
-            PGUnlockChatAlertView *view = [[PGUnlockChatAlertView alloc] initWithFrame:CGRectMake(0, 0, 305, 160) superView:mainView];
-                view.type = 3;
-                view.sureBlock = ^{
-                   
-                };
-                return view;
-            })
-        .wStart();
+//    WeakSelf(self)
+//    [[PGManager shareModel].mainControlAlert closeView];
+//    [PGManager shareModel].mainControlAlert = Dialog()
+//        .wLevelSet(999)
+//        .wTagSet(random()%100000)
+//        .wTypeSet(DialogTypeMyView)
+//        .wShowAnimationSet(AninatonZoomInCombin)
+//        .wHideAnimationSet(AninatonZoomOut)
+//        .wShadowCanTapSet(YES)
+//        .wMyDiaLogViewSet(^UIView *(UIView *mainView) {
+//            mainView.backgroundColor = [UIColor clearColor];
+//            PGUnlockChatAlertView *view = [[PGUnlockChatAlertView alloc] initWithFrame:CGRectMake(0, 0, 305, 160) superView:mainView];
+//                view.type = 3;
+//                view.sureBlock = ^{
+//                   
+//                };
+//                return view;
+//            })
+//        .wStart();
 }
 #pragma mark-======创建表视图
 - (UITableView *)tableView{
@@ -618,24 +640,23 @@
     if (!_varifyBtn) {
         _varifyBtn = [[QMUIButton alloc] init];
         UIImageView * icon = [[UIImageView alloc] init];
-        [icon setImage:MPImage(@"verifyIcon")];
+        [icon setImage:MPImage(@"liwu")];
         icon.contentMode = UIViewContentModeScaleAspectFill;
         [_varifyBtn addSubview:icon];
         [icon mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.centerX.mas_equalTo(0);
-            make.width.height.mas_equalTo(42);
+            make.edges.mas_equalTo(0);
         }];
-        UILabel * titleLabel = [[UILabel alloc] init];
-        titleLabel.font = MPMediumFont(11);
-        titleLabel.textColor = HEX(#000000);
-        titleLabel.text = Localized(@"颜值验证");
-        [_varifyBtn addSubview:titleLabel];
-        [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(icon.mas_bottom).offset(6);
-            make.centerX.mas_equalTo(0);
-            make.height.mas_equalTo(16);
-        }];
-        [_varifyBtn addTarget:self action:@selector(varifyBtnAction) forControlEvents:UIControlEventTouchUpInside];
+//        UILabel * titleLabel = [[UILabel alloc] init];
+//        titleLabel.font = MPMediumFont(11);
+//        titleLabel.textColor = HEX(#000000);
+//        titleLabel.text = Localized(@"颜值验证");
+//        [_varifyBtn addSubview:titleLabel];
+//        [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.top.equalTo(icon.mas_bottom).offset(6);
+//            make.centerX.mas_equalTo(0);
+//            make.height.mas_equalTo(16);
+//        }];
+        [_varifyBtn addTarget:self action:@selector(giftBtnAction) forControlEvents:UIControlEventTouchUpInside];
     }
     return _varifyBtn;
 }

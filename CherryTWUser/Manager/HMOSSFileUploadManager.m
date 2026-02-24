@@ -348,4 +348,143 @@ static NSString *rootUrl = @"https://cdn.hnstylor.cn/";
     }
 }
 
+//异步上传单条语音
++ (void)asyncUploadAudio:(NSString *)filePath progress:(HMUploadImageManageProgressBlock)progressBlock complete:(void(^)(NSArray<NSString *> *names,UploadImageState state))complete
+{
+    [self uploadAudios:@[filePath] isAsync:YES progress:progressBlock complete:complete];
+}
+//同步上传单条语音
++ (void)syncUploadAudio:(NSString *)filePath progress:(HMUploadImageManageProgressBlock)progressBlock complete:(void(^)(NSArray<NSString *> *names,UploadImageState state))complete
+{
+    [self uploadAudios:@[filePath] isAsync:NO progress:progressBlock complete:complete];
+}
+//异步上传多条语音
++ (void)asyncUploadAudios:(NSArray<NSString *> *)filePaths progress:(HMUploadImageManageProgressBlock)progressBlock complete:(void(^)(NSArray<NSString *> *names, UploadImageState state))complete
+{
+    [self uploadAudios:filePaths isAsync:YES progress:progressBlock complete:complete];
+}
+//同步上传多条语音
++ (void)syncUploadAudios:(NSArray<NSString *> *)filePaths progress:(HMUploadImageManageProgressBlock)progressBlock complete:(void(^)(NSArray<NSString *> *names, UploadImageState state))complete
+{
+    [self uploadAudios:filePaths isAsync:NO progress:progressBlock complete:complete];
+}
+
++ (void)uploadAudios:(NSArray<NSString *> *)filePaths isAsync:(BOOL)isAsync progress:(HMUploadImageManageProgressBlock)progressBlock complete:(void(^)(NSArray<NSString *> *names, UploadImageState state))complete
+{
+    // 获取OSS凭证
+    id<OSSCredentialProvider> credential = [[OSSStsTokenCredentialProvider alloc] initWithAccessKeyId:[PGManager shareModel].AccessKeyId secretKeyId:[PGManager shareModel].AccessKeySecret securityToken:[PGManager shareModel].SecurityToken];
+    
+    OSSClient *client = [[OSSClient alloc] initWithEndpoint:EndPoint credentialProvider:credential];
+    
+    // 创建操作队列（保持与图片/视频一致的顺序执行模式）
+    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+    queue.maxConcurrentOperationCount = filePaths.count;  // 实际因依赖会串行
+    
+    NSMutableArray *callBackNames = [NSMutableArray array];
+    
+    for (NSString *filePath in filePaths) {
+        if (filePath.length == 0) continue;
+        
+        NSBlockOperation *operation = [NSBlockOperation blockOperationWithBlock:^{
+            // --- 准备上传请求 ---
+            OSSPutObjectRequest *put = [OSSPutObjectRequest new];
+            put.bucketName = BucketName;
+            
+            // 进度回调
+            put.uploadProgress = ^(int64_t bytesSent, int64_t totalByteSent, int64_t totalBytesExpectedToSend) {
+                if (progressBlock) {
+                    progressBlock(bytesSent, totalByteSent, totalBytesExpectedToSend);
+                }
+            };
+            
+            // 构建OSS对象键（路径）：anchor/userid/uuid.扩展名
+            NSString *folderStr = [NSString stringWithFormat:@"%@/%@", kTempFolder, [PGManager shareModel].userInfo.userid];
+            NSString *extension = [filePath pathExtension];
+            if (extension.length == 0) {
+                extension = @"audio"; // 默认扩展名
+            }
+            NSString *fileName = [NSString stringWithFormat:@"%@.%@", [NSUUID UUID].UUIDString, extension];
+            NSString *objectKey = [folderStr stringByAppendingPathComponent:fileName];
+            put.objectKey = objectKey;
+            
+            // 可选：根据扩展名设置contentType（阿里云OSS可自动识别，但建议明确）
+            if ([extension isEqualToString:@"m4a"]) {
+                put.contentType = @"audio/m4a";
+            } else if ([extension isEqualToString:@"mp3"]) {
+                put.contentType = @"audio/mpeg";
+            } else if ([extension isEqualToString:@"wav"]) {
+                put.contentType = @"audio/wav";
+            } else {
+                put.contentType = @"application/octet-stream";
+            }
+            
+            // 构建可访问的URL
+            NSString *audioUrl = [NSString stringWithFormat:@"%@%@", rootUrl, objectKey];
+            @synchronized (callBackNames) {
+                [callBackNames addObject:audioUrl];
+            }
+            NSLog(@"准备上传语音: %@", audioUrl);
+            
+            // 读取文件数据
+            NSData *audioData = [NSData dataWithContentsOfFile:filePath];
+            if (!audioData) {
+                NSLog(@"读取语音文件失败: %@", filePath);
+                @synchronized (callBackNames) {
+                    [callBackNames removeAllObjects];
+                }
+                if (complete) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        complete(@[], UploadImageFailed);
+                    });
+                }
+                return;
+            }
+            put.uploadingData = audioData;
+            
+            // 阻塞上传直到完成
+            OSSTask *putTask = [client putObject:put];
+            [putTask waitUntilFinished];
+            
+            if (putTask.error) {
+                NSLog(@"上传语音失败: %@, error: %@", audioUrl, putTask.error);
+                @synchronized (callBackNames) {
+                    [callBackNames removeAllObjects];
+                }
+                if (complete) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        complete(@[], UploadImageFailed);
+                    });
+                }
+            } else {
+                NSLog(@"上传语音成功: %@", audioUrl);
+                // 异步模式下，最后一个文件上传成功时回调
+                if (isAsync && filePath == filePaths.lastObject) {
+                    if (complete) {
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            complete([NSArray arrayWithArray:callBackNames], UploadImageSuccess);
+                        });
+                    }
+                }
+            }
+        }];
+        
+        // 添加依赖保证顺序执行（与图片/视频逻辑一致）
+        if (queue.operations.count > 0) {
+            [operation addDependency:queue.operations.lastObject];
+        }
+        [queue addOperation:operation];
+    }
+    
+    // 同步模式：等待所有操作完成
+    if (!isAsync) {
+        [queue waitUntilAllOperationsAreFinished];
+        if (complete) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                complete([NSArray arrayWithArray:callBackNames],
+                         callBackNames.count > 0 ? UploadImageSuccess : UploadImageFailed);
+            });
+        }
+    }
+}
+
 @end

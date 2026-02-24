@@ -1154,52 +1154,64 @@
 ///上传语音
 + (void)uploadFileWithAudio:(NSString *)filePath Success:(void (^)(id data))successBlock failure:(void (^)(NSInteger code, NSString* message))failureBlock
 {
-    // 1. 初始化总数量和计数器（需线程安全，避免多线程竞争）
-    NSInteger totalCount = 1;
-    __block NSInteger completedCount = 0;
-    __block NSMutableArray *allResults = [NSMutableArray arrayWithCapacity:totalCount]; // 存储所有上传结果
-    NSLock *lock = [[NSLock alloc] init]; // 用于计数器同步
-    
-    NSError * error = nil;
-    NSData * voiceData = [NSData dataWithContentsOfURL:[NSURL fileURLWithPath:filePath]
-                                             options:NSDataReadingMappedIfSafe // 优化大文件读取性能
-                                               error:&error];
-    [self fileAwsUploadWithParameters:@{} fileData:voiceData mimeType:@"mp3" Success:^(id  _Nonnull data) {
-        [lock lock]; // 加锁，确保计数器操作线程安全
-        completedCount++;
-        [allResults addObject:data]; // 存储当前上传结果
-        // 3. 检查是否所有任务都已完成
-        if (completedCount == totalCount) {
-            [lock unlock]; // 先解锁再回调（避免回调中耗时操作阻塞锁）
-            if (successBlock) {
-                NSMutableDictionary * dataDic = [NSMutableDictionary dictionary];
-                [dataDic setValue:@"0" forKey:@"code"];
-                [dataDic setValue:@"1" forKey:@"success"];
-                NSMutableArray * imgStrArr = [NSMutableArray array];
-                for (NSDictionary * dd in allResults) {
-                    NSDictionary * urlDic = dd[@"data"];
-                    [imgStrArr addObject:urlDic[@"url"]];
-                }
-                [dataDic setValue:imgStrArr forKey:@"data"];
-                successBlock(dataDic); // 返回所有结果
-            }
-        } else {
-            [lock unlock];
-        }
-    } failure:^(NSInteger code, NSString * _Nonnull message) {
-        [lock lock];
-        completedCount++;
-        [allResults addObject:@{@"code": @(code), @"msg": message}]; // 存储错误信息
-        if (completedCount == totalCount) {
-            [lock unlock];
-            // 业务逻辑：若只要有一个失败则整体视为失败（可根据需求调整）
-            if (failureBlock) {
-                failureBlock(code, message);
-            }
-        } else {
-            [lock unlock];
+    [HMOSSFileUploadManager asyncUploadAudio:filePath progress:^(int64_t bytesSent, int64_t totalByteSent, int64_t totalBytesExpectedToSend) {
+        
+    } complete:^(NSArray<NSString *> * _Nonnull names, UploadImageState state) {
+        if (state == UploadImageSuccess) {
+            NSDictionary * dataDic = @{@"data":names};
+            successBlock(dataDic);
+        }else{
+            failureBlock(50000,Localized(@"Network error"));
+            [[PGManager shareModel] getAliOssInfo];
         }
     }];
+    
+//    // 1. 初始化总数量和计数器（需线程安全，避免多线程竞争）
+//    NSInteger totalCount = 1;
+//    __block NSInteger completedCount = 0;
+//    __block NSMutableArray *allResults = [NSMutableArray arrayWithCapacity:totalCount]; // 存储所有上传结果
+//    NSLock *lock = [[NSLock alloc] init]; // 用于计数器同步
+//    
+//    NSError * error = nil;
+//    NSData * voiceData = [NSData dataWithContentsOfURL:[NSURL fileURLWithPath:filePath]
+//                                             options:NSDataReadingMappedIfSafe // 优化大文件读取性能
+//                                               error:&error];
+//    [self fileAwsUploadWithParameters:@{} fileData:voiceData mimeType:@"mp3" Success:^(id  _Nonnull data) {
+//        [lock lock]; // 加锁，确保计数器操作线程安全
+//        completedCount++;
+//        [allResults addObject:data]; // 存储当前上传结果
+//        // 3. 检查是否所有任务都已完成
+//        if (completedCount == totalCount) {
+//            [lock unlock]; // 先解锁再回调（避免回调中耗时操作阻塞锁）
+//            if (successBlock) {
+//                NSMutableDictionary * dataDic = [NSMutableDictionary dictionary];
+//                [dataDic setValue:@"0" forKey:@"code"];
+//                [dataDic setValue:@"1" forKey:@"success"];
+//                NSMutableArray * imgStrArr = [NSMutableArray array];
+//                for (NSDictionary * dd in allResults) {
+//                    NSDictionary * urlDic = dd[@"data"];
+//                    [imgStrArr addObject:urlDic[@"url"]];
+//                }
+//                [dataDic setValue:imgStrArr forKey:@"data"];
+//                successBlock(dataDic); // 返回所有结果
+//            }
+//        } else {
+//            [lock unlock];
+//        }
+//    } failure:^(NSInteger code, NSString * _Nonnull message) {
+//        [lock lock];
+//        completedCount++;
+//        [allResults addObject:@{@"code": @(code), @"msg": message}]; // 存储错误信息
+//        if (completedCount == totalCount) {
+//            [lock unlock];
+//            // 业务逻辑：若只要有一个失败则整体视为失败（可根据需求调整）
+//            if (failureBlock) {
+//                failureBlock(code, message);
+//            }
+//        } else {
+//            [lock unlock];
+//        }
+//    }];
 }
 
 ///用户10s内未接听视频卡或者主动关闭视频的情况下调用

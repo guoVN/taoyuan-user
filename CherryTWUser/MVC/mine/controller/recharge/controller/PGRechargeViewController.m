@@ -73,7 +73,7 @@
     WeakSelf(self)
     NSMutableDictionary * dic = [NSMutableDictionary dictionary];
     [dic setValue:@"ALI_PAY" forKey:@"payType"];
-    [dic setValue:@"ntdlaz" forKey:@"packageName"];
+    [dic setValue:PackName forKey:@"packageName"];
     [PGAPIService payOriginOrThirdWithParameters:dic Success:^(id  _Nonnull data) {
         BOOL isOrigin = [data[@"data"] boolValue];
         weakself.aliPayType = isOrigin == YES ? 1 : 2;
@@ -162,7 +162,7 @@
     [dic setValue:self.aliPayType == 1 ? @"ZN" : @"ALPN" forKey:@"payType"];
     [dic setValue:@(self.coinModel.money) forKey:@"chargeAmount"];
     [dic setValue:@(self.coinModel.coin) forKey:@"coinAmount"];
-    [dic setValue:@"ntdlaz" forKey:@"packName"];
+    [dic setValue:PackName forKey:@"packName"];
     [PGAPIService payRechargeWithParameters:dic Success:^(id  _Nonnull data) {
         [QMUITips hideAllTips];
         if (weakself.aliPayType == 1) {

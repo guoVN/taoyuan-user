@@ -401,13 +401,19 @@
 
 - (void)getAliOssInfo
 {
+    WeakSelf(self)
+    if (self.requestAliyunCount>10) {
+        return;
+    }
+    self.requestAliyunCount++;
     [PGAPIService getAliOSSInfoWithParameters:@{} Success:^(id  _Nonnull data) {
         NSDictionary * dic = data;
         [PGManager shareModel].AccessKeyId = dic[@"AccessKeyId"];
         [PGManager shareModel].AccessKeySecret = dic[@"AccessKeySecret"];
         [PGManager shareModel].SecurityToken = dic[@"SecurityToken"];
+        weakself.requestAliyunCount = 0;
     } failure:^(NSInteger code, NSString * _Nonnull message) {
-        
+        [weakself getAliOssInfo];
     }];
 }
 

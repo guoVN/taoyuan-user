@@ -81,7 +81,7 @@
 {
     WeakSelf(self)
     [QMUITips showLoadingInView:[PGUtils getCurrentVC].view];
-    [PGAPIService diamondListWithParameters:@{@"packName":@"ntdlaz"} Success:^(id  _Nonnull data) {
+    [PGAPIService diamondListWithParameters:@{@"packName":PackName} Success:^(id  _Nonnull data) {
         [QMUITips hideAllTips];
         PGRechargeListModel * rechargeModel = [PGRechargeListModel mj_objectWithKeyValues:data[@"data"]];
         [PGManager shareModel].giftArray = [rechargeModel.otherSetting.presentCoins mutableCopy];
@@ -164,7 +164,7 @@
     [dic setValue:[PGManager shareModel].currentChooseGiftModel.name forKey:@"giftType"];
     [dic setValue:@([PGManager shareModel].currentChooseGiftModel.coin) forKey:@"coin"];
     [dic setValue:@"0" forKey:@"callid"];
-    [dic setValue:@"ntdlaz" forKey:@"packName"];
+    [dic setValue:PackName forKey:@"packName"];
     [PGAPIService sendGiftWithParameters:dic Success:^(id  _Nonnull data) {
         [QMUITips hideAllTips];
         [PGManager shareModel].selfCoin -= [PGManager shareModel].currentChooseGiftModel.coin;

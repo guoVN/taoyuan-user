@@ -22,7 +22,7 @@
     [self.chooseGiftIcon sd_setImageWithURL:[NSURL URLWithString:giftModel.pic] placeholderImage:MPImage(@"netFaild")];
     self.nameLabel.text = giftModel.name;
     
-    NSString * str = [NSString stringWithFormat:@"%.0f ",giftModel.coin*0.01];
+    NSString * str = [NSString stringWithFormat:@"%.0f ",giftModel.coin*0.1];
     NSMutableAttributedString * att = [[NSMutableAttributedString alloc] initWithString:str];
     NSTextAttachment * attach = [[NSTextAttachment alloc] init];
     attach.image = [UIImage imageNamed:@"diamonds"];

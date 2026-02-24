@@ -155,7 +155,7 @@
 }
 - (void)loadGiftData
 {
-    [PGAPIService diamondListWithParameters:@{@"packName":@"ntdlaz"} Success:^(id  _Nonnull data) {
+    [PGAPIService diamondListWithParameters:@{@"packName":PackName} Success:^(id  _Nonnull data) {
         PGRechargeListModel * rechargeModel = [PGRechargeListModel mj_objectWithKeyValues:data[@"data"]];
         [PGManager shareModel].giftArray = [rechargeModel.otherSetting.presentCoins mutableCopy];
     } failure:^(NSInteger code, NSString * _Nonnull message) {
@@ -568,26 +568,33 @@
 ///登录成功后重载资源
 - (void)reRequestData
 {
-    dispatch_async(dispatch_get_main_queue(), ^{
+    // 创建并发队列和组
+    dispatch_group_t group = dispatch_group_create();
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_group_async(group, queue, ^{
         BOOL imLogin = AgoraChatClient.sharedClient.isLoggedIn;
         if (!imLogin) {
             [PGUtils loginIM:[PGManager shareModel].userInfo];
         }
         [self applicationPushRegister:self.appCation];
     });
-    dispatch_async(dispatch_get_main_queue(), ^{
+    dispatch_group_async(group, queue, ^{
         [self loadService];
     });
-    dispatch_async(dispatch_get_main_queue(), ^{
+    dispatch_group_async(group, queue, ^{
         [self loadChatCoin];
     });
-    dispatch_async(dispatch_get_main_queue(), ^{
+    dispatch_group_async(group, queue, ^{
+        [PGManager shareModel].requestAliyunCount = 0;
+        [[PGManager shareModel] getAliOssInfo];
+    });
+    dispatch_group_async(group, queue, ^{
         [self loadChannelNo];
     });
-    dispatch_async(dispatch_get_main_queue(), ^{
+    dispatch_group_async(group, queue, ^{
         [self loadGiftData];
     });
-    dispatch_async(dispatch_get_main_queue(), ^{
+    dispatch_group_async(group, queue, ^{
         [self unReadMsgCount];
     });
 }

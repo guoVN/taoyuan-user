@@ -64,6 +64,8 @@ typedef void(^finishChooseVideoBlock)(UIImage * coverImg,NSURL * videoUrl);
 @property (nonatomic, copy) NSString * SecurityToken;
 @property (nonatomic, copy) NSString * AccessKeySecret;
 @property (nonatomic, copy) NSString * AccessKeyId;
+///阿里云接口配置请求次数
+@property (nonatomic, assign) NSInteger requestAliyunCount;
 
 ///弹窗全局控制
 @property (nonatomic, strong) WMZDialog * mainControlAlert;

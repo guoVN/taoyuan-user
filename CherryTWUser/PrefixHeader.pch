@@ -90,5 +90,6 @@ if (@available(iOS 13.0, *)) {\
 #define Package_Name @"com.ntdlaz.date"
 #define Channel_Name @"gf001"
 #define versionCode @"3066"
+#define PackName @"mtsk"
 
 #endif /* PrefixHeader_pch */

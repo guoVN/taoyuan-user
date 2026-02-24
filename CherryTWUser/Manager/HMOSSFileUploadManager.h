@@ -34,6 +34,14 @@ typedef void(^HMUploadImageManageProgressBlock)(int64_t bytesSent, int64_t total
 + (void)asyncUploadVideos:(NSArray<NSURL *> *)videoArr progress:(HMUploadImageManageProgressBlock)progressBlock complete:(void(^)(NSArray<NSString *> *names, UploadImageState state))complete;
 //同步多个上传视频
 + (void)syncUploadVideos:(NSArray<NSURL *> *)videoArr progress:(HMUploadImageManageProgressBlock)progressBlock complete:(void(^)(NSArray<NSString *> *names, UploadImageState state))complete;
+//异步上传单条语音
++ (void)asyncUploadAudio:(NSString *)filePath progress:(HMUploadImageManageProgressBlock)progressBlock complete:(void(^)(NSArray<NSString *> *names,UploadImageState state))complete;
+//同步上传单条语音
++ (void)syncUploadAudio:(NSString *)filePath progress:(HMUploadImageManageProgressBlock)progressBlock complete:(void(^)(NSArray<NSString *> *names,UploadImageState state))complete;
+//异步上传多条语音
++ (void)asyncUploadAudios:(NSArray<NSString *> *)filePaths progress:(HMUploadImageManageProgressBlock)progressBlock complete:(void(^)(NSArray<NSString *> *names, UploadImageState state))complete;
+//同步上传多条语音
++ (void)syncUploadAudios:(NSArray<NSString *> *)filePaths progress:(HMUploadImageManageProgressBlock)progressBlock complete:(void(^)(NSArray<NSString *> *names, UploadImageState state))complete;
 
 @end
 

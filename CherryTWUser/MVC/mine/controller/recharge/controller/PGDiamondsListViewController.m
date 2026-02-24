@@ -59,7 +59,7 @@
 {
     WeakSelf(self)
     [QMUITips showLoadingInView:self.view];
-    [PGAPIService diamondListWithParameters:@{@"packName":@"ntdlaz"} Success:^(id  _Nonnull data) {
+    [PGAPIService diamondListWithParameters:@{@"packName":PackName} Success:^(id  _Nonnull data) {
         [QMUITips hideAllTips];
         weakself.rechargeModel = [PGRechargeListModel mj_objectWithKeyValues:data[@"data"]];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{

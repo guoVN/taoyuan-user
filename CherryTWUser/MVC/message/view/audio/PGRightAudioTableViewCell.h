@@ -10,6 +10,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+static NSString * const kShouldStopVoiceMessageNotification = @"kShouldStopVoiceMessageNotification";
+
 @interface PGRightAudioTableViewCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UIImageView *headImg;
