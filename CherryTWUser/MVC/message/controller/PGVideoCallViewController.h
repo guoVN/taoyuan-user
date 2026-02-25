@@ -22,6 +22,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIImage * anchorHeadImg;
 @property (nonatomic, assign) BOOL isVideoCard;
 @property (nonatomic, strong) PGAnchorPriceModel * priceModel;
+///是否音频通话
+@property (nonatomic, assign) NSInteger isAudio;
 
 ///通话时长
 @property (nonatomic, copy) NSString * callDuration;

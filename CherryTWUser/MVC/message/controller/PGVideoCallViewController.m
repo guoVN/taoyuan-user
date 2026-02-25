@@ -28,6 +28,7 @@
 @property (nonatomic, strong) AgoraRtcEngineKit * rtcKit;
 @property (weak, nonatomic) IBOutlet QMUIButton *cameraSwitchBtn;
 @property (weak, nonatomic) IBOutlet QMUIButton *hangSenderBtn;
+@property (weak, nonatomic) IBOutlet QMUIButton *miantiBtn;
 @property (nonatomic, strong) PGVideoInitiationViewController * vc;
 @property (nonatomic, strong) AgoraRtcChannelMediaOptions * options;
 @property (nonatomic, strong) AgoraRtcVideoCanvas * localVideoCanvas;
@@ -76,6 +77,8 @@
     // Do any additional setup after loading the view.
     [self loadUI];
     [self startBusy];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateCallTimeAction:) name:@"updateMsgCallTime" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(otherCloseCall:) name:@"otherCloseCall" object:nil];
 }
 - (void)loadUI
 {
@@ -89,6 +92,7 @@
     self.minutes = 0;
     self.seconds = 0;
     self.vc = [[PGVideoInitiationViewController alloc] init];
+    self.vc.isAudio = self.isAudio;
     self.vc.channelId = self.channelId;
     self.vc.callType = self.callType;
     self.vc.dataDic = self.dataDic;
@@ -178,6 +182,15 @@
 {
     [self.rtcKit joinChannelByToken:@"" channelId:self.channelId uid:0 mediaOptions:self.options joinSuccess:nil];
 }
+///对方取消或拒绝
+- (void)otherCloseCall:(NSNotification *)noti
+{
+    [self.vc timeInvalidate];
+    [self endBusy];
+    [[PGUtils getCurrentVC] dismissViewControllerAnimated:YES completion:^{
+
+    }];
+}
 #pragma mark===主动挂断
 - (IBAction)hangUpAction:(QMUIButton *)sender {
     WeakSelf(self)
@@ -262,6 +275,10 @@
             })
         .wStart();
 }
+- (IBAction)miantiBtnAction:(QMUIButton *)sender {
+    sender.selected = !sender.selected;
+    [self.rtcKit setEnableSpeakerphone:sender.selected];
+}
 #pragma mark===发送消息
 - (void)sendMsgWith:(NSString *)sendContent withType:(NSString *)type
 {
@@ -270,7 +287,6 @@
     }
     NSDictionary * dic = @{@"type":type,@"content":sendContent,@"address":@"",@"anchorId":self.channelId,@"bindId":@"",@"friendId":self.channelId,@"isRecharge":@"",@"senderName":[PGManager shareModel].userInfo.nickName,@"senderPhoto":[PGManager shareModel].userInfo.photo,@"senderid":[PGManager shareModel].userInfo.userid,@"state":@""};
     NSString * msgStr = [PGUtils objectToJson:dic];
-    WeakSelf(self)
     AgoraChatTextMessageBody *textMessageBody = [[AgoraChatTextMessageBody alloc] initWithText:msgStr];
     // 消息接收方，单聊为对端用户的 ID，群聊为群组 ID，聊天室为聊天室 ID。
     NSString* conversationId = self.channelId;
@@ -291,6 +307,26 @@
             
         }
     }];
+}
+- (void)updateCallTimeAction:(NSNotification *)noti
+{
+    NSDictionary * dic = noti.userInfo;
+    NSDictionary * dataDic = dic[@"data"];
+    AgoraChatMessage * msg = dic[@"msg"];
+    [self updateCallTime:dataDic message:msg];
+}
+- (void)updateCallTime:(NSDictionary *)dic message:(AgoraChatMessage *)message
+{
+    NSString * timeStr = self.videoTimeLabel.text;
+//    if ([timeStr hasPrefix:@"00:"]) {
+//        timeStr = [timeStr substringFromIndex:3];
+//    }
+    timeStr = [NSString stringWithFormat:@"%@:%@",Localized(@"通话时长"),timeStr];
+    [[NSUserDefaults standardUserDefaults] setValue:timeStr forKey:message.messageId];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshMsgContent" object:nil userInfo:@{@"msg":message}];
+    [PGManager shareModel].currentCallMsgId = @"";
+    [PGManager shareModel].currentCallConversationId = @"";
 }
 #pragma mark===充值
 - (IBAction)goRechargeAction:(id)sender {
@@ -504,6 +540,16 @@
 //    [LogUtil log:[NSString stringWithFormat:@"remote user left: %lu", uid] level:(LogLevelDebug)];
     [self videoFinish];
     [self pauseTimer];
+}
+
+- (NSString *)timeStringFromSeconds:(NSInteger)seconds {
+    // 计算小时、分钟、秒
+//    NSInteger hours = seconds / 3600;
+    NSInteger minutes = (seconds % 3600) / 60;
+    NSInteger secs = seconds % 60;
+    
+    // 格式化为两位数（补零）
+    return [NSString stringWithFormat:@"%02ld:%02ld",(long)minutes, (long)secs];
 }
 
 /*

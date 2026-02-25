@@ -70,6 +70,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardHide:) name:UIKeyboardWillHideNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkMsg:) name:@"RefreshMsg" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateVideocallMsg:) name:@"RefreshVideoCallType" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateMsg:) name:@"refreshMsgContent" object:nil];
 }
 - (void)loadUI
 {
@@ -92,6 +93,31 @@
         make.bottom.equalTo(self.chatInputView.mas_top).offset(-30);
         make.size.mas_equalTo(CGSizeMake(48, 48));
     }];
+}
+- (void)updateMsg:(NSNotification *)noti
+{
+    NSDictionary * dic = noti.userInfo;
+    AgoraChatMessage * msg = dic[@"msg"];
+    if ([msg.conversationId integerValue] == [self.channelId integerValue]) {
+        for (AgoraChatMessage * mm in self.dataArray) {
+            if ([mm.messageId isEqualToString:[PGManager shareModel].currentCallMsgId]) {
+                [self.dataArray removeObject:mm];
+                break;
+            }
+            if ([mm.messageId isEqualToString:msg.messageId]) {
+                [self.dataArray removeObject:mm];
+                break;
+            }
+        }
+       
+        [self.dataArray addObject:msg];
+        [self.tableView reloadData];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25 * NSEC_PER_SEC)),
+                       dispatch_get_main_queue(), ^{
+            [self dealTableView:YES];
+        });
+    }
+    [self readMsg];
 }
 - (void)dealTableView:(BOOL)animated
 {
@@ -410,6 +436,8 @@
     NSString * sendType = @"3";
     if ([type isEqualToString:@"视频"]) {
         sendType = @"2";
+    }else if ([type isEqualToString:@"语音"]){
+        sendType = @"1";
     }
     WeakSelf(self)
     NSMutableDictionary * dic = [NSMutableDictionary dictionary];
@@ -461,10 +489,11 @@
 //            }else if ([type isEqualToString:@"文字"]){
 //                [weakself messageChargeAction:sendContent withType:type];
 //            }
-            if ([type isEqualToString:@"视频"]) {
+            if ([type isEqualToString:@"视频"] || [type isEqualToString:@"语音"]) {
                 [PGManager shareModel].currentCallMsgId = message.messageId;
                 [PGManager shareModel].currentCallConversationId = message.conversationId;
                 PGVideoCallViewController * vc = [[PGVideoCallViewController alloc] init];
+                vc.isAudio = [type isEqualToString:@"语音"] ? YES : NO;
                 vc.channelId = weakself.channelId;
                 vc.callType = 1;
                 vc.dataDic = dic;
@@ -618,6 +647,9 @@
         };
         _chatInputView.sendImgBlock = ^(NSString * _Nonnull imgUrl) {
             [weakself sendMsgWith:imgUrl withType:@"文字"];
+        };
+        _chatInputView.sendVoiceCallBlock = ^{
+            [weakself sendMsgWith:@"" withType:@"语音"];
         };
         _chatInputView.sendVideoCallBlock = ^{
             [weakself sendMsgWith:@"" withType:@"视频"];

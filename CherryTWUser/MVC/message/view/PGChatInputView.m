@@ -51,6 +51,7 @@
     [self addSubview:self.menuStackView];
 //    [self.menuStackView addArrangedSubview:self.giftBtn];
     [self.menuStackView addArrangedSubview:self.albumBtn];
+    [self.menuStackView addArrangedSubview:self.voiceCallBtn];
     [self.menuStackView addArrangedSubview:self.videoCallBtn];
     [self.menuStackView addArrangedSubview:self.emojiBtn];
     [self addSubview:self.lockView];
@@ -90,6 +91,9 @@
 //        make.width.height.mas_equalTo(28);
 //    }];
     [self.albumBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.height.mas_equalTo(28);
+    }];
+    [self.voiceCallBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.height.mas_equalTo(28);
     }];
     [self.videoCallBtn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -174,6 +178,12 @@
     }
     [self.inputField reloadInputViews];
     [self.inputField becomeFirstResponder];
+}
+- (void)voiceCallBtnAction
+{
+    if (self.sendVoiceCallBlock) {
+        self.sendVoiceCallBlock();
+    }
 }
 - (void)videoCallBtnAction
 {
@@ -500,6 +510,15 @@
     }
     return _albumBtn;
 }
+- (UIButton *)voiceCallBtn
+{
+    if (!_voiceCallBtn) {
+        _voiceCallBtn = [[UIButton alloc] init];
+        [_voiceCallBtn setImage:MPImage(@"voice") forState:UIControlStateNormal];
+        [_voiceCallBtn addTarget:self action:@selector(voiceCallBtnAction) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _voiceCallBtn;
+}
 - (UIButton *)videoCallBtn
 {
     if (!_videoCallBtn) {
@@ -552,7 +571,7 @@
                     image = [UIImage imageWithData:data];
                 }
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    [weakself updateHeadImg:image];
+                    [weakself updateHeadImg:@[image]];
                 });
             }
         };

@@ -355,6 +355,8 @@
             content.title = messageModel.nickName;
             if ([type isEqualToString:@"视频"]){
                 content.body = @"[视频通话]";
+            }else if ([type isEqualToString:@"语音"]){
+                content.body = @"[语音通话]";
             }else{
                 if ([[PGUtils getFileFormat:contentStr] isEqualToString:@"图片"]) {
                     content.body = @"[图片]";
@@ -390,23 +392,25 @@
 }
 - (void)unReadMsgCount
 {
-    PGNavigationViewController * nav = (PGNavigationViewController *)self.window.rootViewController;
-    PGContainerVC * tabbarVC = (PGContainerVC *)nav.topViewController;
-    NSArray <AgoraChatConversation *>*conversations = [AgoraChatClient.sharedClient.chatManager getAllConversations:YES];
-    NSInteger unreadCount = 0;
-    for (AgoraChatConversation *conversation in conversations) {
-        if (![conversation.conversationId isEqualToString:@"99999999"]) {
-            unreadCount += conversation.unreadMessagesCount;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        PGNavigationViewController * nav = (PGNavigationViewController *)self.window.rootViewController;
+        PGContainerVC * tabbarVC = (PGContainerVC *)nav.topViewController;
+        NSArray <AgoraChatConversation *>*conversations = [AgoraChatClient.sharedClient.chatManager getAllConversations:YES];
+        NSInteger unreadCount = 0;
+        for (AgoraChatConversation *conversation in conversations) {
+            if (![conversation.conversationId isEqualToString:@"99999999"]) {
+                unreadCount += conversation.unreadMessagesCount;
+            }
         }
-    }
-    
-    if ([tabbarVC isMemberOfClass:[PGContainerVC class]]) {
-        [tabbarVC.floatingTabBar setBadgeValue:[NSString stringWithFormat:@"%ld",unreadCount] forIndex:2];
-        if (unreadCount == 0) {
-            [tabbarVC.floatingTabBar setBadgeValue:nil forIndex:2];
+        
+        if ([tabbarVC isMemberOfClass:[PGContainerVC class]]) {
+            [tabbarVC.floatingTabBar setBadgeValue:[NSString stringWithFormat:@"%ld",unreadCount] forIndex:2];
+            if (unreadCount == 0) {
+                [tabbarVC.floatingTabBar setBadgeValue:nil forIndex:2];
+            }
         }
-    }
-    [UIApplication sharedApplication].applicationIconBadgeNumber = unreadCount;
+        [UIApplication sharedApplication].applicationIconBadgeNumber = unreadCount;
+    });
 }
 /// 创建音乐播放器
 - (void)creatAVAudioSessionObject{

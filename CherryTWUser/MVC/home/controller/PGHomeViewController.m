@@ -94,9 +94,11 @@
         NSArray * items = data[@"data"];
         if ([items isKindOfClass:[NSArray class]]) {
             [weakself initScrollHeadView:items];
+        }else{
+            [weakself initScrollHeadView:@[@""]];
         }
     } failure:^(NSInteger code, NSString * _Nonnull message) {
-        
+        [weakself initScrollHeadView:@[@""]];
     }];
 }
 - (void)initScrollHeadView:(NSArray*)bannerArr {

@@ -73,7 +73,7 @@
 {
     _msdDic = msdDic;
     NSString * contentStr = msdDic[@"content"];
-    [self.headImg sd_setImageWithURL:[NSURL URLWithString:[PGManager shareModel].userInfo.photo] placeholderImage:MPImage(@"womanDefault")];
+    [self.headImg sd_setImageWithURL:[NSURL URLWithString:self.friendHead] placeholderImage:MPImage(@"womanDefault")];
     NSURL *fileUrl = [NSURL URLWithString:contentStr];
     NSString *fileName = fileUrl.lastPathComponent;
 

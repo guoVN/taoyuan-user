@@ -95,6 +95,9 @@
     NSAttributedString * attrStringWithImage = [NSAttributedString attributedStringWithAttachment:attach];
     [att insertAttributedString:attrStringWithImage atIndex:0];
     NSAttributedString * pp = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"(%ld",model.video/10]];
+    if (self.isAudio) {
+        pp = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"(%ld",model.voice/10]];
+    }
     [att insertAttributedString:pp atIndex:0];
     self.priceLabel.attributedText = att;
 }

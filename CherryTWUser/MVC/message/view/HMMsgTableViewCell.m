@@ -54,6 +54,8 @@
             self.msgLabel.text = Localized(@"[图片]");
         }else if ([messageType isEqualToString:@"视频"]){
             self.msgLabel.text = Localized(@"[视频通话]");
+        }else if ([messageType isEqualToString:@"语音"]){
+            self.msgLabel.text = Localized(@"[语音通话]");
         }else if ([messageType isEqualToString:@"语音"] || [messageType isEqualToString:@"local_voice"]){
             self.msgLabel.text = Localized(@"[语音]");
         }else if ([messageType isEqualToString:@"礼物"]){
