@@ -25,7 +25,7 @@
 {
     _detailModel = detailModel;
     self.IDLabel.text = [NSString stringWithFormat:@"%ld",detailModel.userid];
-    self.tallLabel.text = [NSString stringWithFormat:@"%@cm %@-cup",detailModel.height,detailModel.cup];
+    self.tallLabel.text = [NSString stringWithFormat:@"%@cm",detailModel.height];
     self.ageLabel.text = [NSString stringWithFormat:@"%@岁",detailModel.age];
 //    switch ([detailModel.appearance integerValue]) {
 //        case 1:

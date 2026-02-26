@@ -22,6 +22,8 @@ typedef NS_ENUM(NSInteger, HTTPLogType) {
 @property (nonatomic, strong) NSMutableDictionary<NSString *, NSURLSessionTask *> *tasks;
 @property (nonatomic, strong) NSOperationQueue *delegateQueue;
 @property (nonatomic, strong) NSMutableDictionary<NSString *, NSString *> *globalHeaders;
+@property (nonatomic, strong) dispatch_queue_t tasksSerialQueue;
+
 @end
 
 @implementation HMNetworking
@@ -54,6 +56,8 @@ typedef NS_ENUM(NSInteger, HTTPLogType) {
         
         // 初始化任务字典
         self.tasks = [NSMutableDictionary dictionary];
+        // 初始化串行队列
+        self.tasksSerialQueue = dispatch_queue_create("com.HMNetworking.tasksSerialQueue", DISPATCH_QUEUE_SERIAL);
         
         // 初始化全局请求头
         self.globalHeaders = [NSMutableDictionary dictionary];
@@ -71,7 +75,32 @@ typedef NS_ENUM(NSInteger, HTTPLogType) {
     }
     return self;
 }
+#pragma mark - 私有方法：tasks 字典安全读写
+/// 安全保存任务到 tasks 字典
+- (void)safeSetTask:(NSURLSessionTask *)task forKey:(NSString *)url {
+    if (!task || !url || url.length == 0) return; // 非空判断，防止崩溃
+    dispatch_sync(self.tasksSerialQueue, ^{
+        [self.tasks setObject:task forKey:url];
+    });
+}
 
+/// 安全从 tasks 字典移除任务
+- (void)safeRemoveTaskForKey:(NSString *)url {
+    if (!url || url.length == 0) return; // 非空判断
+    dispatch_sync(self.tasksSerialQueue, ^{
+        [self.tasks removeObjectForKey:url];
+    });
+}
+
+/// 安全获取 tasks 字典中的任务
+- (NSURLSessionTask *)safeGetTaskForKey:(NSString *)url {
+    if (!url || url.length == 0) return nil;
+    __block NSURLSessionTask *task = nil;
+    dispatch_sync(self.tasksSerialQueue, ^{
+        task = self.tasks[url];
+    });
+    return task;
+}
 #pragma mark - GET 请求
 - (NSURLSessionDataTask *)get:(NSString *)url
                    parameters:(NSDictionary *)parameters
@@ -98,6 +127,8 @@ typedef NS_ENUM(NSInteger, HTTPLogType) {
     
     // 设置请求头（全局+局部，局部覆盖全局）
     [self setupHeaders:request withCustomHeaders:headers];
+    // 弱引用 fullURL，用于回调中移除任务
+    __weak NSString *weakFullURL = fullURL;
     
     // 创建任务
     NSURLSessionDataTask *task = [self.session dataTaskWithRequest:request
@@ -120,10 +151,12 @@ typedef NS_ENUM(NSInteger, HTTPLogType) {
                    error:error];
         
         [self handleJSONResponse:response data:data error:error success:success failure:failure];
+        // 任务完成（无论成功/失败），从 tasks 字典中移除
+        [self safeRemoveTaskForKey:weakFullURL];
     }];
     
     // 保存任务
-    [self.tasks setObject:task forKey:fullURL];
+    [self safeSetTask:task forKey:fullURL];
     
     // 启动任务
     [task resume];
@@ -159,7 +192,8 @@ typedef NS_ENUM(NSInteger, HTTPLogType) {
     if (parameters) {
         request.HTTPBody = [self parametersToFormData:parameters];
     }
-    
+    // 弱引用 url，用于回调中移除任务
+    __weak NSString *weakURL = url;
     // 创建任务
     NSURLSessionDataTask *task = [self.session dataTaskWithRequest:request
                                                 completionHandler:^(NSData * _Nullable data,
@@ -179,10 +213,12 @@ typedef NS_ENUM(NSInteger, HTTPLogType) {
                     error:error];
         
         [self handleJSONResponse:response data:data error:error success:success failure:failure];
+        //任务完成，从 tasks 字典中移除
+        [self safeRemoveTaskForKey:weakURL];
     }];
     
     // 保存任务
-    [self.tasks setObject:task forKey:url];
+    [self safeSetTask:task forKey:url];
     
     // 启动任务
     [task resume];
@@ -215,7 +251,8 @@ typedef NS_ENUM(NSInteger, HTTPLogType) {
     
     // 设置自定义请求体
     request.HTTPBody = bodyData;
-    
+    // 弱引用 url
+    __weak NSString *weakURL = url;
     // 创建任务
     NSURLSessionDataTask *task = [self.session dataTaskWithRequest:request
                                                 completionHandler:^(NSData * _Nullable data,
@@ -235,10 +272,12 @@ typedef NS_ENUM(NSInteger, HTTPLogType) {
                     error:error];
         
         [self handleJSONResponse:response data:data error:error success:success failure:failure];
+        // 任务完成，移除任务
+        [self safeRemoveTaskForKey:weakURL];
     }];
     
     // 保存任务
-    [self.tasks setObject:task forKey:url];
+    [self safeSetTask:task forKey:url];
     
     // 启动任务
     [task resume];
@@ -325,7 +364,8 @@ typedef NS_ENUM(NSInteger, HTTPLogType) {
     NSMutableDictionary *uploadHeaders = [NSMutableDictionary dictionaryWithDictionary:headers ?: @{}];
     uploadHeaders[@"Content-Type"] = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundary];
     [self setupHeaders:request withCustomHeaders:uploadHeaders];
-    
+    // 弱引用 url
+    __weak NSString *weakURL = url;
     // 创建上传任务
     NSURLSessionUploadTask *task = [self.session uploadTaskWithRequest:request
                                                               fromData:formData
@@ -346,10 +386,12 @@ typedef NS_ENUM(NSInteger, HTTPLogType) {
                    error:error];
         
         [self handleJSONResponse:response data:data error:error success:success failure:failure];
+        // 任务完成，移除任务
+       [self safeRemoveTaskForKey:weakURL];
     }];
     
     // 保存任务
-    [self.tasks setObject:task forKey:url];
+    [self safeSetTask:task forKey:url];
     
     // 启动任务
     [task resume];
@@ -450,7 +492,7 @@ typedef NS_ENUM(NSInteger, HTTPLogType) {
     }];
     
     // 保存任务
-    [self.tasks setObject:task forKey:url];
+    [self safeSetTask:task forKey:url];
     
     // 启动任务
     [task resume];
@@ -469,17 +511,34 @@ typedef NS_ENUM(NSInteger, HTTPLogType) {
 
 #pragma mark - 取消请求
 - (void)cancelAllRequests {
-    [self.tasks enumerateKeysAndObjectsUsingBlock:^(NSString *key, NSURLSessionTask *task, BOOL *stop) {
-        [task cancel];
-    }];
-    [self.tasks removeAllObjects];
+    // 串行队列中执行，避免多线程冲突
+    dispatch_sync(self.tasksSerialQueue, ^{
+        [self.tasks enumerateKeysAndObjectsUsingBlock:^(NSString *key, NSURLSessionTask *task, BOOL *stop) {
+            [task cancel];
+            // 移除 KVO 监听
+            @try {
+                [task removeObserver:self forKeyPath:@"progress.fractionCompleted" context:NULL];
+            } @catch (NSException *exception) {
+                NSLog(@"移除任务 KVO 监听失败：%@", exception);
+            }
+        }];
+        [self.tasks removeAllObjects];
+    });
 }
 
 - (void)cancelRequestWithURL:(NSString *)url {
-    NSURLSessionTask *task = [self.tasks objectForKey:url];
+    // 安全获取任务
+    NSURLSessionTask *task = [self safeGetTaskForKey:url];
     if (task) {
         [task cancel];
-        [self.tasks removeObjectForKey:url];
+        // 移除 KVO 监听
+        @try {
+            [task removeObserver:self forKeyPath:@"progress.fractionCompleted" context:NULL];
+        } @catch (NSException *exception) {
+            NSLog(@"移除任务 KVO 监听失败：%@", exception);
+        }
+        // 安全移除任务
+        [self safeRemoveTaskForKey:url];
     }
 }
 

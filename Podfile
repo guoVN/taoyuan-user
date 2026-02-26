@@ -50,5 +50,6 @@ pod 'DZNEmptyDataSet'
 pod 'WMZDialog'
 pod 'JKCategories'
 pod 'AliyunOSSiOS'
+pod 'SocketRocket'
 
 end

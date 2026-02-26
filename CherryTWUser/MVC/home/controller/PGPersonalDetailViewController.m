@@ -249,7 +249,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
 {
-    if (indexPath.section == 3 && self.detailModel.femaleAdditionalConfigList.count == 0 && self.detailModel.customSign.length == 0) {
+    if (indexPath.section == 3 || indexPath.section == 5) {
         return 0;
     }
     return UITableViewAutomaticDimension;

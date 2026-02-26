@@ -34,6 +34,7 @@
 		BF177FB32D0150BB0000387F /* PGPublishDynamicCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF177FB22D0150BB0000387F /* PGPublishDynamicCollectionViewCell.xib */; };
 		BF177FB42D0150BB0000387F /* PGPublishDynamicCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF177FB12D0150BB0000387F /* PGPublishDynamicCollectionViewCell.m */; };
 		BF1B8B792D1BF1CF0020CADC /* PGAlbumModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BF1B8B782D1BF1CF0020CADC /* PGAlbumModel.m */; };
+		BF2044092F5033E1006C425E /* HMSocketManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BF2044082F5033E1006C425E /* HMSocketManager.m */; };
 		BF2112412ECD96AF00935252 /* PGCallVideoAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF2112402ECD96AF00935252 /* PGCallVideoAlertView.m */; };
 		BF2112442ECDB6A600935252 /* PGYuYueOrderModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BF2112432ECDB6A600935252 /* PGYuYueOrderModel.m */; };
 		BF2BA1FE2CFDD70A00E28E88 /* PGMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF2BA1FD2CFDD70A00E28E88 /* PGMessageViewController.m */; };
@@ -374,6 +375,8 @@
 		BF177FB22D0150BB0000387F /* PGPublishDynamicCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PGPublishDynamicCollectionViewCell.xib; sourceTree = "<group>"; };
 		BF1B8B772D1BF1CF0020CADC /* PGAlbumModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PGAlbumModel.h; sourceTree = "<group>"; };
 		BF1B8B782D1BF1CF0020CADC /* PGAlbumModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PGAlbumModel.m; sourceTree = "<group>"; };
+		BF2044072F5033E1006C425E /* HMSocketManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HMSocketManager.h; sourceTree = "<group>"; };
+		BF2044082F5033E1006C425E /* HMSocketManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HMSocketManager.m; sourceTree = "<group>"; };
 		BF21123F2ECD96AF00935252 /* PGCallVideoAlertView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PGCallVideoAlertView.h; sourceTree = "<group>"; };
 		BF2112402ECD96AF00935252 /* PGCallVideoAlertView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PGCallVideoAlertView.m; sourceTree = "<group>"; };
 		BF2112422ECDB6A600935252 /* PGYuYueOrderModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PGYuYueOrderModel.h; sourceTree = "<group>"; };
@@ -925,6 +928,8 @@
 				4385821F29E1C7110059A69D /* PGManager.m */,
 				BF8E5D1F2F39FF1E008362DC /* HMOSSFileUploadManager.h */,
 				BF8E5D202F39FF1E008362DC /* HMOSSFileUploadManager.m */,
+				BF2044072F5033E1006C425E /* HMSocketManager.h */,
+				BF2044082F5033E1006C425E /* HMSocketManager.m */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -2322,6 +2327,7 @@
 				BF889B072CFEFCF600812159 /* PGLoginViewController.m in Sources */,
 				BF8DB3152F3F05EE00E8E9A4 /* YBShowBigVideoVC.m in Sources */,
 				BF60144C2D096E7700CB6A96 /* PGLoginModel.m in Sources */,
+				BF2044092F5033E1006C425E /* HMSocketManager.m in Sources */,
 				BFB85DD72D1E9EBD0021FFCF /* PGGiftView.m in Sources */,
 				BFF8125C2D3E1F0C009E07AD /* PGWithdrawalTableViewCell.m in Sources */,
 				BF5F0B382D1016940034F14A /* PGMessageSystemTableViewCell.m in Sources */,

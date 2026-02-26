@@ -25,9 +25,20 @@
 - (void)setDetailModel:(PGAnchorModel *)detailModel
 {
     _detailModel = detailModel;
-    [self.videoPriceBtnOne setTitle:[NSString stringWithFormat:@"%ld/10分钟",[detailModel.textChatCoin integerValue]/100] forState:UIControlStateNormal];
-    [self.videoPriceBtnTwo setTitle:[NSString stringWithFormat:@"%ld/20分钟",[detailModel.voiceCoin integerValue]/100] forState:UIControlStateNormal];
-    [self.videoPriceBtnThree setTitle:[NSString stringWithFormat:@"%ld/30分钟",[detailModel.videoCoin integerValue]/100] forState:UIControlStateNormal];
+    NSString * videoStr = [NSString stringWithFormat:@"视频%ld/min",[detailModel.videoCoin integerValue]/10];
+    NSMutableAttributedString * vodeoAtt = [[NSMutableAttributedString alloc] initWithString:videoStr];
+    NSTextAttachment * attach = [[NSTextAttachment alloc] init];
+    UIImage * resultImg = MPImage(@"diamonds");
+    attach.image = resultImg;
+    attach.bounds = CGRectMake(0, -3, 15, 15);
+    NSAttributedString * attrStringWithImage = [NSAttributedString attributedStringWithAttachment:attach];
+    [vodeoAtt insertAttributedString:attrStringWithImage atIndex:videoStr.length-4];
+    [self.videoPriceBtnOne setAttributedTitle:vodeoAtt forState:UIControlStateNormal];
+    
+    NSString * voiceStr = [NSString stringWithFormat:@"语音%ld/min",[detailModel.voiceCoin integerValue]/10];
+    NSMutableAttributedString * voiceAtt = [[NSMutableAttributedString alloc] initWithString:voiceStr];
+    [voiceAtt insertAttributedString:attrStringWithImage atIndex:voiceStr.length-4];
+    [self.videoPriceBtnTwo setAttributedTitle:voiceAtt forState:UIControlStateNormal];
 }
 
 @end

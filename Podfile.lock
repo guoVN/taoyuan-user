@@ -521,6 +521,7 @@ PODS:
   - SDWebImage/Core (5.21.2)
   - ShengwangChat_iOS (1.3.2):
     - AgoraInfra_iOS (= 1.2.13)
+  - SocketRocket (0.7.1)
   - SSZipArchive (2.4.3)
   - SVGAPlayer (2.5.7):
     - SVGAPlayer/Core (= 2.5.7)
@@ -601,6 +602,7 @@ DEPENDENCIES:
   - RyukieSwifty/ScreenShield
   - SDWebImage
   - ShengwangChat_iOS
+  - SocketRocket
   - SVGAPlayer
   - TIMCommon (from `./CherryTWUser/public/TUIKit/TIMCommon`)
   - TUIChat (from `./CherryTWUser/public/TUIKit/TUIChat`)
@@ -642,6 +644,7 @@ SPEC REPOS:
     - RyukieSwifty
     - SDWebImage
     - ShengwangChat_iOS
+    - SocketRocket
     - SSZipArchive
     - SVGAPlayer
     - SVProgressHUD
@@ -689,6 +692,7 @@ SPEC CHECKSUMS:
   RyukieSwifty: 1eb8298e53bb703005e5e876a935b9e65cd39152
   SDWebImage: 9f177d83116802728e122410fb25ad88f5c7608a
   ShengwangChat_iOS: f70ff4d59087c75294a11a4fcc66b08869479262
+  SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
   SSZipArchive: fe6a26b2a54d5a0890f2567b5cc6de5caa600aef
   SVGAPlayer: 318b85a78b61292d6ae9dfcd651f3f0d1cdadd86
   SVProgressHUD: 4837c74bdfe2e51e8821c397825996a8d7de6e22
@@ -703,6 +707,6 @@ SPEC CHECKSUMS:
   WMZDialog: 724777637ca12b1d8078644b9f10aa264dec3a96
   ZFPlayer: 5cf39e8d9f0c2394a014b0db4767b5b5a6bffe13
 
-PODFILE CHECKSUM: d4a4c5e5e87052c40dc10b296fed8839c40a6e43
+PODFILE CHECKSUM: 81de6a9fedb9e37f0a7c896452bff05ce5eb30bb
 
 COCOAPODS: 1.16.2

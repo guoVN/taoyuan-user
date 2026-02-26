@@ -70,6 +70,7 @@
     if (isLogin) {
 //        PGTabbarViewController * tabbar = [[PGTabbarViewController alloc] init];
 //        self.window.rootViewController = tabbar;
+        [PGManager shareModel].userInfo = [PGLoginModel readInfo];
         PGContainerVC * vc = [[PGContainerVC alloc] init];
         PGNavigationViewController * nav = [[PGNavigationViewController alloc] initWithRootViewController:vc];
         self.window.rootViewController = nav;
@@ -165,7 +166,6 @@
 
 - (void)setupAgoraChat
 {
-    [PGManager shareModel].userInfo = [PGLoginModel readInfo];
     AgoraChatOptions *options = [AgoraChatOptions optionsWithAppId:AgroaAppid];
     // apnsCertName是证书名称，可以先传 nil，等后期配置 APNs 推送时在传入证书名称
     options.apnsCertName = AgroaIMcertificate;
@@ -600,6 +600,9 @@
     });
     dispatch_group_async(group, queue, ^{
         [self unReadMsgCount];
+    });
+    dispatch_group_async(group, queue, ^{
+        [[HMSocketManager share] connect];
     });
 }
 
