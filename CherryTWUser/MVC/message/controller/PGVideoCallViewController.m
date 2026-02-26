@@ -138,6 +138,11 @@
         [self.rtcKit enableAudio];
         [self.rtcKit enableVideo];
     }
+    if (self.isAudio) {
+        [self.rtcKit disableVideo];
+        self.cameraSwitchBtn.alpha = 0;
+        self.miantiBtn.alpha = 1;
+    }
     
     AgoraVideoEncoderConfiguration *encoderConfig = [[AgoraVideoEncoderConfiguration alloc] initWithSize:CGSizeMake(960, 540) frameRate:(AgoraVideoFrameRateFps15) bitrate:15 orientationMode:(AgoraVideoOutputOrientationModeFixedPortrait) mirrorMode:(AgoraVideoMirrorModeAuto)];
     [self.rtcKit setVideoEncoderConfiguration:encoderConfig];
@@ -543,6 +548,11 @@
         [self.vc removeFromParentViewController];
         [self.rtcKit enableAudio];
         [self.rtcKit enableVideo];
+        if (self.isAudio) {
+            [self.rtcKit disableVideo];
+            self.cameraSwitchBtn.alpha = 0;
+            self.miantiBtn.alpha = 1;
+        }
     });
     AgoraRtcVideoCanvas *videoCanvas = [[AgoraRtcVideoCanvas alloc]init];
     videoCanvas.uid = uid;

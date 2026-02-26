@@ -287,13 +287,14 @@
                 }
             }
             [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshMsgContent" object:nil userInfo:@{@"msg":message}];
-        }else if ([type isEqualToString:@"视频"]) {
+        }else if ([type isEqualToString:@"视频"] || [type isEqualToString:@"语音"]) {
             if ([[PGUtils getCurrentVC] isMemberOfClass:[PGVideoInitiationViewController class]] || [[PGUtils getCurrentVC] isMemberOfClass:[PGVideoCallViewController class]]) {
                 return;
             }
             [PGManager shareModel].currentCallMsgId = message.messageId;
             [PGManager shareModel].currentCallConversationId = message.conversationId;
             PGVideoCallViewController * vc = [[PGVideoCallViewController alloc] init];
+            vc.isAudio = [type isEqualToString:@"语音"] ? YES : NO;
             vc.channelId = msgDic[@"senderid"];
             vc.callType = 3;
             vc.anchorName = msgDic[@"senderName"];
