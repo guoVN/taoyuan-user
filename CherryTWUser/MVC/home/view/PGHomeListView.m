@@ -29,7 +29,9 @@
         self.backgroundColor = [UIColor clearColor];
         [self initSubView];
         [self snapSubView];
-        dispatch_async(dispatch_get_main_queue(), ^{
+        dispatch_group_t group = dispatch_group_create();
+        dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+        dispatch_group_async(group, queue, ^{
             [self loadData];
         });
     }
@@ -52,39 +54,41 @@
 }
 - (void)loadData
 {
-    if ([PGManager shareModel].baseUrl.length == 0) {
-        return;
-    }
-    WeakSelf(self)
-    NSString * timeStampString = [PGUtils getCurrentTimeStamp];
-    NSMutableDictionary * dic = [NSMutableDictionary dictionary];
-    [dic setValue:[PGManager shareModel].userInfo.userid forKey:@"userid"];
-    [dic setValue:@(page) forKey:@"page"];
-    [dic setValue:@(10) forKey:@"pageSize"];
-    [dic setValue:self.index == 0 ? @"1" : @"2" forKey:@"type"];
-    NSString * sign = [PGParameterSignTool encoingPameterSignWithDic:[NSMutableDictionary dictionaryWithDictionary:dic] andTimeSta:timeStampString];
-    [dic setValue:sign forKey:@"sign"];
-    [QMUITips showLoadingInView:[PGUtils getCurrentVC].view];
-    [PGAPIService homeRemandWithParameters:dic Success:^(id  _Nonnull data) {
-        [QMUITips hideAllTips];
-        [weakself.collectionView.mj_header endRefreshing];
-        [weakself.collectionView.mj_footer endRefreshing];
-        NSArray * items = [PGHomeListModel mj_objectArrayWithKeyValuesArray:data[@"data"]];
-        if (self->page == 1) {
-            [weakself.dataArray removeAllObjects];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if ([PGManager shareModel].baseUrl.length == 0) {
+            return;
         }
-        if (items.count<=0) {
-            [weakself.collectionView.mj_footer endRefreshingWithNoMoreData];
-        }else {
-            [weakself.dataArray addObjectsFromArray:items];
-        }
-        [weakself.collectionView reloadData];
-    } failure:^(NSInteger code, NSString * _Nonnull message) {
-        [QMUITips hideAllTips];
-        [QMUITips showWithText:message];
-        [weakself.collectionView.mj_header endRefreshing];
-        [weakself.collectionView.mj_footer endRefreshing];
-    }];
+        WeakSelf(self)
+        NSString * timeStampString = [PGUtils getCurrentTimeStamp];
+        NSMutableDictionary * dic = [NSMutableDictionary dictionary];
+        [dic setValue:[PGManager shareModel].userInfo.userid forKey:@"userid"];
+        [dic setValue:@(self->page) forKey:@"page"];
+        [dic setValue:@(10) forKey:@"pageSize"];
+        [dic setValue:self.index == 0 ? @"1" : @"2" forKey:@"type"];
+        NSString * sign = [PGParameterSignTool encoingPameterSignWithDic:[NSMutableDictionary dictionaryWithDictionary:dic] andTimeSta:timeStampString];
+        [dic setValue:sign forKey:@"sign"];
+        [QMUITips showLoadingInView:[PGUtils getCurrentVC].view];
+        [PGAPIService homeRemandWithParameters:dic Success:^(id  _Nonnull data) {
+            [QMUITips hideAllTips];
+            [weakself.collectionView.mj_header endRefreshing];
+            [weakself.collectionView.mj_footer endRefreshing];
+            NSArray * items = [PGHomeListModel mj_objectArrayWithKeyValuesArray:data[@"data"]];
+            if (self->page == 1) {
+                [weakself.dataArray removeAllObjects];
+            }
+            if (items.count<=0) {
+                [weakself.collectionView.mj_footer endRefreshingWithNoMoreData];
+            }else {
+                [weakself.dataArray addObjectsFromArray:items];
+            }
+            [weakself.collectionView reloadData];
+        } failure:^(NSInteger code, NSString * _Nonnull message) {
+            [QMUITips hideAllTips];
+            [QMUITips showWithText:message];
+            [weakself.collectionView.mj_header endRefreshing];
+            [weakself.collectionView.mj_footer endRefreshing];
+        }];
+    });
 }
 #pragma mark===UICollectionViewDelegate
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{

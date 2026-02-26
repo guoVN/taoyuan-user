@@ -475,11 +475,11 @@
 #pragma mark===修改在线状态
 - (void)updateState:(NSString *)state
 {
-    [PGAPIService updateUserStateWithParameters:@{@"state":state} Success:^(id  _Nonnull data) {
-            
-    } failure:^(NSInteger code, NSString * _Nonnull message) {
-        
-    }];
+//    [PGAPIService updateUserStateWithParameters:@{@"state":state} Success:^(id  _Nonnull data) {
+//            
+//    } failure:^(NSInteger code, NSString * _Nonnull message) {
+//        
+//    }];
 }
 
 #pragma mark===心跳接口

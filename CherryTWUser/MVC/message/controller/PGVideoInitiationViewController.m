@@ -192,9 +192,8 @@
         sender.selected = YES;
     });
     self.isSelfClick = YES;
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"RefreshVideoCallType" object:nil userInfo:@{@"status":@"已取消"}];
     if (self.acceptVideoBlock) {
-        self.acceptVideoBlock(2);
+        self.acceptVideoBlock(3);
     }
     [self timeInvalidate];
     [[PGUtils getCurrentVC] dismissViewControllerAnimated:YES completion:^{
@@ -208,8 +207,6 @@
         sender.selected = YES;
     });
     self.isSelfClick = YES;
-    NSString * statusStr = @"已拒绝";
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"RefreshVideoCallType" object:nil userInfo:@{@"status":statusStr}];
     if (self.acceptVideoBlock) {
         self.acceptVideoBlock(0);
     }
@@ -266,7 +263,6 @@
     if (![statusStr containsString:@"接收"]) {
         NSLog(@"hahahaha");
         [self chargingMethod];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"RefreshVideoCallType" object:nil userInfo:@{@"status":statusStr}];
         [[PGUtils getCurrentVC] dismissViewControllerAnimated:YES completion:^{
             [self removeNoti];
         }];

@@ -101,14 +101,20 @@
     self.vc.isVideoCard = self.isVideoCard;
     self.vc.priceModel = self.priceModel;
     self.vc.acceptVideoBlock = ^(NSInteger type) {
-        if (type == 0) {
-            [weakself sendMsgWith:@"" withType:@"拒绝"];
-        }else if (type == 1) {
-            [weakself joinVideo];
-            [weakself sendMsgWith:@"" withType:@"接收"];
-        }else if (type == 2){
-            [weakself sendMsgWith:@"" withType:@"挂断"];
-        }
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (type == 0) {
+                    [weakself sendMsgWith:@"拒绝" withType:@"拒绝"];
+                    [weakself addMsgRecord:@"拒绝视频通话"];
+                }else if (type == 1) {
+                    [weakself joinVideo];
+                }else if (type == 2){
+                    [weakself sendMsgWith:@"挂断" withType:@"挂断"];
+                }else if (type == 3){
+                    [weakself sendMsgWith:@"取消" withType:@"取消"];
+                }
+            });
+        });
     };
     dispatch_async(dispatch_get_main_queue(), ^{
         [self addChildViewController:self.vc];
@@ -287,9 +293,11 @@
     }
     NSDictionary * dic = @{@"type":type,@"content":sendContent,@"address":@"",@"anchorId":self.channelId,@"bindId":@"",@"friendId":self.channelId,@"isRecharge":@"",@"senderName":[PGManager shareModel].userInfo.nickName,@"senderPhoto":[PGManager shareModel].userInfo.photo,@"senderid":[PGManager shareModel].userInfo.userid,@"state":@""};
     NSString * msgStr = [PGUtils objectToJson:dic];
+    WeakSelf(self)
     AgoraChatTextMessageBody *textMessageBody = [[AgoraChatTextMessageBody alloc] initWithText:msgStr];
     // 消息接收方，单聊为对端用户的 ID，群聊为群组 ID，聊天室为聊天室 ID。
     NSString* conversationId = self.channelId;
+    [self dealMsg:type];
     AgoraChatMessage *message = [[AgoraChatMessage alloc] initWithConversationID:conversationId
                                                           body:textMessageBody
                                                                    ext:nil];
@@ -304,9 +312,27 @@
                                             progress:nil
                                                  completion:^(AgoraChatMessage * _Nullable message, AgoraChatError * _Nullable error) {
         if (!error) {
-            
+            if ([type isEqualToString:@"挂断"]) {
+                [weakself updateCallTime:dic message:message];
+            }else if ([type isEqualToString:@"接收"]){
+                AgoraChatConversation *conversation = [AgoraChatClient.sharedClient.chatManager getConversationWithConvId:self.channelId];
+                AgoraChatError *error;
+                [conversation deleteMessageWithId:message.messageId error:&error];
+            }else{
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshMsgContent" object:nil userInfo:@{@"msg":message}];
+            }
+            [weakself addMsgRecord:sendContent];
         }
     }];
+}
+///处理消息
+- (void)dealMsg:(NSString *)type
+{
+    if ([type isEqualToString:@"取消"] || [type isEqualToString:@"拒绝"] || [type isEqualToString:@"挂断"]) {
+        AgoraChatConversation *conversation = [AgoraChatClient.sharedClient.chatManager getConversationWithConvId:self.channelId];
+        AgoraChatError *error;
+        [conversation deleteMessageWithId:[PGManager shareModel].currentCallMsgId error:&error];
+    }
 }
 - (void)updateCallTimeAction:(NSNotification *)noti
 {
@@ -451,7 +477,6 @@
     timeStr = [NSString stringWithFormat:@"通话时长：%@",timeStr];
     [self addMsgRecord:timeStr];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"RefreshVideoCallType" object:nil userInfo:@{@"status":timeStr}];
         [[PGUtils getCurrentVC] dismissViewControllerAnimated:YES completion:^{
             [PGManager shareModel].isCallYes = NO;
         }];

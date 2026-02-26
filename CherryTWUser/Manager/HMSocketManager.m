@@ -221,8 +221,8 @@ static NSString *kHeartString = @"ping";
 #pragma mark -
 - (void)addNotification {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(logOutSuccess) name:@"loginOutSuccess" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didBecomeActive) name:UIApplicationDidBecomeActiveNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didEnterBackground) name:UIApplicationDidEnterBackgroundNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didBecomeActive) name:UIApplicationDidBecomeActiveNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didEnterBackground) name:UIApplicationDidEnterBackgroundNotification object:nil];
 }
 
 - (void)removeNotification {
