@@ -244,6 +244,7 @@
         _topBg = [[UIImageView alloc] init];
         [_topBg setImage:MPImage(@"homeBg")];
         _topBg.contentMode = UIViewContentModeScaleAspectFill;
+        [_topBg setImage:MPImage(@"homeBg")];
     }
     return _topBg;
 }
