@@ -7,22 +7,23 @@
 //
 
 #import "PGMessageViewController.h"
-#import "PGMessageSystemViewController.h"
-#import "PGChatViewController.h"
-#import "PGWebViewController.h"
-#import "PGContainerVC.h"
 #import "PGNavigationViewController.h"
-//model
-#import "PGMessageListModel.h"
-//view
-#import "HMMsgTableViewCell.h"
+#import "PGMessageListViewController.h"
+#import "PGContainerVC.h"
+#import "HMIntimacyListModel.h"
 
-@interface PGMessageViewController ()<UITableViewDataSource,UITableViewDelegate>
+@interface PGMessageViewController ()<JXCategoryViewDelegate,JXCategoryListContainerViewDelegate>
 
 @property (nonatomic, strong) UIImageView * topBg;
-@property (nonatomic, strong) UILabel * titleBtn;
-@property (nonatomic, strong) UITableView * tableView;
-@property (nonatomic, strong) NSMutableArray * dataArray;
+@property (nonatomic, strong) JXCategoryNumberView * jxCategoryView;
+@property (nonatomic, strong) JXCategoryListContainerView * listContainerView;
+@property (nonatomic, strong) JXCategoryIndicatorLineView *lineView;
+@property (nonatomic, strong) NSMutableArray * segArray;
+@property (nonatomic, strong) NSArray *numbers;
+
+@property (nonatomic, strong) NSMutableArray * imResultArr;
+@property (nonatomic, strong) NSMutableArray * intimacyResultArr;
+@property (nonatomic, strong) NSMutableArray * qinmiDataArr;
 
 @end
 
@@ -33,7 +34,10 @@
     [super viewWillAppear:animated];
     [self loadData];
 }
-
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -42,26 +46,40 @@
 }
 - (void)loadUI
 {
+    self.view.backgroundColor = HEX(#FFFFFF);
     [self.view addSubview:self.topBg];
-    [self.topBg mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.top.right.mas_equalTo(0);
-        make.height.mas_equalTo(466);
-    }];
-    [self.view addSubview:self.titleBtn];
-    [self.titleBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(15);
-        make.top.mas_equalTo(STATUS_H_F+19);
-        make.height.mas_equalTo(29);
-    }];
-    [self.view addSubview:self.tableView];
-    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+    self.segArray = [@[Localized(@"消息"),Localized(@"亲密消息")] mutableCopy];
+    [self.view addSubview:self.jxCategoryView];
+    //关联到categoryView
+    self.listContainerView = [[JXCategoryListContainerView alloc] initWithType:JXCategoryListContainerType_ScrollView delegate:self];
+    self.jxCategoryView.listContainer = self.listContainerView;
+    [self.jxCategoryView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.mas_equalTo(0);
-        make.top.mas_equalTo(STATUS_H_F+54);
+        make.top.mas_equalTo(STATUS_H_F+5);
+        make.height.mas_equalTo(60);
+    }];
+    [self.view addSubview:self.listContainerView];
+    [self.listContainerView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.mas_equalTo(0);
+        make.top.mas_equalTo(self.jxCategoryView.mas_bottom);
         make.bottom.mas_equalTo(-SafeBottom-49);
     }];
+    [self.jxCategoryView reloadData];
 }
 - (void)loadData
 {
+    WeakSelf(self)
+    [PGAPIService intimacyListWithParameters:@{@"userId":[PGManager shareModel].userInfo.userid} Success:^(id  _Nonnull data) {
+        NSArray * items = [HMIntimacyListModel mj_objectArrayWithKeyValuesArray:data[@"data"]];
+        [weakself dealMSgData:items];
+    } failure:^(NSInteger code, NSString * _Nonnull message) {
+        [weakself dealMSgData:@[]];
+        [QMUITips showWithText:message];
+    }];
+}
+- (void)dealMSgData:(NSArray *)qinmiArray
+{
+    self.qinmiDataArr = [NSMutableArray arrayWithArray:qinmiArray];
     NSArray <AgoraChatConversation *>*conversations = [AgoraChatClient.sharedClient.chatManager getAllConversations:YES];
     NSInteger unreadCount = 0;
     NSMutableArray * userIdArr = [NSMutableArray array];
@@ -89,10 +107,11 @@
     NSMutableArray * intimacyResultArr = [NSMutableArray array];
     NSInteger intimacyUnReadCount = 0;
     for (AgoraChatConversation * imModel in conversations) {
-        AgoraChatMessageBody * lastMsg = imModel.latestMessage.body;
-        if ([@"99999999" isEqualToString:imModel.conversationId] || lastMsg == nil) {
-            [intimacyResultArr addObject:imModel];
-            intimacyUnReadCount += imModel.unreadMessagesCount;
+        for (HMIntimacyListModel * intimacyModel in qinmiArray) {
+            if ([intimacyModel.userid isEqualToString:imModel.conversationId]) {
+                [intimacyResultArr addObject:imModel];
+                intimacyUnReadCount += imModel.unreadMessagesCount;
+            }
         }
     }
     
@@ -103,150 +122,118 @@
             [result addObject:obj];
         }
     }
-    self.dataArray = [result mutableCopy];
-    [self.tableView reloadData];
+    NSMutableArray * imResultArr = [result mutableCopy];
+    self.imResultArr = imResultArr;
+    self.intimacyResultArr = intimacyResultArr;
+    self.numbers = @[@(unreadCount-intimacyUnReadCount),@(intimacyUnReadCount)];
+    self.jxCategoryView.counts = self.numbers;
+    [self.jxCategoryView reloadData];
+}
+#pragma mark=== JXCategoryViewDelegate
+//点击选中或者滚动选中都会调用该方法。适用于只关心选中事件，不关心具体是点击还是滚动选中的。
+- (void)categoryView:(JXCategoryBaseView *)categoryView didSelectedItemAtIndex:(NSInteger)index
+{
+    //侧滑手势处理
+    self.navigationController.interactivePopGestureRecognizer.enabled = (index == 0);
 }
 
-#pragma mark - UITableViewDataSource, UITableViewDelegate
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 1;
-}
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.dataArray.count;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
+//点击选中的情况才会调用该方法
+- (void)categoryView:(JXCategoryBaseView *)categoryView didClickSelectedItemAtIndex:(NSInteger)index
 {
-    return UITableViewAutomaticDimension;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    HMMsgTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"HMMsgTableViewCell" forIndexPath:indexPath];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.model = self.dataArray[indexPath.row];
-    [cell layoutIfNeeded];
-    return cell;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    return 0.01;
-}
--(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-{
-    return 10;
-}
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-    return nil;
-}
--(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
-{
-    return nil;
-}
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    AgoraChatConversation * model = self.dataArray[indexPath.row];
-    NSString * friendHeadStr = @"";
-    NSString * friendNameStr = @"";
-    NSString * conversationIdStr = @"";
-    RLMResults *results = [PGMessageListModel allObjects];
-    for (PGMessageListModel * mm in results) {
-        if ([mm.messageId integerValue] == [model.conversationId integerValue]) {
-            friendHeadStr = mm.avatar;
-            friendNameStr = mm.nickName;
-        }
-    }
-    conversationIdStr = model.conversationId;
-    PGChatViewController * vc = [[PGChatViewController alloc] init];
-    vc.friendHead = friendHeadStr;
-    vc.friendName = friendNameStr;
-    vc.channelId = conversationIdStr;
-    [[PGUtils getCurrentVC].navigationController pushViewController:vc animated:YES];
-}
-// iOS 13+ 推荐使用的滑动操作替代方法
-- (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
-    // 1. 创建“删除”操作（UIContextualAction 替代原来的 UITableViewRowAction）
-    UIContextualAction *deleteAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleDestructive
-                                                                              title:@"删除"
-                                                                            handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
-        // 2. 执行删除逻辑（与原代码逻辑一致）
-   
-        
-        // 3. 必须调用 completionHandler，告知系统操作完成（YES 表示需要刷新行，NO 表示不刷新）
-        completionHandler(YES);
-    }];
     
-    // 4. 设置操作按钮背景色（替代原来的 action.backgroundColor）
-    deleteAction.backgroundColor = HEX(#EB4D3D);
-    
-    // 5. 返回滑动操作配置（可包含多个操作，这里仅“删除”）
-    UISwipeActionsConfiguration *config = [UISwipeActionsConfiguration configurationWithActions:@[deleteAction]];
-    // 可选：设置是否允许滑动到底删除（默认 YES，设置 NO 可禁用）
-    config.performsFirstActionWithFullSwipe = NO;
-    
-    return config;
-}
-#pragma mark===客服
-- (void)serviceBtnAction:(QMUIButton *)sender
-{
-    PGWebViewController * vc = [PGWebViewController controllerWithTitle:@"客服" url:[PGManager shareModel].searviceLinkStr];
-    [self.navigationController pushViewController:vc animated:YES];
-}
-#pragma mark-======创建表视图
-- (UITableView *)tableView{
-    if(!_tableView){
-        _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
-#ifdef __IPHONE_11_0
-        if ([_tableView respondsToSelector:@selector(setContentInsetAdjustmentBehavior:)]) {
-            if (@available(iOS 11.0, *)) {
-                _tableView.estimatedRowHeight = 0;
-                _tableView.estimatedSectionFooterHeight = 0;
-                _tableView.estimatedSectionHeaderHeight = 0;
-                _tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
-            } else {
-                // Fallback on earlier versions
-            }
-        }
-#endif
-        _tableView.rowHeight = UITableViewAutomaticDimension;
-        _tableView.estimatedRowHeight = 200;
-        _tableView.delegate = self;
-        _tableView.dataSource = self;
-        _tableView.showsVerticalScrollIndicator = NO;
-        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        _tableView.backgroundColor = [UIColor clearColor];
-        [_tableView registerNib:[UINib nibWithNibName:@"HMMsgTableViewCell" bundle:nil] forCellReuseIdentifier:@"HMMsgTableViewCell"];
-    }
-    return _tableView;
 }
 
-- (UILabel *)titleBtn
+//滚动选中的情况才会调用该方法
+- (void)categoryView:(JXCategoryBaseView *)categoryView didScrollSelectedItemAtIndex:(NSInteger)index
 {
-    if (!_titleBtn) {
-        _titleBtn = [[UILabel alloc] init];
-        _titleBtn.font = MPSemiboldFont(24);
-        _titleBtn.textColor = HEX(#000000);
-        _titleBtn.text = Localized(@"消息");
-    }
-    return _titleBtn;
+    
 }
-- (NSMutableArray *)dataArray
+
+//正在滚动中的回调
+- (void)categoryView:(JXCategoryBaseView *)categoryView scrollingFromLeftIndex:(NSInteger)leftIndex toRightIndex:(NSInteger)rightIndex ratio:(CGFloat)ratio
 {
-    if (!_dataArray) {
-        _dataArray = [NSMutableArray array];
+    
+}
+- (BOOL)categoryView:(JXCategoryBaseView *)categoryView canClickItemAtIndex:(NSInteger)index
+{
+    return YES;
+}
+//返回列表的数量
+- (NSInteger)numberOfListsInlistContainerView:(JXCategoryListContainerView *)listContainerView {
+    return self.segArray.count;
+}
+//根据下标index返回对应遵从`JXCategoryListContentViewDelegate`协议的列表实例
+- (id<JXCategoryListContentViewDelegate>)listContainerView:(JXCategoryListContainerView *)listContainerView initListForIndex:(NSInteger)index {
+    PGMessageListViewController * vc= [[PGMessageListViewController alloc] init];
+    vc.index = index;
+    vc.imResultArr = self.imResultArr;
+    vc.intimacyResultArr = self.intimacyResultArr;
+    vc.qinmiDataArray = self.qinmiDataArr;
+    return vc;
+}
+
+- (JXCategoryNumberView *)jxCategoryView
+{
+    if (!_jxCategoryView) {
+        _jxCategoryView = [[JXCategoryNumberView alloc] init];
+        _jxCategoryView.backgroundColor = UIColor.clearColor;
+        _jxCategoryView.numberBackgroundColor = [UIColor redColor];
+        _jxCategoryView.numberLabelOffset = CGPointMake(0, 2);
+        _jxCategoryView.delegate = self;
+        _jxCategoryView.titles = self.segArray;
+        _jxCategoryView.defaultSelectedIndex = 0;
+        _jxCategoryView.indicators = @[self.lineView];
+        _jxCategoryView.titleFont = MPBoldFont(16);
+        _jxCategoryView.titleColor = HEX(#000000);
+        _jxCategoryView.titleSelectedFont = MPHeavyFont(24);
+        _jxCategoryView.titleSelectedColor = HEX(#000000);
+        _jxCategoryView.averageCellSpacingEnabled = NO;
+        _jxCategoryView.contentEdgeInsetLeft = 22;
+        _jxCategoryView.cellSpacing = 30;
     }
-    return _dataArray;
+    return _jxCategoryView;
+}
+
+- (JXCategoryIndicatorLineView *)lineView
+{
+    if (!_lineView) {
+        _lineView = [[JXCategoryIndicatorLineView alloc] init];
+        _lineView.indicatorColor = THEAME_COLOR;
+        _lineView.indicatorWidth = 20;
+        _lineView.indicatorHeight = 6;
+        _lineView.verticalMargin = 8;
+    }
+    return _lineView;
 }
 - (UIImageView *)topBg
 {
     if (!_topBg) {
-        _topBg = [[UIImageView alloc] init];
-        [_topBg setImage:MPImage(@"homeBg")];
+        _topBg = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, STATUS_H_F+300)];
         _topBg.contentMode = UIViewContentModeScaleAspectFill;
         [_topBg setImage:MPImage(@"homeBg")];
     }
     return _topBg;
+}
+- (NSMutableArray *)imResultArr
+{
+    if (!_imResultArr) {
+        _imResultArr = [NSMutableArray array];
+    }
+    return _imResultArr;
+}
+- (NSMutableArray *)intimacyResultArr
+{
+    if (!_intimacyResultArr) {
+        _intimacyResultArr = [NSMutableArray array];
+    }
+    return _intimacyResultArr;
+}
+- (NSMutableArray *)qinmiDataArr
+{
+    if (!_qinmiDataArr) {
+        _qinmiDataArr = [NSMutableArray array];
+    }
+    return _qinmiDataArr;
 }
 
 /*

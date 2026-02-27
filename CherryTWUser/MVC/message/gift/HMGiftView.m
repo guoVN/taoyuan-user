@@ -7,6 +7,7 @@
 
 #import "HMGiftView.h"
 #import "HMPlayTypeUpdatePriceCollectionViewCell.h"
+#import "PGContainerVC.h"
 
 @interface HMGiftView ()<UICollectionViewDataSource,UICollectionViewDelegate>
 
@@ -129,6 +130,7 @@
     PGGiftListModel * model = self.dataArray[indexPath.row];
     [self.chooseArray removeAllObjects];
     [self.chooseArray addObject:model];
+    [PGManager shareModel].currentChooseGiftModel = model;
     [self.collectionView reloadData];
 }
 #pragma mark===送礼物
@@ -147,13 +149,13 @@
     [PGAPIService sendGiftWithParameters:dic Success:^(id  _Nonnull data) {
         [QMUITips hideAllTips];
         [PGManager shareModel].selfCoin -= [PGManager shareModel].currentChooseGiftModel.coin;
-//        weakself.diamondLabel.text = [NSString stringWithFormat:@"糖币余额：%.0f",[PGManager shareModel].selfCoin*0.01];
-        PGTabbarViewController * tabbar = (PGTabbarViewController *)[UIApplication sharedApplication].delegate.window.rootViewController;
-        [tabbar showSvga:[PGManager shareModel].currentChooseGiftModel.dynamicPic];
+//        weakself.diamondLabel.text = [NSString stringWithFormat:@"糖币余额：%.0f",[PGManager shareModel].selfCoin*0.1];
+        PGBaseViewController * baseVC = (PGBaseViewController *)[PGUtils getCurrentVC];
+        [baseVC showSvga:[PGManager shareModel].currentChooseGiftModel.dynamicPic];
         if (weakself.sendGiftBlock) {
             weakself.sendGiftBlock([PGManager shareModel].currentChooseGiftModel.name);
         }
-        [weakself removeFromSuperview];
+        [[PGManager shareModel].mainControlAlert closeView];
     } failure:^(NSInteger code, NSString * _Nonnull message) {
         [QMUITips hideAllTips];
         [QMUITips showWithText:message];
@@ -180,7 +182,7 @@
         _totalDiamondLabel = [[UILabel alloc] init];
         _totalDiamondLabel.font = MPMediumFont(18);
         _totalDiamondLabel.textColor = HEX(#FFFFFF);
-        NSMutableAttributedString * att = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%.0f ",[PGManager shareModel].selfCoin*0.01]];
+        NSMutableAttributedString * att = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%.0f ",[PGManager shareModel].selfCoin*0.1]];
         NSTextAttachment * attach = [[NSTextAttachment alloc] init];
         attach.image = [UIImage imageNamed:@"diamonds"];
         attach.bounds = CGRectMake(0, -2, 16, 16);

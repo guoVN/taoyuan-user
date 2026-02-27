@@ -383,6 +383,9 @@ NS_ASSUME_NONNULL_BEGIN
 /// 删除视频
 + (void)deleteVideoAtVideoWithParameters:(NSDictionary *)parametersDic Success:(void (^)(id data))successBlock
                           failure:(void (^)(NSInteger code, NSString* message))failureBlock;
+///亲密度列表
++ (void)intimacyListWithParameters:(NSDictionary *)parametersDic Success:(void (^)(id data))successBlock
+                           failure:(void (^)(NSInteger code, NSString* message))failureBlock;
 
 @end
 

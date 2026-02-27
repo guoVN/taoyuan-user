@@ -50,7 +50,7 @@
         diamondBtn.imagePosition = QMUIButtonImagePositionLeft;
         diamondBtn.spacingBetweenImageAndTitle = 0;
         [diamondBtn setImage:MPImage(@"zuanshiLittle") forState:UIControlStateNormal];
-        [diamondBtn setTitle:[NSString stringWithFormat:@"%.0f",model.coin*0.01] forState:UIControlStateNormal];
+        [diamondBtn setTitle:[NSString stringWithFormat:@"%.0f",model.coin*0.1] forState:UIControlStateNormal];
         [diamondBtn setTitleColor:HEX(#FFFFFF) forState:UIControlStateNormal];
         diamondBtn.titleLabel.font = MPBoldFont(10);
         [giftBackBtn addSubview:diamondBtn];

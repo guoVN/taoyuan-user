@@ -231,7 +231,7 @@
         _diamondLabel = [[UILabel alloc] init];
         _diamondLabel.font = MPBoldFont(16);
         _diamondLabel.textColor = HEX(#FFFFFF);
-        _diamondLabel.text = [NSString stringWithFormat:@"糖币余额：%.0f",[PGManager shareModel].selfCoin*0.01];
+        _diamondLabel.text = [NSString stringWithFormat:@"糖币余额：%.0f",[PGManager shareModel].selfCoin*0.1];
     }
     return _diamondLabel;
 }

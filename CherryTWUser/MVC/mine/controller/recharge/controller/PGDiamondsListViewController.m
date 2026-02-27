@@ -47,7 +47,7 @@
         self.naviView.frame = CGRectMake(0, 0, ScreenWidth, 64);
         self.naviView.backBtn.alpha = 0;
     }
-    self.coinLabel.text = [NSString stringWithFormat:@"%.0f",[PGManager shareModel].selfCoin*0.01];
+    self.coinLabel.text = [NSString stringWithFormat:@"%.0f",[PGManager shareModel].selfCoin*0.1];
     [self.view addSubview:self.collectionView];
     [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.totalView.mas_bottom).offset(57);

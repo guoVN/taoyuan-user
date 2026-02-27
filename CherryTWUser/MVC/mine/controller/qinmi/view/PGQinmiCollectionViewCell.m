@@ -15,4 +15,12 @@
     // Initialization code
 }
 
+- (void)setListModel:(HMIntimacyListModel *)listModel
+{
+    _listModel = listModel;
+    [self.headImg sd_setImageWithURL:[NSURL URLWithString:listModel.photo] placeholderImage:MPImage(@"womanDefault")];
+    self.nameLabel.text = listModel.nickName;
+    [self.qinmiduBtn setTitle:[NSString stringWithFormat:@"%@℃",listModel.intimacy] forState:UIControlStateNormal];
+}
+
 @end

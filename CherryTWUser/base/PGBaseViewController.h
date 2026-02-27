@@ -33,6 +33,8 @@ NS_ASSUME_NONNULL_BEGIN
                   buttonTitle:(nullable NSString *)buttonTitle
                  buttonAction:(nullable SEL)action;
 
+- (void)showSvga:(NSString *)svgaUrl;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -18,7 +18,7 @@
 - (void)setCoinModel:(PGRechargeListCoinModel *)coinModel
 {
     _coinModel = coinModel;
-    self.numberLabel.text = [NSString stringWithFormat:@"%.0f",coinModel.coin*0.01];
+    self.numberLabel.text = [NSString stringWithFormat:@"%.0f",coinModel.coin*0.1];
     self.priceLabel.text = [NSString stringWithFormat:@"¥ %ld",coinModel.money];
 }
 

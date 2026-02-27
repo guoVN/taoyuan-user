@@ -26,6 +26,7 @@
 @property (nonatomic, strong) NSMutableArray * dataArray;
 @property (nonatomic, strong) NSMutableArray * cellHeightArray;
 @property (nonatomic, strong) UILabel * titleBtn;
+@property (nonatomic, strong) UIButton * publishBtn;
 
 @end
 
@@ -62,6 +63,12 @@
     [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.bottom.right.mas_equalTo(0);
         make.top.mas_equalTo(STATUS_H_F+68);
+    }];
+    [self.view addSubview:self.publishBtn];
+    [self.publishBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.mas_equalTo(-10);
+        make.bottom.mas_equalTo(-SafeBottom-10-49);
+        make.width.height.mas_equalTo(82);
     }];
 }
 - (void)loadData
@@ -172,6 +179,14 @@
     return UIEdgeInsetsMake(0, 15, 0, 15);
 }
 
+#pragma mark===发布
+- (void)publishAction
+{
+    PGPublishDynamicViewController * vc = [[PGPublishDynamicViewController alloc] init];
+    vc.modalPresentationStyle = 0;
+    [self presentViewController:vc animated:YES completion:nil];
+}
+
 #pragma mark-======创建表视图
 - (UICollectionView *)collectionView
 {
@@ -241,6 +256,15 @@
         _topBg.contentMode = UIViewContentModeScaleAspectFill;
     }
     return _topBg;
+}
+- (UIButton *)publishBtn
+{
+    if (!_publishBtn) {
+        _publishBtn = [[UIButton alloc] init];
+        [_publishBtn setImage:MPImage(@"publish") forState:UIControlStateNormal];
+        [_publishBtn addTarget:self action:@selector(publishAction) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _publishBtn;
 }
 
 /*

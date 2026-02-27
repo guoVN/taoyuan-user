@@ -6,10 +6,14 @@
 //
 
 #import "PGBaseViewController.h"
+#import <SVGAParser.h>
+#import <SVGAPlayer.h>
 
-@interface PGBaseViewController ()
+@interface PGBaseViewController ()<SVGAPlayerDelegate>
 
 @property (nonatomic, strong) id oldNavGesDelegate;
+@property (nonatomic, strong) SVGAPlayer * svgaPlayer;
+@property (nonatomic, strong) SVGAParser * svgaParser;
 
 @end
 
@@ -122,6 +126,49 @@
         _emptyView = [[QMUIEmptyView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, self.view.frame.size.height)];
     }
     return _emptyView;
+}
+
+- (void)showSvga:(NSString *)svgaUrl
+{
+    WeakSelf(self)
+    [self.svgaParser parseWithURL:[NSURL URLWithString:svgaUrl] completionBlock:^(SVGAVideoEntity * _Nullable videoItem) {
+        weakself.svgaPlayer.videoItem = videoItem;
+        [weakself.svgaPlayer startAnimation];
+    } failureBlock:^(NSError * _Nullable error) {
+        
+    }];
+    [[PGUtils getCurrentVC].view addSubview:self.svgaPlayer];
+    [self.svgaPlayer mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.center.mas_equalTo(0);
+        make.size.mas_equalTo(CGSizeMake(ScreenWidth, ScreenHeight));
+    }];
+}
+- (void)svgaPlayerDidFinishedAnimation:(SVGAPlayer *)player
+{
+    [self.svgaPlayer removeFromSuperview];
+}
+
+- (SVGAPlayer *)svgaPlayer
+{
+    if (!_svgaPlayer)
+    {
+        _svgaPlayer = [[SVGAPlayer alloc] init];
+        _svgaPlayer.frame = CGRectMake(0, 0, ScreenWidth, 200);
+        _svgaPlayer.fillMode = @"Forward";
+        _svgaPlayer.loops = 1;
+        _svgaPlayer.clearsAfterStop = YES;
+        _svgaPlayer.delegate = self;
+    }
+    
+    return _svgaPlayer;
+}
+
+- (SVGAParser *)svgaParser
+{
+    if (!_svgaParser){
+        _svgaParser = [[SVGAParser alloc] init];
+    }
+    return _svgaParser;
 }
 
 /*

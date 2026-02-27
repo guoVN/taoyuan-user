@@ -144,21 +144,15 @@
     }
     WeakSelf(self)
     if (self.photoArray.count>0) {
-        NSMutableArray * urlArr = [NSMutableArray array];
         [QMUITips showLoading:@"图片上传中" inView:self.view];
-        for (NSInteger i=0; i<self.photoArray.count; i++) {
-            [PGAPIService uploadFileWithImages:@[self.photoArray[i]] Success:^(id  _Nonnull data) {
-                NSString * imgStr = data[@"data"];
-                [urlArr addObject:imgStr];
-                if (urlArr.count==weakself.photoArray.count) {
-                    [QMUITips hideAllTips];
-                    [weakself doPublish:weakself.textView.text withImg:urlArr];
-                }
-            } failure:^(NSInteger code, NSString * _Nonnull message) {
-                [QMUITips hideAllTips];
-                [QMUITips showWithText:@"上传失败"];
-            }];
-        }
+        [PGAPIService uploadFileWithImages:self.photoArray Success:^(id  _Nonnull data) {
+            NSArray * imgArr = data[@"data"];
+            [QMUITips hideAllTips];
+            [weakself doPublish:weakself.textView.text withImg:imgArr];
+        } failure:^(NSInteger code, NSString * _Nonnull message) {
+            [QMUITips hideAllTips];
+            [QMUITips showWithText:@"上传失败"];
+        }];
     }else{
         [self doPublish:self.textView.text withImg:@[]];
     }

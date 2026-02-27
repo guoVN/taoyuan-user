@@ -10,7 +10,12 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface PGMessageListViewController : PGBaseViewController
+@interface PGMessageListViewController : PGBaseViewController<JXCategoryListContentViewDelegate>
+
+@property (nonatomic, assign) NSInteger index;
+@property (nonatomic, strong) NSMutableArray * imResultArr;
+@property (nonatomic, strong) NSMutableArray * intimacyResultArr;
+@property (nonatomic, strong) NSMutableArray * qinmiDataArray;
 
 @end
 

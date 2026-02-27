@@ -6,8 +6,8 @@
 //
 
 #import "HMQinmiTableViewCell.h"
-#import "HMPersonalHomePageViewController.h"
-#import "HMTAInfoAlertView.h"
+#import "PGMessageListModel.h"
+#import "PGPersonalDetailViewController.h"
 
 @implementation HMQinmiTableViewCell
 
@@ -34,7 +34,7 @@
     self.nameLabel.text = qinModel.nickName;
     self.unReadLabel.alpha = 0;
     self.onlineView.alpha = [qinModel.state isEqualToString:@"在线"] ? 1 : 0;
-    [self.qinmiBtn setTitle:[NSString stringWithFormat:@"%@℃",[HMUtils formatNumber:[qinModel.intimacy floatValue]]] forState:UIControlStateNormal];
+    [self.qinmiBtn setTitle:[NSString stringWithFormat:@"%@℃",[PGUtils formatNumber:[qinModel.intimacy floatValue]]] forState:UIControlStateNormal];
 }
 - (void)setQinmiIMArr:(NSArray *)qinmiIMArr
 {
@@ -43,7 +43,7 @@
         if ([model.conversationId isEqualToString:self.qinModel.userid]) {
             self.unReadLabel.text = [NSString stringWithFormat:@"%d",model.unreadMessagesCount];
             self.unReadLabel.alpha = model.unreadMessagesCount;
-            self.timeLabel.text = [HMUtils ConvertsStringToTimeYDHM:[NSString stringWithFormat:@"%lld",model.latestMessage.timestamp]];
+            self.timeLabel.text = [PGUtils ConvertsStringToTimeYDHM:[NSString stringWithFormat:@"%lld",model.latestMessage.timestamp]];
             self.topBtn.selected = model.isPinned;
             self.topBtn.layer.borderColor = model.isPinned == YES ? HEX(#9797FF).CGColor : HEX(#F7799C).CGColor;
             self.contentView.backgroundColor = model.isPinned == YES ? HEXAlpha(#9797FF, 0.2) : HEX(#FFFFFF);
@@ -51,15 +51,15 @@
             if (lastMsg.type == AgoraChatMessageBodyTypeText) {
                 AgoraChatTextMessageBody *textBody = (AgoraChatTextMessageBody *)lastMsg;
                 NSString * msg = textBody.text;
-                NSDictionary * dic = [HMUtils jsonToObject:msg];
+                NSDictionary * dic = [PGUtils jsonToObject:msg];
                 NSString * contetStr = dic[@"content"];
                 NSString * messageType = dic[@"type"];
                 if ([messageType isEqualToString:@"文字"]) {
-                    if ([[HMUtils getFileFormat:contetStr] isEqualToString:@"图片"]) {
+                    if ([[PGUtils getFileFormat:contetStr] isEqualToString:@"图片"]) {
                         self.msgLabel.text = Localized(@"[图片]");
-                    }else if ([[HMUtils getFileFormat:contetStr] isEqualToString:@"视频"]){
+                    }else if ([[PGUtils getFileFormat:contetStr] isEqualToString:@"视频"]){
                         self.msgLabel.text = Localized(@"[视频]");
-                    }else if ([[HMUtils getFileFormat:contetStr] isEqualToString:@"语音"]){
+                    }else if ([[PGUtils getFileFormat:contetStr] isEqualToString:@"语音"]){
                         self.msgLabel.text = Localized(@"[语音]");
                     }else{
                         NSArray * arr = [contetStr componentsSeparatedByString:@"!!@@##"];
@@ -82,8 +82,8 @@
                 }
             }
             
-            RLMResults *results = [HMMsgListModel allObjects];
-            for (HMMsgListModel * mm in results) {
+            RLMResults *results = [PGMessageListModel allObjects];
+            for (PGMessageListModel * mm in results) {
                 if ([mm.messageId integerValue] == [model.conversationId integerValue]) {
                     [self.headImg sd_setImageWithURL:[NSURL URLWithString:mm.avatar] placeholderImage:MPImage(@"manDefault")];
                     self.nameLabel.text = mm.nickName;
@@ -116,26 +116,10 @@
 
 - (void)clickHead:(UITapGestureRecognizer *)tap
 {
-//    HMPersonalHomePageViewController * vc = [[HMPersonalHomePageViewController alloc] init];
-//    vc.userId = [self.qinModel.userid integerValue];
-//    [[HMUtils getCurrentVC].navigationController pushViewController:vc animated:YES];
-    __block HMOnlineDetailModel * model = [[HMOnlineDetailModel alloc] init];
-     model.userid = [self.qinModel.userid integerValue];
-    [[HMManager shareModel].mainControlAlert closeView];
-    [HMManager shareModel].mainControlAlert = Dialog()
-        .wLevelSet(999)
-        .wTagSet(random()%100000)
-        .wTypeSet(DialogTypeMyView)
-        .wShowAnimationSet(AninatonZoomInCombin)
-        .wHideAnimationSet(AninatonZoomOut)
-        .wShadowCanTapSet(YES)
-        .wMyDiaLogViewSet(^UIView *(UIView *mainView) {
-            mainView.backgroundColor = [UIColor clearColor];
-            HMTAInfoAlertView *view = [[HMTAInfoAlertView alloc] initWithFrame:CGRectMake(0, 0, 305, 289) superView:mainView];
-                view.userModel = model;
-                return view;
-            })
-        .wStart();
+    PGPersonalDetailViewController * vc = [[PGPersonalDetailViewController alloc] init];
+    vc.anchorid = self.qinModel.userid;
+    vc.isFromChat = YES;
+    [[PGUtils getCurrentVC].navigationController pushViewController:vc animated:YES];
 }
 
 @end

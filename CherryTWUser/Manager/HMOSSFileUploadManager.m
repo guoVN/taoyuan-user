@@ -16,7 +16,7 @@
 
 static NSString *const BucketName = @"ynty";
 static NSString *const EndPoint = @"oss-cn-shenzhen.aliyuncs.com";
-static NSString *kTempFolder = @"anchor";
+static NSString *kTempFolder = @"user";
 static NSString *rootUrl = @"https://cdn.hnstylor.cn/";
 
 + (void)asyncUploadImage:(UIImage *)image progress:(HMUploadImageManageProgressBlock)progressBlock complete:(void(^)(NSArray<NSString *> *names,UploadImageState state))complete

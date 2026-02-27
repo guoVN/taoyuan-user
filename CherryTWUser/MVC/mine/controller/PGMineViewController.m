@@ -19,6 +19,7 @@
 #import "PGFollowAndFansViewController.h"
 #import "PGYuYueRecordViewController.h"
 #import "HMAlbumViewController.h"
+#import "PGQinmiViewController.h"
 //view
 #import "PGMineTableViewCell.h"
 #import "PGRechargeAlertView.h"
@@ -101,6 +102,8 @@
     self.IDLabel.text = [NSString stringWithFormat:@"ID：%@",[PGManager shareModel].userInfo.userid];
     self.dataArray = [@[@{@"img":@"icon_recharge",@"name":@"充值"},
                         @{@"img":@"icon_yuyue",@"name":@"相册"},
+                        @{@"img":@"dynamicIcon",@"name":@"我的动态"},
+                        @{@"img":@"icon_yuyue",@"name":@"亲密度"},
                         @{@"img":@"icon_service",@"name":@"客服"},
                         @{@"img":@"icon_invite",@"name":@"邀请好友"},
                         @{@"img":@"icon_set",@"name":@"设置"}] mutableCopy];
@@ -218,6 +221,12 @@
         [self.navigationController pushViewController:vc animated:YES];
     }else if ([titleStr isEqualToString:@"相册"]){
         HMAlbumViewController * vc = [[HMAlbumViewController alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
+    }else if ([titleStr isEqualToString:@"我的动态"]){
+        PGMyDynamicViewController * vc = [[PGMyDynamicViewController alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
+    }else if ([titleStr isEqualToString:@"亲密度"]){
+        PGQinmiViewController * vc = [[PGQinmiViewController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
     }
 }

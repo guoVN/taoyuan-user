@@ -2115,5 +2115,25 @@
         failureBlock(50000,@"Network error");
     }];
 }
+///亲密度列表
++ (void)intimacyListWithParameters:(NSDictionary *)parametersDic Success:(void (^)(id data))successBlock
+                    failure:(void (^)(NSInteger code, NSString* message))failureBlock
+{
+    NSString * urlStr = [NSString stringWithFormat:@"%@%@",[PGManager shareModel].baseUrl,@"api/user/getIntimacyListMultiple"];
+    NSMutableDictionary * headerDic = [NSMutableDictionary dictionaryWithDictionary:[self getCommonHeaderOfSubclasses:parametersDic]];
+    [headerDic setValue:@"application/json" forKey:@"Content-Type"];
+    [[HMNetworking sharedClient] get:urlStr parameters:parametersDic headers:headerDic success:^(id  _Nullable responseObject) {
+        NSDictionary *responseDict = responseObject;
+        if([responseDict[@"code"] integerValue] == 0){
+            successBlock(responseDict);
+        }else{
+            NSString * msg = responseDict[@"message"];
+            failureBlock([responseDict[@"code"] integerValue],msg);
+        }
+    } failure:^(NSError * _Nonnull error) {
+        failureBlock(50000,@"Network error");
+    }];
+}
+
 
 @end
