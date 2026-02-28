@@ -106,6 +106,10 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)updateWeightWithParameters:(NSDictionary *)parametersDic Success:(void (^)(id data))successBlock
                           failure:(void (^)(NSInteger code, NSString* message))failureBlock;
 
+///修改情感状态
++ (void)updateEmotionStateWithParameters:(NSDictionary *)parametersDic Success:(void (^)(id data))successBlock
+                                 failure:(void (^)(NSInteger code, NSString* message))failureBlock;
+
 ///收藏列表
 + (void)myCollectListWithParameters:(NSDictionary *)parametersDic Success:(void (^)(id data))successBlock
                           failure:(void (^)(NSInteger code, NSString* message))failureBlock;
