@@ -646,6 +646,25 @@
         failureBlock(50000,@"Network error");
     }];
 }
+///修改情感状态
++ (void)updateEmotionStateWithParameters:(NSDictionary *)parametersDic Success:(void (^)(id data))successBlock
+                          failure:(void (^)(NSInteger code, NSString* message))failureBlock
+{
+    NSString * urlStr = [NSString stringWithFormat:@"%@%@",[PGManager shareModel].baseUrl,@"api/user/emotion/state/update"];
+    NSDictionary * headerDic = [self getCommonHeaderOfSubclasses:parametersDic];
+    [[HMNetworking sharedClient] postForm:urlStr parameters:parametersDic headers:headerDic success:^(id  _Nullable responseObject) {
+        NSDictionary *responseDict = responseObject;
+        if([responseDict[@"code"] integerValue] == 0){
+            successBlock(responseDict);
+        }else{
+            NSString * msg = responseDict[@"msg"];
+            NSString * msg2 = responseDict[@"message"];
+            failureBlock([responseDict[@"code"] integerValue],msg.length>0?msg:msg2);
+        }
+    } failure:^(NSError *error) {
+        failureBlock(50000,@"Network error");
+    }];
+}
 
 ///收藏列表
 + (void)myCollectListWithParameters:(NSDictionary *)parametersDic Success:(void (^)(id data))successBlock
