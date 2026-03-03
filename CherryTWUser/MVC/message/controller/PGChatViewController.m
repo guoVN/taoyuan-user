@@ -433,6 +433,11 @@
 }
 - (void)sendMsgCheckPre:(NSString *)sendContent withType:(NSString *)type
 {
+    if ([PGManager shareModel].selfCoin < [PGManager shareModel].callCoin || [PGManager shareModel].selfCoin < 100) {
+        [QMUITips showWithText:@"用户金币不足"];
+        [PGUtils goRechargeAlert];
+        return;
+    }
     NSString * sendType = @"3";
     if ([type isEqualToString:@"视频"]) {
         sendType = @"2";

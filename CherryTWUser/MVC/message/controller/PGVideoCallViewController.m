@@ -446,7 +446,8 @@
 - (void)showRecharge
 {
     if ([PGManager shareModel].selfCoin < 2*[PGManager shareModel].callCoin) {
-        self.rechargeView.alpha = 1;
+//        self.rechargeView.alpha = 1;
+        [self goRechargeAction:nil];
     }else{
         self.rechargeView.alpha = 0;
     }

@@ -44,7 +44,6 @@
 //            break;
 //    }
     self.looksLevelLabel.text = detailModel.job;
-    self.purposeLabel.text = detailModel.personalSign;
 }
 
 @end

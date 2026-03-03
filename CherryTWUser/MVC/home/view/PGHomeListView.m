@@ -63,7 +63,7 @@
         NSMutableDictionary * dic = [NSMutableDictionary dictionary];
         [dic setValue:[PGManager shareModel].userInfo.userid forKey:@"userid"];
         [dic setValue:@(self->page) forKey:@"page"];
-        [dic setValue:@(10) forKey:@"pageSize"];
+        [dic setValue:@(20) forKey:@"pageSize"];
         [dic setValue:self.index == 0 ? @"1" : @"2" forKey:@"type"];
         NSString * sign = [PGParameterSignTool encoingPameterSignWithDic:[NSMutableDictionary dictionaryWithDictionary:dic] andTimeSta:timeStampString];
         [dic setValue:sign forKey:@"sign"];
