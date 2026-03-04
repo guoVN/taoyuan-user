@@ -41,6 +41,9 @@
             [photoArr addObject:str];
         }
         weakself.headImgStr = [photoArr componentsJoinedByString:@","];
+        if (weakself.headImgStr.length==0) {
+            [QMUITips showWithText:@"上传失败"];
+        }
     } failure:^(NSInteger code, NSString * _Nonnull message) {
         [QMUITips hideAllTips];
         [QMUITips showWithText:@"上传失败"];
