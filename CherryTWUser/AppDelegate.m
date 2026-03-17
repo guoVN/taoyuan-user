@@ -19,6 +19,7 @@
 #import "PGVideoInitiationViewController.h"
 #import <Bugly/Bugly.h>
 #import "PGContainerVC.h"
+#import "Reachability.h"
 
 @interface AppDelegate ()<UNUserNotificationCenterDelegate,AgoraChatManagerDelegate,AgoraChatClientDelegate>
 
@@ -32,6 +33,9 @@
 @property (nonatomic, assign) NSInteger requestDomainCount;
 @property (nonatomic, strong) UIApplication * appCation;
 @property (strong, nonatomic) AVAudioPlayer * audioPlayer;
+
+@property (nonatomic, strong) Reachability *reachability;
+@property (nonatomic, assign) BOOL isNotNetAgo;
 
 @end
 
@@ -49,16 +53,17 @@
     self.appCation = application;
     self.requestDomainCount = 0;
     [Bugly startWithAppId:@"4637b2c21f"];
-    [self getDomain];
     [PGUtils getUserAgent];
     [self setLanguage];
     [self setupKeyboardManager];
+    [self listenNetwork];
     [self netSet];
     [self createTimer];
     [self initializeLocalNotification];
     [self setupAgoraChat];
     [self applicationPushRegister:application];
     [self initPushData:launchOptions];
+    [self getDomain];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationEnterAction) name:@"FirstEnterState" object:nil];
     return YES;
 }
@@ -143,7 +148,7 @@
     [dic setValue:[PGUtils getAdId] forKey:@"imei"];
     [dic setValue:[PGUtils getAdId] forKey:@"oaid"];
     [dic setValue:@"" forKey:@"ipv6"];
-    [dic setValue:Package_Name forKey:@"packName"];
+    [dic setValue:PackName forKey:@"packName"];
     [dic setValue:Channel_Name forKey:@"channel"];
     [dic setValue:[PGManager shareModel].userAgent forKey:@"ua"];
     [dic setValue:[PGUtils getMacAddress] forKey:@"mac"];
@@ -571,6 +576,45 @@
  
     }];
 }
+#pragma mark===网络监听
+-(void)listenNetwork{
+  //注册网络状态通知
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(networkStatusChanged:) name:kReachabilityChangedNotification object:nil];
+  //获取Reachability对象
+  self.reachability = [Reachability reachabilityForInternetConnection];
+  //开始监听网络变化
+  [self.reachability startNotifier];
+  // 立即进行一次初始的网络状态检测
+  NetworkStatus networkStatus = [self.reachability currentReachabilityStatus];
+  [self networkStatusChangedWithNetworkStatus:networkStatus];
+}
+
+- (void)networkStatusChanged:(NSNotification*)notification {
+  Reachability*reachability = (Reachability*)notification.object;
+  NetworkStatus networkStatus = [reachability currentReachabilityStatus];
+  [self networkStatusChangedWithNetworkStatus:networkStatus];
+}
+
+- (void)networkStatusChangedWithNetworkStatus:(NetworkStatus)networkStatus {
+  // 判断是否有网络连接
+  if(networkStatus ==NotReachable) {
+      self.isNotNetAgo = YES;
+  }else{
+      if (self.isNotNetAgo) {
+          //重新网络请求
+          self.requestDomainCount = 0;
+          [self getDomain];
+          self.isNotNetAgo = NO;
+      }
+  }
+}
+
+-(void)removeNetworkListener{
+  [self.reachability stopNotifier];
+  [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
+  self.reachability = nil;
+}
+
 ///登录成功后重载资源
 - (void)reRequestData
 {
@@ -585,6 +629,9 @@
         [self applicationPushRegister:self.appCation];
     });
     dispatch_group_async(group, queue, ^{
+        [self loadChannelNo];
+    });
+    dispatch_group_async(group, queue, ^{
         [self loadService];
     });
     dispatch_group_async(group, queue, ^{
@@ -593,9 +640,6 @@
     dispatch_group_async(group, queue, ^{
         [PGManager shareModel].requestAliyunCount = 0;
         [[PGManager shareModel] getAliOssInfo];
-    });
-    dispatch_group_async(group, queue, ^{
-        [self loadChannelNo];
     });
     dispatch_group_async(group, queue, ^{
         [self loadGiftData];

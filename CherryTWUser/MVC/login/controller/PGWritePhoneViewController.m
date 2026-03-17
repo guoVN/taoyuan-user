@@ -36,7 +36,7 @@
     [dic setValue:[PGUtils getAdId] forKey:@"androidid"];
     [dic setValue:[PGUtils getAdId] forKey:@"imei"];
     [dic setValue:[PGUtils getAdId] forKey:@"oaid"];
-    [dic setValue:Package_Name forKey:@"packName"];
+    [dic setValue:PackName forKey:@"packName"];
     [dic setValue:self.phoneField.text forKey:@"phone"];
     [QMUITips showLoadingInView:self.view];
     [PGAPIService checkPhoneWithParameters:dic Success:^(id  _Nonnull data) {

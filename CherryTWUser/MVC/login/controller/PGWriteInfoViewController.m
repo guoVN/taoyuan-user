@@ -65,7 +65,6 @@
 - (void)goRegisterAction
 {
     NSString * timeStampString = [PGUtils getCurrentTimeStamp];
-    NSString * packageName = Package_Name;
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
     NSString *app_Version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
     NSMutableDictionary * dic = [NSMutableDictionary dictionary];
@@ -76,7 +75,7 @@
     [dic setValue:Channel_Name forKey:@"channel"];
     [dic setValue:timeStampString forKey:@"timestamp"];
     [dic setValue:app_Version forKey:@"aversion"];
-    [dic setValue:packageName forKey:@"packName"];
+    [dic setValue:PackName forKey:@"packName"];
     [dic setValue:@"YES" forKey:@"init"];
     [dic setValue:[PGUtils getAdId] forKey:@"oaid"];
     [dic setValue:[PGUtils getAdId] forKey:@"androidid"];
@@ -103,6 +102,7 @@
     }];
 }
 - (IBAction)chooseImg:(id)sender {
+    [self.view endEditing:YES];
     WeakSelf(self)
     [[PGManager shareModel] chooseMediaWith:1 count:1 withCrop:NO selectImg:^(NSArray *imgArr) {
         weakself.chooseImg = imgArr.firstObject;

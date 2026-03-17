@@ -59,11 +59,10 @@
     }];
 }
 - (IBAction)sureBtnAction:(id)sender {
-    NSString * packageName = Package_Name;
     NSMutableDictionary * dic = [NSMutableDictionary dictionary];
     [dic setValue:self.phoneStr forKey:@"phone"];
     [dic setValue:self.smsCodeField.text forKey:@"verifyCode"];
-    [dic setValue:packageName forKey:@"packName"];
+    [dic setValue:PackName forKey:@"packName"];
     [dic setValue:[PGUtils getAdId] forKey:@"oaid"];
     [dic setValue:[PGUtils getAdId] forKey:@"androidid"];
     [dic setValue:[PGUtils getAdId] forKey:@"imei"];
