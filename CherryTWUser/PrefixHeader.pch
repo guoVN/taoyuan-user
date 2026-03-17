@@ -80,7 +80,7 @@ if (@available(iOS 13.0, *)) {\
 #define AgroaAppidRTC_Use @"d164e2a3dc6043ffabe812902fb9b584"
 #define AgroaAppid @"c58a63684055400f80c1ac3b1229bcd9"
 #define AgroaIMcertificate  @"" //@"tw_dev_anchor"
-#define AliyunOSSHttp @"http://test.hainanyihong.cn:7080"
+#define AliyunOSSHttp @"http://newtest1.hainanyihong.cn:7080"
 #else
 #define AgroaAppidRTC_Use @"c58a63684055400f80c1ac3b1229bcd9"
 #define AgroaAppid @"c58a63684055400f80c1ac3b1229bcd9"
@@ -88,7 +88,7 @@ if (@available(iOS 13.0, *)) {\
 #define AliyunOSSHttp @"http://ou.hainanyihong.cn"
 #endif
 
-#define Package_Name @"com.ntdlaz.date"
+#define Package_Name @"com.qrml.date"
 #define Channel_Name @"gf001"
 #define versionCode @"3066"
 #define PackName @"mtsk"

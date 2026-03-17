@@ -10,7 +10,7 @@
 #import "HMOSSFileUploadManager.h"
 
 ///测试环境
-#define BaseUrl @"https://test.hainanyihong.cn/chatserver"
+#define BaseUrl @"http://newtest1.hainanyihong.cn/chatserver"
 ///正式环境
 //#define BaseUrl @"http://newm.huayuan123.com/chatserver"
 

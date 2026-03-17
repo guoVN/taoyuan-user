@@ -49,7 +49,11 @@ static NSString *kHeartString = @"ping";
 //        return;
 //    }
 
-    NSString *url = [NSString stringWithFormat:@"ws://test.hainanyihong.cn/chatserver/presence/user/%@?token=%@",[PGManager shareModel].userInfo.userid,[PGManager shareModel].userInfo.loginToken];
+#if DEBUG
+    NSString *url = [NSString stringWithFormat:@"ws://newtest1.hainanyihong.cn/chatserver/presence/user/%@?token=%@",[PGManager shareModel].userInfo.userid,[PGManager shareModel].userInfo.loginToken];
+#else
+    NSString *url = [NSString stringWithFormat:@"ws://ou.hainanyihong.cn/chatserver/presence/user/%@?token=%@",[PGManager shareModel].userInfo.userid,[PGManager shareModel].userInfo.loginToken];
+#endif
     NSLog(@"webSocket 链接到服务器：%@", url);
     _webSocket = [[SRWebSocket alloc] initWithURL:[NSURL URLWithString:url]];
     _webSocket.delegate = self;

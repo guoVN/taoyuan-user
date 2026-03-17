@@ -79,6 +79,7 @@
         PGCustomViewController * vc = [[PGCustomViewController alloc] init];
         PGNavigationViewController * nav = [[PGNavigationViewController alloc] initWithRootViewController:vc];
         self.window.rootViewController = nav;
+        [self reRequestData];
     }
     [self.window makeKeyAndVisible];
 }
@@ -544,7 +545,7 @@
         [self doPreDomainRequest:reqUrl withArr:self.addressArr];
     }else{
         // mt.huayuan123.com
-        [PGManager shareModel].baseUrl = @"https://test.hainanyihong.cn/chatserver/";
+        [PGManager shareModel].baseUrl = @"http://newtest1.hainanyihong.cn/chatserver/";
         [self toMain];
     }
 }
