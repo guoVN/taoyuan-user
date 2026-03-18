@@ -50,7 +50,7 @@
     [dic setValue:self.phoneStr forKey:@"phone"];
     NSString * sign = [PGParameterSignTool encoingPameterSignWithDic:[NSMutableDictionary dictionaryWithDictionary:dic] andTimeSta:timeStampString];
     [dic setValue:sign forKey:@"sign"];
-    [dic setValue:@"stl" forKey:@"packName"];
+    [dic setValue:@"sywl" forKey:@"packName"];
     [PGAPIService sendMsgCodeWithParameters:dic Success:^(id  _Nonnull data) {
         weakself.sendCodeBtn.enabled = NO;
         [weakself.sendCodeBtn beginCountDown];

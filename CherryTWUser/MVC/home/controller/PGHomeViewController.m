@@ -6,7 +6,6 @@
 //
 
 #import "PGHomeViewController.h"
-#import "Reachability.h"
 #import "PGCustomViewController.h"
 #import "PGSearchViewController.h"
 #import "PGWebViewController.h"
@@ -31,9 +30,6 @@
 @property (nonatomic, strong) JXCategoryIndicatorLineView *lineView;
 @property (nonatomic, strong) NSMutableArray * segArray;
 
-@property (nonatomic, strong) Reachability *reachability;
-@property (nonatomic, assign) BOOL isNotNetAgo;
-
 @end
 
 @implementation PGHomeViewController
@@ -41,7 +37,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    [self listenNetwork];
     [self loadUI];
     dispatch_async(dispatch_get_main_queue(), ^{
         [self loadBanner];
@@ -223,49 +218,6 @@
 - (IBAction)searchAction:(id)sender {
     PGSearchViewController * vc = [[PGSearchViewController alloc] init];
     [self.navigationController pushViewController:vc animated:YES];
-}
-#pragma mark===网络监听
--(void)listenNetwork{
-  //注册网络状态通知
-  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(networkStatusChanged:) name:kReachabilityChangedNotification object:nil];
-  //获取Reachability对象
-  self.reachability = [Reachability reachabilityForInternetConnection];
-  //开始监听网络变化
-  [self.reachability startNotifier];
-  // 立即进行一次初始的网络状态检测
-  NetworkStatus networkStatus = [self.reachability currentReachabilityStatus];
-  [self networkStatusChangedWithNetworkStatus:networkStatus];
-}
-
-- (void)networkStatusChanged:(NSNotification*)notification {
-  Reachability*reachability = (Reachability*)notification.object;
-  NetworkStatus networkStatus = [reachability currentReachabilityStatus];
-  [self networkStatusChangedWithNetworkStatus:networkStatus];
-}
-
-- (void)networkStatusChangedWithNetworkStatus:(NetworkStatus)networkStatus {
-  // 判断是否有网络连接
-  if(networkStatus ==NotReachable) {
-      self.isNotNetAgo = YES;
-  }else{
-      if (self.isNotNetAgo) {
-          //重新网络请求
-          [self.jxCategoryView reloadData];
-          [self loadConfigData];
-          [self loadScreenSwitch];
-          [PGUtils versionUpdate];
-          self.isNotNetAgo = NO;
-      }
-  }
-}
-- (void)dealloc{
-  [self removeNetworkListener];
-}
-
--(void)removeNetworkListener{
-  [self.reachability stopNotifier];
-  [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
-  self.reachability = nil;
 }
 
 - (GKCycleScrollView *)bannerScrollView {
