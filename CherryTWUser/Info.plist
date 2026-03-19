@@ -24,6 +24,24 @@
 				<string>HYAlipayScheames</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>weixin</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>wx80d86f14ce1b2e34</string>
+			</array>
+		</dict>
+	</array>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>wechat</string>
+		<string>weixin</string>
+		<string>weixinULAPI</string>
+		<string>alipay</string>
+		<string>alipays</string>
 	</array>
 	<key>NSAppTransportSecurity</key>
 	<dict>

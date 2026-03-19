@@ -51,5 +51,6 @@ pod 'WMZDialog'
 pod 'JKCategories'
 pod 'AliyunOSSiOS'
 pod 'SocketRocket'
+pod 'WechatOpenSDK'
 
 end

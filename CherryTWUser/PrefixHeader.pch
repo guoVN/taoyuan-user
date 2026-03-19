@@ -42,6 +42,7 @@
 #import "UITableViewCell+PGCellShaow.h"
 #import "YBImageView.h"
 #import "HMSocketManager.h"
+#import <WXApi.h>
 
 //弱引用
 #define WeakSelf(type)     __weak typeof(type) weak##type = type;
@@ -92,5 +93,7 @@ if (@available(iOS 13.0, *)) {\
 #define Channel_Name @"toutiao_qrml"
 #define versionCode @"3066"
 #define PackName @"qrml"
+#define WeiXinPayKey @"wx80d86f14ce1b2e34"
+#define WeiXinSecret @"e25e6206725c8e714121157e795e67ad"
 
 #endif /* PrefixHeader_pch */

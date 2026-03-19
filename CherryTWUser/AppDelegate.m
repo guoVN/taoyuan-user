@@ -20,6 +20,7 @@
 #import <Bugly/Bugly.h>
 #import "PGContainerVC.h"
 #import "Reachability.h"
+#import "LQWeChatManager.h"
 
 @interface AppDelegate ()<UNUserNotificationCenterDelegate,AgoraChatManagerDelegate,AgoraChatClientDelegate>
 
@@ -47,8 +48,10 @@
     
 #if DEBUG
     self.isPreEv = NO;
+    [WXApi registerApp:WeiXinPayKey universalLink:@"https://t.hainanjunfeng.com/app/"];
 #else
     self.isPreEv = YES;
+    [WXApi registerApp:WeiXinPayKey universalLink:@"https://ls.hainanjunfeng.com/app/"];
 #endif
     self.appCation = application;
     self.requestDomainCount = 0;
@@ -479,6 +482,17 @@
     }
 }
 
+- (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray<id<UIUserActivityRestoring>> * _Nullable))restorationHandler {
+    NSURL *continueURL = userActivity.webpageURL;
+    NSString *relativePath = continueURL.relativePath;
+    if ([relativePath containsString:WeiXinPayKey] && [relativePath containsString:@"pay"]) {
+        return [WXApi handleOpenUniversalLink:userActivity delegate:[LQWeChatManager shareInstance]];
+    } else if ([relativePath containsString:[NSString stringWithFormat:@"%@", WeiXinPayKey]]) {
+        return [WXApi handleOpenUniversalLink:userActivity delegate:[LQWeChatManager shareInstance]];
+    }
+    return YES;
+}
+
 #pragma mark===修改在线状态
 - (void)updateState:(NSString *)state
 {
@@ -520,6 +534,15 @@
 }
 
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
+    if ([url.scheme containsString:WeiXinPayKey]) {
+        if ([url.absoluteString containsString:[NSString stringWithFormat:@"%@://pay", WeiXinPayKey]]) {
+            return [LQWeChatManager handleOpenUrl:url];
+        } else if ([url.absoluteString containsString:[NSString stringWithFormat:@"%@://oauth?", WeiXinPayKey]]) {
+            return [LQWeChatManager handleOpenUrl:url];
+        }else if ([url.absoluteString containsString:[NSString stringWithFormat:@"%@://resendContextReqByScheme?", WeiXinPayKey]]){
+            return [WXApi handleOpenURL:url delegate:nil];
+        }
+    }
     if ([url.host isEqualToString:@"safepay"]) {
         //跳转支付宝钱包进行支付时，处理支付结果
         [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {

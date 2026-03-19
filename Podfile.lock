@@ -568,6 +568,7 @@ PODS:
     - TZImagePickerController/Location (= 3.8.9)
   - TZImagePickerController/Basic (3.8.9)
   - TZImagePickerController/Location (3.8.9)
+  - WechatOpenSDK (2.0.5)
   - WMZDialog (1.5.0)
   - ZFPlayer (4.1.4):
     - ZFPlayer/Core (= 4.1.4)
@@ -611,6 +612,7 @@ DEPENDENCIES:
   - TUICore (from `./CherryTWUser/public/TUIKit/TUICore`)
   - TYCyclePagerView
   - TZImagePickerController
+  - WechatOpenSDK
   - WMZDialog
   - ZFPlayer
   - ZFPlayer/AVPlayer
@@ -651,6 +653,7 @@ SPEC REPOS:
     - TXIMSDK_Plus_iOS
     - TYCyclePagerView
     - TZImagePickerController
+    - WechatOpenSDK
     - WMZDialog
     - ZFPlayer
 
@@ -704,9 +707,10 @@ SPEC CHECKSUMS:
   TXIMSDK_Plus_iOS: 977e38f6e4e0d8e72dfeae832b7f309d994a8df5
   TYCyclePagerView: 2b051dade0615c70784aa34f40c646feeddb7344
   TZImagePickerController: 456f470b5dea97b37226ec7a694994a8663340b2
+  WechatOpenSDK: a363db41205f57abbc05bb6b80bf2d2ed1ea40bf
   WMZDialog: 724777637ca12b1d8078644b9f10aa264dec3a96
   ZFPlayer: 5cf39e8d9f0c2394a014b0db4767b5b5a6bffe13
 
-PODFILE CHECKSUM: 81de6a9fedb9e37f0a7c896452bff05ce5eb30bb
+PODFILE CHECKSUM: be1a95f44c70626bd6320bfcce34253804a5065c
 
 COCOAPODS: 1.16.2

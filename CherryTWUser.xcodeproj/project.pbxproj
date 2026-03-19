@@ -305,6 +305,7 @@
 		BFE0EB982ECAB9FA0099D224 /* UITableViewCell+PGCellShaow.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE0EB972ECAB9FA0099D224 /* UITableViewCell+PGCellShaow.m */; };
 		BFE0EB9B2ECB033B0099D224 /* PGYuYueModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE0EB9A2ECB033B0099D224 /* PGYuYueModel.m */; };
 		BFE0EB9E2ECB16B40099D224 /* HMPublishSuccessAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE0EB9D2ECB16B40099D224 /* HMPublishSuccessAlertView.m */; };
+		BFE440912F6BF20500CAFEB1 /* LQWeChatManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE440902F6BF20500CAFEB1 /* LQWeChatManager.m */; };
 		BFE70D882D00084100B8FFAA /* PGPersonalTaDynamicCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFE70D872D00084000B8FFAA /* PGPersonalTaDynamicCollectionViewCell.xib */; };
 		BFE70D892D00084100B8FFAA /* PGPersonalTaDynamicCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE70D862D00084000B8FFAA /* PGPersonalTaDynamicCollectionViewCell.m */; };
 		BFE94A612EC97DE200580041 /* PGPersonalIntroTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFE94A602EC97DE200580041 /* PGPersonalIntroTableViewCell.xib */; };
@@ -849,6 +850,8 @@
 		BFE0EB9A2ECB033B0099D224 /* PGYuYueModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PGYuYueModel.m; sourceTree = "<group>"; };
 		BFE0EB9C2ECB16B40099D224 /* HMPublishSuccessAlertView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HMPublishSuccessAlertView.h; sourceTree = "<group>"; };
 		BFE0EB9D2ECB16B40099D224 /* HMPublishSuccessAlertView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HMPublishSuccessAlertView.m; sourceTree = "<group>"; };
+		BFE4408F2F6BF20500CAFEB1 /* LQWeChatManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LQWeChatManager.h; sourceTree = "<group>"; };
+		BFE440902F6BF20500CAFEB1 /* LQWeChatManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LQWeChatManager.m; sourceTree = "<group>"; };
 		BFE70D852D00084000B8FFAA /* PGPersonalTaDynamicCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PGPersonalTaDynamicCollectionViewCell.h; sourceTree = "<group>"; };
 		BFE70D862D00084000B8FFAA /* PGPersonalTaDynamicCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PGPersonalTaDynamicCollectionViewCell.m; sourceTree = "<group>"; };
 		BFE70D872D00084000B8FFAA /* PGPersonalTaDynamicCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PGPersonalTaDynamicCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -949,6 +952,8 @@
 				BF8E5D202F39FF1E008362DC /* HMOSSFileUploadManager.m */,
 				BF2044072F5033E1006C425E /* HMSocketManager.h */,
 				BF2044082F5033E1006C425E /* HMSocketManager.m */,
+				BFE4408F2F6BF20500CAFEB1 /* LQWeChatManager.h */,
+				BFE440902F6BF20500CAFEB1 /* LQWeChatManager.m */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -2361,6 +2366,7 @@
 				BF7EE3862EB6FA5D00DCB3C0 /* PGPersonalYuYueAlertView.m in Sources */,
 				BF177FAF2D014B1A0000387F /* PGPublishDynamicViewController.m in Sources */,
 				BF2112412ECD96AF00935252 /* PGCallVideoAlertView.m in Sources */,
+				BFE440912F6BF20500CAFEB1 /* LQWeChatManager.m in Sources */,
 				BF692EC92D1179F70032BD37 /* PGMyCollectModel.m in Sources */,
 				BFA178122EB7B35B00FB3675 /* HMBlackListTableViewCell.m in Sources */,
 				BF5DB2E02D5F882200C3311D /* PGChatTableHeaderView.m in Sources */,

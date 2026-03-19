@@ -23,6 +23,8 @@
 ///1.原生，2.三方
 @property (nonatomic, assign) NSInteger aliPayType;
 
+@property (nonatomic, copy) NSString * currentPayType;
+
 @end
 
 @implementation PGRechargeViewController
@@ -32,7 +34,7 @@
     // Do any additional setup after loading the view from its nib.
     [self loadUI];
     [self loadData];
-    [self judgeOriginOrThird];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(paySuccess) name:@"UserNotificationAlipayOrWechatSuccess" object:nil];
 }
 - (void)loadUI
 {
@@ -72,7 +74,7 @@
 {
     WeakSelf(self)
     NSMutableDictionary * dic = [NSMutableDictionary dictionary];
-    [dic setValue:@"ALI_PAY" forKey:@"payType"];
+    [dic setValue:self.currentPayType forKey:@"payType"];
     [dic setValue:PackName forKey:@"packageName"];
     [PGAPIService payOriginOrThirdWithParameters:dic Success:^(id  _Nonnull data) {
         BOOL isOrigin = [data[@"data"] boolValue];
@@ -139,6 +141,14 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSDictionary * dic = self.dataArray[indexPath.section];
+    NSString * nameStr = dic[@"name"];
+    if ([nameStr isEqualToString:@"支付宝"]) {
+        self.currentPayType = @"ALI_PAY";
+    }else if ([nameStr isEqualToString:@"微信支付"]){
+        self.currentPayType = @"WE_CHAT";
+    }
+    [self judgeOriginOrThird];
     PGRechargeTableViewCell * cell = [tableView cellForRowAtIndexPath:indexPath];
     [cell.chooseImg setImage:MPImage(@"choose_ed")];
     cell.backgroundColor = HEX(#FFE3EB);
@@ -160,21 +170,43 @@
     [dic setValue:[PGManager shareModel].userInfo.userid forKey:@"userId"];
     [dic setValue:@"充值" forKey:@"category"];
     [dic setValue:self.aliPayType == 1 ? @"ZN" : @"ALPN" forKey:@"payType"];
+    if ([self.currentPayType isEqualToString:@"WE_CHAT"]) {
+        [dic setValue:@"WN" forKey:@"payType"];
+    }
     [dic setValue:@(self.coinModel.money) forKey:@"chargeAmount"];
     [dic setValue:@(self.coinModel.coin) forKey:@"coinAmount"];
     [dic setValue:PackName forKey:@"packName"];
     [PGAPIService payRechargeWithParameters:dic Success:^(id  _Nonnull data) {
         [QMUITips hideAllTips];
-        if (weakself.aliPayType == 1) {
-            NSString * orderStr = data[@"orderString"];
-            [weakself goForAlipayAction:orderStr];
+        if ([self.currentPayType isEqualToString:@"WE_CHAT"]) {
+            [weakself wxPayAction:data];
         }else{
-            NSString * payUrl = data[@"data"];
-            [weakself goPay:payUrl];
+            if (weakself.aliPayType == 1) {
+                NSString * orderStr = data[@"orderString"];
+                [weakself goForAlipayAction:orderStr];
+            }else{
+                NSString * payUrl = data[@"data"];
+                [weakself goPay:payUrl];
+            }
         }
     } failure:^(NSInteger code, NSString * _Nonnull message) {
         [QMUITips hideAllTips];
         [QMUITips showWithText:message];
+    }];
+}
+#pragma mark===微信原生支付
+- (void)wxPayAction:(NSDictionary *)orderDic
+{
+    NSDictionary * dic = orderDic;
+    PayReq * request = [[PayReq alloc]init];
+    request.partnerId = dic[@"partnerid"];//商户号
+    request.prepayId =  dic[@"prepayid"];//微信返回的支付交
+    request.package =  dic[@"package"];//扩展字段
+    request.nonceStr=  dic[@"noncestr"];//随机字符串
+    request.timeStamp = (UInt32)[dic[@"timestamp"] integerValue];//时间戳
+    request.sign = dic[@"sign"];//签名
+    [WXApi sendReq:request completion:^(BOOL success) {
+        
     }];
 }
 - (void)goPay:(NSString *)url
