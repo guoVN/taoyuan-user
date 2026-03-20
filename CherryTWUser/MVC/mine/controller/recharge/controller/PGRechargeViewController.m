@@ -169,9 +169,9 @@
     NSMutableDictionary * dic = [NSMutableDictionary dictionary];
     [dic setValue:[PGManager shareModel].userInfo.userid forKey:@"userId"];
     [dic setValue:@"充值" forKey:@"category"];
-    [dic setValue:self.aliPayType == 1 ? @"ZN" : @"ALPN" forKey:@"payType"];
+    [dic setValue:self.aliPayType == 1 ? @"ALPN" : @"CXZN" forKey:@"payType"];
     if ([self.currentPayType isEqualToString:@"WE_CHAT"]) {
-        [dic setValue:@"WN" forKey:@"payType"];
+        [dic setValue:self.aliPayType == 1 ? @"WN" : @"WXPN" forKey:@"payType"];
     }
     [dic setValue:@(self.coinModel.money) forKey:@"chargeAmount"];
     [dic setValue:@(self.coinModel.coin) forKey:@"coinAmount"];
@@ -179,7 +179,11 @@
     [PGAPIService payRechargeWithParameters:dic Success:^(id  _Nonnull data) {
         [QMUITips hideAllTips];
         if ([self.currentPayType isEqualToString:@"WE_CHAT"]) {
-            [weakself wxPayAction:data];
+            if (weakself.aliPayType == 1) {
+                [weakself wxPayAction:data];
+            }else{
+                [weakself wxMinPayAction:data];
+            }
         }else{
             if (weakself.aliPayType == 1) {
                 NSString * orderStr = data[@"orderString"];
@@ -206,6 +210,18 @@
     request.timeStamp = (UInt32)[dic[@"timeStamp"] integerValue];//时间戳
     request.sign = dic[@"paySign"];//签名
     [WXApi sendReq:request completion:^(BOOL success) {
+        
+    }];
+}
+///小程序支付
+- (void)wxMinPayAction:(NSDictionary *)orderDic
+{
+    NSDictionary * dataDic = [PGUtils jsonToObject:orderDic[@"miniapp_data"]];
+    WXLaunchMiniProgramReq *req = [[WXLaunchMiniProgramReq alloc] init];
+       req.userName = dataDic[@"gh_id"];
+       req.path = [NSString stringWithFormat:@"%@?p=%@&s=app",dataDic[@"path"],orderDic[@"pre_order_id"]];
+       req.miniProgramType = WXMiniProgramTypeRelease;
+    [WXApi sendReq:req completion:^(BOOL success) {
         
     }];
 }
