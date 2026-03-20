@@ -810,6 +810,7 @@
 		BFAC59CF2D074E9700E02EFD /* PGColorfulQRCodeView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PGColorfulQRCodeView.m; sourceTree = "<group>"; };
 		BFAC59D12D074F4700E02EFD /* PGQRCodeTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PGQRCodeTool.h; sourceTree = "<group>"; };
 		BFAC59D22D074F4700E02EFD /* PGQRCodeTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PGQRCodeTool.m; sourceTree = "<group>"; };
+		BFACBDEF2F6D3E91007C388E /* CherryTWUser.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CherryTWUser.entitlements; sourceTree = "<group>"; };
 		BFAF05C92D0052700058CC39 /* PGDynamicDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PGDynamicDetailViewController.h; sourceTree = "<group>"; };
 		BFAF05CA2D0052700058CC39 /* PGDynamicDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PGDynamicDetailViewController.m; sourceTree = "<group>"; };
 		BFAF05CC2D0054940058CC39 /* PGDynamicDetailTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PGDynamicDetailTableViewCell.h; sourceTree = "<group>"; };
@@ -1107,6 +1108,7 @@
 		4390100729E041B3008857FB /* CherryTWUser */ = {
 			isa = PBXGroup;
 			children = (
+				BFACBDEF2F6D3E91007C388E /* CherryTWUser.entitlements */,
 				BF5B7BA92CFFF6A80051676D /* public */,
 				4385820129E1B7600059A69D /* MVC */,
 				43883AC229E30A4F00115A5E /* network */,
@@ -2734,6 +2736,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = CherryTWUser/CherryTWUser.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 3066;
@@ -2780,6 +2783,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = CherryTWUser/CherryTWUser.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 3066;

@@ -48,10 +48,10 @@
     
 #if DEBUG
     self.isPreEv = NO;
-    [WXApi registerApp:WeiXinPayKey universalLink:@"https://t.hainanjunfeng.com/app/"];
+    [WXApi registerApp:WeiXinPayKey universalLink:@"https://ms.sysywl.top/"];
 #else
     self.isPreEv = YES;
-    [WXApi registerApp:WeiXinPayKey universalLink:@"https://ls.hainanjunfeng.com/app/"];
+    [WXApi registerApp:WeiXinPayKey universalLink:@"https://ms.sysywl.top/"];
 #endif
     self.appCation = application;
     self.requestDomainCount = 0;

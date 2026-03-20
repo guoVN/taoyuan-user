@@ -17,7 +17,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="375" height="94"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="manDefault" translatesAutoresizingMaskIntoConstraints="NO" id="qbQ-XS-3gZ">
+                    <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_man" translatesAutoresizingMaskIntoConstraints="NO" id="qbQ-XS-3gZ">
                         <rect key="frame" x="16" y="16" width="60" height="60"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="60" id="4TX-xh-psI"/>
@@ -25,7 +25,7 @@
                         </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="hCornerRadius">
-                                <real key="value" value="10"/>
+                                <real key="value" value="30"/>
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </imageView>
@@ -165,7 +165,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="manDefault" width="80" height="80"/>
+        <image name="default_man" width="116" height="116"/>
         <image name="msg_down" width="7.6666665077209473" height="8.6666669845581055"/>
         <image name="msg_top" width="7.6666665077209473" height="8.6666669845581055"/>
         <image name="qinmidu" width="20" height="20"/>
