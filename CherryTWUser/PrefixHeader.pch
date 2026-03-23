@@ -89,10 +89,10 @@ if (@available(iOS 13.0, *)) {\
 #define AliyunOSSHttp @"http://ou.hainanyihong.cn"
 #endif
 
-#define Package_Name @"com.qrml.date"
-#define Channel_Name @"toutiao_qrml"
+#define Package_Name @"com.ppyh.date"
+#define Channel_Name @"toutiao_ppyh"
 #define versionCode @"3066"
-#define PackName @"qrml"
+#define PackName @"ppyh"
 #define WeiXinPayKey @"wx76a6e58cb7749ec0"
 #define WeiXinSecret @"e25e6206725c8e714121157e795e67ad"
 

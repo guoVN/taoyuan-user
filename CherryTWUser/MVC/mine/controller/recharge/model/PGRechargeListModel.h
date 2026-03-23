@@ -23,6 +23,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, assign) NSInteger money;
 @property (nonatomic, assign) NSInteger coin;
+///赠送的
+@property (nonatomic, assign) NSInteger giveCoin;
 
 @end
 

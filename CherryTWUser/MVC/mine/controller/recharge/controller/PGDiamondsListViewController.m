@@ -42,7 +42,7 @@
 }
 - (void)loadUI
 {
-    self.titleStr = @"糖币充值";
+    self.titleStr = @"钻石充值";
     if (self.isCallRecharge) {
         self.naviView.frame = CGRectMake(0, 0, ScreenWidth, 64);
         self.naviView.backBtn.alpha = 0;

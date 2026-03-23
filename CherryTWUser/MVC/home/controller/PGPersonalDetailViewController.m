@@ -22,6 +22,7 @@
 #import "PGPersonalIntroTableViewCell.h"
 #import "PGPersonalVideoPriceTableViewCell.h"
 #import "PGYuYueTableViewCell.h"
+#import "PGPersonalDetailTADynamicTableViewCell.h"
 #import "PGCustomAlertView.h"
 #import "HMBlackAlertView.h"
 #import "PGCallVideoAlertView.h"
@@ -241,7 +242,7 @@
 }
 #pragma mark - UITableViewDataSource, UITableViewDelegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 6;
+    return 7;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return 1;
@@ -287,7 +288,7 @@
         cell.detailModel = self.detailModel;
         [cell layoutIfNeeded];
         return cell;
-    }else{
+    }else if(indexPath.section == 5){
         PGYuYueTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"PGYuYueTableViewCell" forIndexPath:indexPath];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.detailModel = self.detailModel;
@@ -295,6 +296,12 @@
         cell.changeDayBlock = ^(NSString * _Nonnull scheduleDate) {
             [weakself loadYuYue:scheduleDate];
         };
+        [cell layoutIfNeeded];
+        return cell;
+    }else{
+        PGPersonalDetailTADynamicTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"PGPersonalDetailTADynamicTableViewCell" forIndexPath:indexPath];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.dynamicList = self.detailModel.dynamicList;
         [cell layoutIfNeeded];
         return cell;
     }
@@ -524,6 +531,7 @@
         [_tableView registerNib:[UINib nibWithNibName:@"PGYuYueTableViewCell" bundle:nil] forCellReuseIdentifier:@"PGYuYueTableViewCell"];
         [_tableView registerNib:[UINib nibWithNibName:@"PGPersonalIntroTableViewCell" bundle:nil] forCellReuseIdentifier:@"PGPersonalIntroTableViewCell"];
         [_tableView registerNib:[UINib nibWithNibName:@"PGPersonalVideoPriceTableViewCell" bundle:nil] forCellReuseIdentifier:@"PGPersonalVideoPriceTableViewCell"];
+        [_tableView registerNib:[UINib nibWithNibName:@"PGPersonalDetailTADynamicTableViewCell" bundle:nil] forCellReuseIdentifier:@"PGPersonalDetailTADynamicTableViewCell"];
         _tableView.tableHeaderView = self.tabHeaderView;
     }
     return _tableView;
