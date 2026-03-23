@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface PGDiamondsCollectionViewCell : UICollectionViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *numberLabel;
+@property (weak, nonatomic) IBOutlet UILabel *sendLabel;
 @property (weak, nonatomic) IBOutlet UILabel *priceLabel;
 
 @property (nonatomic, strong) PGRechargeListCoinModel * coinModel;

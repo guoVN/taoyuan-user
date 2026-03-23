@@ -20,6 +20,7 @@
 #import "PGYuYueRecordViewController.h"
 #import "HMAlbumViewController.h"
 #import "PGQinmiViewController.h"
+#import "PGInviteBindViewController.h"
 //view
 #import "PGMineTableViewCell.h"
 #import "PGRechargeAlertView.h"
@@ -105,7 +106,7 @@
                         @{@"img":@"dynamicIcon",@"name":@"我的动态"},
                         @{@"img":@"icon_yuyue",@"name":@"亲密度"},
                         @{@"img":@"icon_service",@"name":@"客服"},
-                        @{@"img":@"icon_invite",@"name":@"邀请好友"},
+                        @{@"img":@"icon_invite",@"name":@"邀请绑定"},
                         @{@"img":@"icon_set",@"name":@"设置"}] mutableCopy];
     [self.tableView reloadData];
 }
@@ -227,6 +228,9 @@
         [self.navigationController pushViewController:vc animated:YES];
     }else if ([titleStr isEqualToString:@"亲密度"]){
         PGQinmiViewController * vc = [[PGQinmiViewController alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
+    }else if ([titleStr isEqualToString:@"邀请绑定"]){
+        PGInviteBindViewController * vc = [[PGInviteBindViewController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
     }
 }

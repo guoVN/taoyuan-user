@@ -18,7 +18,12 @@
 - (void)setCoinModel:(PGRechargeListCoinModel *)coinModel
 {
     _coinModel = coinModel;
-    self.numberLabel.text = [NSString stringWithFormat:@"%.0f",coinModel.coin*0.1];
+    self.numberLabel.text = [NSString stringWithFormat:@"%.0f + %.0f",coinModel.coin*0.1,coinModel.giveCoin*0.1];
+    NSString * sendCoinStr = [NSString stringWithFormat:@"多送%.0f币",coinModel.giveCoin*0.1];
+    NSMutableAttributedString * att = [[NSMutableAttributedString alloc] initWithString:sendCoinStr];
+    NSRange range = [sendCoinStr rangeOfString:[NSString stringWithFormat:@"%.0f",coinModel.giveCoin*0.1]];
+    [att addAttributes:@{NSForegroundColorAttributeName:THEAME_COLOR} range:range];
+    self.sendLabel.attributedText = att;
     self.priceLabel.text = [NSString stringWithFormat:@"¥ %ld",coinModel.money];
 }
 

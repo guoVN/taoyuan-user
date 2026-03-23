@@ -409,7 +409,10 @@
         NSInteger unreadCount = 0;
         for (AgoraChatConversation *conversation in conversations) {
             if (![conversation.conversationId isEqualToString:@"99999999"]) {
-                unreadCount += conversation.unreadMessagesCount;
+                AgoraChatMessage * last = conversation.latestMessage;
+                if (last.conversationId>0) {
+                    unreadCount += conversation.unreadMessagesCount;
+                }
             }
         }
         

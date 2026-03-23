@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24504"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -25,7 +25,7 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </imageView>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="play" translatesAutoresizingMaskIntoConstraints="NO" id="GSn-7f-GsD">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="play" translatesAutoresizingMaskIntoConstraints="NO" id="GSn-7f-GsD">
                         <rect key="frame" x="78" y="73.666666666666671" width="30" height="30"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="8UY-j7-BiT"/>
@@ -76,11 +76,12 @@
                 <outlet property="backView" destination="44O-2t-Wr0" id="KXb-qt-WcL"/>
                 <outlet property="contentLabel" destination="j9I-gZ-0IA" id="s1d-qv-9Uq"/>
                 <outlet property="coverImg" destination="mHq-yf-JJW" id="cFF-sC-toH"/>
+                <outlet property="playImg" destination="GSn-7f-GsD" id="wPR-tI-dIy"/>
             </connections>
             <point key="canvasLocation" x="198.47328244274809" y="64.436619718309856"/>
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="play" width="30" height="30"/>
+        <image name="play" width="36" height="36"/>
     </resources>
 </document>

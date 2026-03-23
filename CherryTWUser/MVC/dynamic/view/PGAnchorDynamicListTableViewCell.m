@@ -8,6 +8,7 @@
 
 #import "PGAnchorDynamicListTableViewCell.h"
 #import "PGChatViewController.h"
+#import "PGPlayerViewController.h"
 
 @interface PGAnchorDynamicListTableViewCell ()
 
@@ -65,12 +66,48 @@
     }
     scroll.contentSize = CGSizeMake(90*imgArr.count, 0);
     self.preImgArray = imgArr;
+    
+    //视频
+    if (model.photoUrl.length == 0 && model.videoUrl.length>0) {
+        self.imgShowViewHC.constant = 80;
+        for (NSInteger i = 0; i <1; i++) {
+            UIImageView * imgV = [[UIImageView alloc] initWithFrame:CGRectMake(90*i, 0, 80, 80)];
+            imgV.contentMode = UIViewContentModeScaleAspectFill;
+            imgV.clipsToBounds = YES;
+            imgV.layer.cornerRadius = 10;
+            imgV.layer.masksToBounds = YES;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [[PGManager shareModel] getVideoThumbnailAsync:[NSURL URLWithString:model.videoUrl] completion:^(UIImage *thumbnail) {
+                    imgV.image = thumbnail;
+                }];
+            });
+            imgV.userInteractionEnabled = YES;
+            imgV.tag = i;
+            [imgV addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(videoClik:)]];
+            UIImageView * playImg = [[UIImageView alloc] init];
+            [playImg setImage:MPImage(@"play")];
+            [imgV addSubview:playImg];
+            [playImg mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.center.mas_equalTo(0);
+                make.width.height.mas_equalTo(30);
+            }];
+            [scroll addSubview:imgV];
+        }
+        scroll.contentSize = CGSizeMake(90*1, 0);
+    }
 }
 
 - (void)imgClik:(UITapGestureRecognizer *)ges
 {
     UIImageView * imgV = (UIImageView *)ges.view;
     [HUPhotoBrowser showFromImageView:imgV withURLStrings:self.preImgArray atIndex:ges.view.tag];
+}
+- (void)videoClik:(UITapGestureRecognizer *)ges
+{
+    PGPlayerViewController * vc = [[PGPlayerViewController alloc] init];
+    vc.modalPresentationStyle = 0;
+    vc.videoUrlStr = self.model.videoUrl;
+    [[PGUtils getCurrentVC] presentViewController:vc animated:YES completion:nil];
 }
 - (IBAction)praiseAction:(QMUIButton *)sender {
     WeakSelf(self)

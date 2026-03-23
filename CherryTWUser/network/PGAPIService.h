@@ -391,6 +391,18 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)intimacyListWithParameters:(NSDictionary *)parametersDic Success:(void (^)(id data))successBlock
                            failure:(void (^)(NSInteger code, NSString* message))failureBlock;
 
+///查询女主播
++ (void)checkAnchorByIdWithParameters:(NSDictionary *)parametersDic Success:(void (^)(id data))successBlock
+                           failure:(void (^)(NSInteger code, NSString* message))failureBlock;
+
+///绑定女主播
++ (void)inviteBindAnchorWithParameters:(NSDictionary *)parametersDic Success:(void (^)(id data))successBlock
+                           failure:(void (^)(NSInteger code, NSString* message))failureBlock;
+
+///查询绑定女主播
++ (void)checkBindAnchorWithParameters:(NSDictionary *)parametersDic Success:(void (^)(id data))successBlock
+                           failure:(void (^)(NSInteger code, NSString* message))failureBlock;
+
 @end
 
 NS_ASSUME_NONNULL_END

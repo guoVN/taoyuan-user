@@ -31,13 +31,11 @@
     NSArray * imgArr = [model.photoUrl componentsSeparatedByString:@","];
     [self.contentImg sd_setImageWithURL:[NSURL URLWithString:imgArr.firstObject]];
     if (model.photoUrl.length == 0 && model.videoUrl.length>0) {
-        if (self.contentImg.image == nil) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [[PGManager shareModel] getVideoThumbnailAsync:[NSURL URLWithString:model.videoUrl] completion:^(UIImage *thumbnail) {
-                    self.contentImg.image = thumbnail;
-                }];
-            });
-        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[PGManager shareModel] getVideoThumbnailAsync:[NSURL URLWithString:model.videoUrl] completion:^(UIImage *thumbnail) {
+                self.contentImg.image = thumbnail;
+            }];
+        });
         self.playImg.alpha = 1;
     }
 }

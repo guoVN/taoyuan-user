@@ -7,10 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "PGAnchorModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface PGCheckBindAnchorModel : NSObject
+
+@property (nonatomic, assign) NSInteger bindStatus;
+@property (nonatomic, strong) PGAnchorModel * anchorUser;
 
 @end
 

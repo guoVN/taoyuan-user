@@ -46,7 +46,7 @@
             make.top.mas_equalTo(10);
         }];
     }
-    self.diamonsNumLabel.text = [NSString stringWithFormat:@"%.0f",self.coinModel.coin*0.1];
+    self.diamonsNumLabel.text = [NSString stringWithFormat:@"%.0f+%.0f",self.coinModel.coin*0.1,self.coinModel.giveCoin*0.1];
     self.moneyLabel.text = [NSString stringWithFormat:@"¥ %ld.00",self.coinModel.money];
     [self.view addSubview:self.tableView];
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {

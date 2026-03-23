@@ -2154,5 +2154,63 @@
     }];
 }
 
+///查询女主播
++ (void)checkAnchorByIdWithParameters:(NSDictionary *)parametersDic Success:(void (^)(id data))successBlock
+                           failure:(void (^)(NSInteger code, NSString* message))failureBlock
+{
+    NSString * urlStr = [NSString stringWithFormat:@"%@%@",[PGManager shareModel].baseUrl,@"api/userBindAnchor/getAnchorUserById"];
+    NSMutableDictionary * headerDic = [NSMutableDictionary dictionaryWithDictionary:[self getCommonHeaderOfSubclasses:parametersDic]];
+    [headerDic setValue:@"application/json" forKey:@"Content-Type"];
+    [[HMNetworking sharedClient] get:urlStr parameters:parametersDic headers:headerDic success:^(id  _Nullable responseObject) {
+        NSDictionary *responseDict = responseObject;
+        if([responseDict[@"code"] integerValue] == 0){
+            successBlock(responseDict);
+        }else{
+            NSString * msg = responseDict[@"message"];
+            failureBlock([responseDict[@"code"] integerValue],msg);
+        }
+    } failure:^(NSError * _Nonnull error) {
+        failureBlock(50000,@"Network error");
+    }];
+}
+
+///绑定女主播
++ (void)inviteBindAnchorWithParameters:(NSDictionary *)parametersDic Success:(void (^)(id data))successBlock
+                           failure:(void (^)(NSInteger code, NSString* message))failureBlock
+{
+    NSString * urlStr = [NSString stringWithFormat:@"%@%@",[PGManager shareModel].baseUrl,@"api/userBindAnchor/bindInviteUser"];
+    NSDictionary * headerDic = [self getCommonHeaderOfSubclasses:parametersDic];
+    [[HMNetworking sharedClient] postForm:urlStr parameters:parametersDic headers:headerDic success:^(id  _Nullable responseObject) {
+        NSDictionary *responseDict = responseObject;
+        if([responseDict[@"code"] integerValue] == 0){
+            successBlock(responseDict);
+        }else{
+            NSString * msg = responseDict[@"msg"];
+            failureBlock([responseDict[@"code"] integerValue],msg);
+        }
+    } failure:^(NSError * _Nonnull error) {
+        failureBlock(50000,@"Network error");
+    }];
+}
+
+///查询绑定女主播
++ (void)checkBindAnchorWithParameters:(NSDictionary *)parametersDic Success:(void (^)(id data))successBlock
+                           failure:(void (^)(NSInteger code, NSString* message))failureBlock
+{
+    NSString * urlStr = [NSString stringWithFormat:@"%@%@",[PGManager shareModel].baseUrl,@"api/userBindAnchor/getBindStatusAndAnchor"];
+    NSMutableDictionary * headerDic = [NSMutableDictionary dictionaryWithDictionary:[self getCommonHeaderOfSubclasses:parametersDic]];
+    [headerDic setValue:@"application/json" forKey:@"Content-Type"];
+    [[HMNetworking sharedClient] get:urlStr parameters:parametersDic headers:headerDic success:^(id  _Nullable responseObject) {
+        NSDictionary *responseDict = responseObject;
+        if([responseDict[@"code"] integerValue] == 0){
+            successBlock(responseDict);
+        }else{
+            NSString * msg = responseDict[@"message"];
+            failureBlock([responseDict[@"code"] integerValue],msg);
+        }
+    } failure:^(NSError * _Nonnull error) {
+        failureBlock(50000,@"Network error");
+    }];
+}
 
 @end

@@ -253,6 +253,9 @@
     if (indexPath.section == 3 || indexPath.section == 5) {
         return 0;
     }
+    if (indexPath.section == 6) {
+        return self.detailModel.dynamicList.count>0?UITableViewAutomaticDimension:0;
+    }
     return UITableViewAutomaticDimension;
 }
 

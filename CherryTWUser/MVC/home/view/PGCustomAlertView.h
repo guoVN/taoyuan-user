@@ -21,7 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIView * hengView;
 @property (nonatomic, strong) UIView * shuView;
 
-///1.举报，2.删除动态，3.退出登录，4.注销账号，5.充值，6.转入到账户余额，7.拉黑
+///1.举报，2.删除动态，3.退出登录，4.注销账号，5.充值，6.转入到账户余额，7.拉黑，8.邀请绑定
 @property (nonatomic, assign) NSInteger type;
 @property (nonatomic, copy) NSString * dynamicId;
 @property (nonatomic, copy) void(^sureBlock)(void);

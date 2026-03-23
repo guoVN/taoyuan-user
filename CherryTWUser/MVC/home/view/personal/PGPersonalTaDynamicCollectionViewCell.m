@@ -23,6 +23,14 @@
     _dynamicModel = dynamicModel;
     [self.coverImg sd_setImageWithURL:[NSURL URLWithString:dynamicModel.photoUrl] placeholderImage:MPImage(@"netFaild")];
     self.contentLabel.text = dynamicModel.content;
+    self.playImg.alpha = dynamicModel.videoUrl.length>0?1:0;
+    if (dynamicModel.photoUrl.length == 0 && dynamicModel.videoUrl.length>0) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[PGManager shareModel] getVideoThumbnailAsync:[NSURL URLWithString:dynamicModel.videoUrl] completion:^(UIImage *thumbnail) {
+                self.coverImg.image = thumbnail;
+            }];
+        });
+    }
 }
 
 - (void)clickCover

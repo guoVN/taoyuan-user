@@ -154,6 +154,10 @@
         if (self.sureBlock) {
             self.sureBlock();
         }
+    }else if (self.type == 8){
+        if (self.sureBlock) {
+            self.sureBlock();
+        }
     }
     [self removeFromSuperview];
 }

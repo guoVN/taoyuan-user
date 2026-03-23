@@ -200,6 +200,11 @@
 		BF7EE3982EB7A4BA00DCB3C0 /* HMPlayTypeChooseProjectCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF7EE3942EB7A4BA00DCB3C0 /* HMPlayTypeChooseProjectCollectionViewCell.m */; };
 		BF7EE39B2EB7A57400DCB3C0 /* HMPlayTypeProjectModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BF7EE39A2EB7A57400DCB3C0 /* HMPlayTypeProjectModel.m */; };
 		BF81161E2D22368C00EC22B3 /* PGVideoCardAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF81161D2D22368C00EC22B3 /* PGVideoCardAlertView.m */; };
+		BF82F4B72F717B8D00998C0E /* PGInviteBindViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF82F4B62F717B8D00998C0E /* PGInviteBindViewController.xib */; };
+		BF82F4B82F717B8D00998C0E /* PGInviteBindViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF82F4B52F717B8D00998C0E /* PGInviteBindViewController.m */; };
+		BF82F4BC2F717EA400998C0E /* PGInviteBindTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF82F4BB2F717EA400998C0E /* PGInviteBindTableViewCell.xib */; };
+		BF82F4BD2F717EA400998C0E /* PGInviteBindTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF82F4BA2F717EA400998C0E /* PGInviteBindTableViewCell.m */; };
+		BF82F4C02F71888D00998C0E /* PGCheckBindAnchorModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BF82F4BF2F71888D00998C0E /* PGCheckBindAnchorModel.m */; };
 		BF854BFD2EAE5E7600B1C1B8 /* PGUnlockChatAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF854BFC2EAE5E7600B1C1B8 /* PGUnlockChatAlertView.m */; };
 		BF854C042EAE702200B1C1B8 /* HMPersonalInfoEditHeadTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF854BFF2EAE702200B1C1B8 /* HMPersonalInfoEditHeadTableViewCell.m */; };
 		BF854C052EAE702200B1C1B8 /* HMPersonalInfoEditInfoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF854C022EAE702200B1C1B8 /* HMPersonalInfoEditInfoTableViewCell.m */; };
@@ -668,6 +673,14 @@
 		BF7EE39A2EB7A57400DCB3C0 /* HMPlayTypeProjectModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HMPlayTypeProjectModel.m; sourceTree = "<group>"; };
 		BF81161C2D22368C00EC22B3 /* PGVideoCardAlertView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PGVideoCardAlertView.h; sourceTree = "<group>"; };
 		BF81161D2D22368C00EC22B3 /* PGVideoCardAlertView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PGVideoCardAlertView.m; sourceTree = "<group>"; };
+		BF82F4B42F717B8D00998C0E /* PGInviteBindViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PGInviteBindViewController.h; sourceTree = "<group>"; };
+		BF82F4B52F717B8D00998C0E /* PGInviteBindViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PGInviteBindViewController.m; sourceTree = "<group>"; };
+		BF82F4B62F717B8D00998C0E /* PGInviteBindViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PGInviteBindViewController.xib; sourceTree = "<group>"; };
+		BF82F4B92F717EA400998C0E /* PGInviteBindTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PGInviteBindTableViewCell.h; sourceTree = "<group>"; };
+		BF82F4BA2F717EA400998C0E /* PGInviteBindTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PGInviteBindTableViewCell.m; sourceTree = "<group>"; };
+		BF82F4BB2F717EA400998C0E /* PGInviteBindTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PGInviteBindTableViewCell.xib; sourceTree = "<group>"; };
+		BF82F4BE2F71888D00998C0E /* PGCheckBindAnchorModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PGCheckBindAnchorModel.h; sourceTree = "<group>"; };
+		BF82F4BF2F71888D00998C0E /* PGCheckBindAnchorModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PGCheckBindAnchorModel.m; sourceTree = "<group>"; };
 		BF854BFB2EAE5E7600B1C1B8 /* PGUnlockChatAlertView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PGUnlockChatAlertView.h; sourceTree = "<group>"; };
 		BF854BFC2EAE5E7600B1C1B8 /* PGUnlockChatAlertView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PGUnlockChatAlertView.m; sourceTree = "<group>"; };
 		BF854BFE2EAE702200B1C1B8 /* HMPersonalInfoEditHeadTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HMPersonalInfoEditHeadTableViewCell.h; sourceTree = "<group>"; };
@@ -1299,6 +1312,9 @@
 				BF4987AE2D06CA35000BE1F6 /* PGInviteFriendViewController.xib */,
 				BF4987B62D06E58E000BE1F6 /* PGInviteFriendListViewController.h */,
 				BF4987B72D06E58E000BE1F6 /* PGInviteFriendListViewController.m */,
+				BF82F4B42F717B8D00998C0E /* PGInviteBindViewController.h */,
+				BF82F4B52F717B8D00998C0E /* PGInviteBindViewController.m */,
+				BF82F4B62F717B8D00998C0E /* PGInviteBindViewController.xib */,
 			);
 			path = controller;
 			sourceTree = "<group>";
@@ -1322,6 +1338,9 @@
 				BFAC59C92D07409F00E02EFD /* PGInviteFriendPosterCollectionViewCell.h */,
 				BFAC59CA2D07409F00E02EFD /* PGInviteFriendPosterCollectionViewCell.m */,
 				BFAC59CB2D07409F00E02EFD /* PGInviteFriendPosterCollectionViewCell.xib */,
+				BF82F4B92F717EA400998C0E /* PGInviteBindTableViewCell.h */,
+				BF82F4BA2F717EA400998C0E /* PGInviteBindTableViewCell.m */,
+				BF82F4BB2F717EA400998C0E /* PGInviteBindTableViewCell.xib */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -1745,6 +1764,8 @@
 				BF515D4F2D1D83650043AD41 /* PGInviteInComeModel.m */,
 				BF515D512D1D88430043AD41 /* PGInviteInFriendModel.h */,
 				BF515D522D1D88430043AD41 /* PGInviteInFriendModel.m */,
+				BF82F4BE2F71888D00998C0E /* PGCheckBindAnchorModel.h */,
+				BF82F4BF2F71888D00998C0E /* PGCheckBindAnchorModel.m */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -2191,6 +2212,7 @@
 				BF5C66692D009F76005A0DA7 /* PGDynamicDetailPraiseListTableViewCell.xib in Resources */,
 				BFE9CF052EAA8A52008356CC /* PGYuYueTableViewCell.xib in Resources */,
 				BF71A79C2D05467E00F0DB0D /* PGSetViewController.xib in Resources */,
+				BF82F4B72F717B8D00998C0E /* PGInviteBindViewController.xib in Resources */,
 				BF177FB32D0150BB0000387F /* PGPublishDynamicCollectionViewCell.xib in Resources */,
 				BFA178072EB7AF4500FB3675 /* HMPlayTypeUpdatePriceCollectionViewCell.xib in Resources */,
 				BF3EB62E2D002CDE002B862F /* PGPersonalDetailTagTableViewCell.xib in Resources */,
@@ -2258,6 +2280,7 @@
 				BF7944DA2D27827A00408F39 /* receiver.wav in Resources */,
 				BFC52AA62D0597200078CCAD /* PGRechargeViewController.xib in Resources */,
 				BF99ED8F2F516F86000A8C53 /* PGQinmiCollectionViewCell.xib in Resources */,
+				BF82F4BC2F717EA400998C0E /* PGInviteBindTableViewCell.xib in Resources */,
 				BF6E84A62EAB1E0000B3DF5E /* HMProjectMenuTableViewCell.xib in Resources */,
 				BFE94A612EC97DE200580041 /* PGPersonalIntroTableViewCell.xib in Resources */,
 				BF3EB63B2D004007002B862F /* PGPersonalDetailInfoableViewCell.xib in Resources */,
@@ -2347,6 +2370,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BF889AFE2CFEB6F400812159 /* PGRegisterViewController.m in Sources */,
+				BF82F4C02F71888D00998C0E /* PGCheckBindAnchorModel.m in Sources */,
 				BF4987AF2D06CA35000BE1F6 /* PGInviteFriendViewController.m in Sources */,
 				BFE70D892D00084100B8FFAA /* PGPersonalTaDynamicCollectionViewCell.m in Sources */,
 				BF6087212EAB5A92003AAB11 /* PGNoticeViewController.m in Sources */,
@@ -2381,6 +2405,7 @@
 				BFC52AAC2D059A2E0078CCAD /* PGRechargeTableViewCell.m in Sources */,
 				BF5DD74F2D0156F600CA61F7 /* TZImagePickerHelper.m in Sources */,
 				BF99ED942F5172E3000A8C53 /* HMIntimacyListModel.m in Sources */,
+				BF82F4B82F717B8D00998C0E /* PGInviteBindViewController.m in Sources */,
 				BFE9CF0F2EAA8E84008356CC /* HMYuYueListCollectionReusableView.m in Sources */,
 				BFE9CF102EAA8E84008356CC /* HMYuYueListCollectionViewCell.m in Sources */,
 				BF692EC52D1175390032BD37 /* PGMyCollectTableViewCell.m in Sources */,
@@ -2493,6 +2518,7 @@
 				BF5DD7632D019F9700CA61F7 /* PGMyAlbumViewController.m in Sources */,
 				BF2BA2052CFDDF9000E28E88 /* PGCustomViewController.m in Sources */,
 				BF96AE932D3E40D200028B39 /* PGAddAlipayAccountViewController.m in Sources */,
+				BF82F4BD2F717EA400998C0E /* PGInviteBindTableViewCell.m in Sources */,
 				BF66CB842EABC4F7002FC6A1 /* PGFollowAndFansListView.m in Sources */,
 				BF50EC792D0A6B2C008C9C9E /* PGChatViewController.m in Sources */,
 				BF121B8F2D06BCC500E737E8 /* PGMessageListTableViewCell.m in Sources */,
