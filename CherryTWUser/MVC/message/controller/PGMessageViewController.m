@@ -33,6 +33,13 @@
 {
     [super viewWillAppear:animated];
     [self loadData];
+    BOOL imLogin = AgoraChatClient.sharedClient.isLoggedIn;
+    if (!imLogin) {
+        [PGUtils loginIM:[PGManager shareModel].userInfo];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self loadData];
+        });
+    }
 }
 - (void)dealloc
 {

@@ -45,12 +45,18 @@
 {
     page = 1;
     [self addSubview:self.collectionView];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshData) name:@"refreshHomeVC" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadData) name:@"refreshHomeListVC" object:nil];
 }
 - (void)snapSubView
 {
     [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.mas_equalTo(0);
     }];
+}
+- (void)refreshData
+{
+    [self.collectionView.mj_header beginRefreshing];
 }
 - (void)loadData
 {

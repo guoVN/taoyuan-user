@@ -112,7 +112,14 @@
     PGBaseViewController *targetVc = self.childVcs[index];
     
     // 3. 若已是当前控制器，直接返回（避免重复操作）
-    if (targetVc == self.currentVc) return;
+    if (targetVc == self.currentVc){
+        if ([targetVc isMemberOfClass:[PGHomeViewController class]]) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshHomeVC" object:nil userInfo:nil];
+        }else if ([targetVc isMemberOfClass:[PGDynamicViewController class]]){
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshDynamicVC" object:nil userInfo:nil];
+        }
+        return;
+    }
     
     // 4. 移除当前子控制器的视图
     [self.currentVc.view removeFromSuperview];

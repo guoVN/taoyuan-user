@@ -44,6 +44,7 @@
     page = 1;
     [self loadUI];
     [self loadData];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshData) name:@"refreshDynamicVC" object:nil];
 }
 - (void)loadUI
 {
@@ -70,6 +71,10 @@
         make.bottom.mas_equalTo(-SafeBottom-10-49);
         make.width.height.mas_equalTo(82);
     }];
+}
+- (void)refreshData
+{
+    [self.collectionView.mj_header beginRefreshing];
 }
 - (void)loadData
 {

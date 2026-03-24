@@ -278,8 +278,22 @@
         messageModel.avatar = msgDic[@"senderPhoto"];
         messageModel.nickName = msgDic[@"senderName"];
         messageModel.extendStr1 = msgDic[@"senderid"];
+        if ([msgType isKindOfClass:[NSNull class]]) {
+            messageModel.avatar = msgDic[@"avatar"];
+            messageModel.nickName = msgDic[@"nickName"];
+            messageModel.extendStr1 = msgDic[@"anchorid"];
+        }
         
         NSString * type = msgDic[@"type"];
+        if ([type containsString:@"word"]) {
+            type = @"文字";
+        }else if ([type containsString:@"voice"]){
+            type = @"语音";
+        }else if ([type containsString:@"picture"] || [type containsString:@"photo"]){
+            type = @"图片";
+        }else if ([type containsString:@"video"]){
+            type = @"视频";
+        }
         NSString * contentStr = msgDic[@"content"];
         if ([contentStr containsString:@"!@#!@#"]) {///视频聊天发消息时用
             [[NSNotificationCenter defaultCenter] postNotificationName:@"videoChat" object:nil userInfo:@{@"content":message}];

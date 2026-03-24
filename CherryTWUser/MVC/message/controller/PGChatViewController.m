@@ -94,6 +94,10 @@
         make.size.mas_equalTo(CGSizeMake(48, 48));
     }];
 }
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 - (void)updateMsg:(NSNotification *)noti
 {
     NSDictionary * dic = noti.userInfo;
