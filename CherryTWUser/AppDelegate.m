@@ -267,6 +267,9 @@
         AgoraChatTextMessageBody *textBody = (AgoraChatTextMessageBody *)message.body;
         NSLog(@"%@",textBody.text);
         NSDictionary * msgDic = [PGUtils jsonToObject:textBody.text];
+        if ([msgDic isKindOfClass:[NSNull class]]) {
+            break;
+        }
         NSString * msgType = msgDic[@"type"];
         if ([msgType isKindOfClass:[NSNull class]]) {
             msgDic = [PGUtils jsonToObject:msgDic[@"content"]];

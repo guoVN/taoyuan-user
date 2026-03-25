@@ -7,27 +7,22 @@
 
 #import "PGNavigationViewController.h"
 
-@interface PGNavigationViewController ()<UINavigationControllerDelegate>
-
+@interface PGNavigationViewController ()<UINavigationControllerDelegate, UIGestureRecognizerDelegate>
 @end
 
 @implementation PGNavigationViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    //设置右滑返回手势的代理为自身
     self.delegate = self;
     __weak typeof(self) weakself = self;
     if ([self respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
         self.interactivePopGestureRecognizer.delegate = (id)weakself;
     }
-
 }
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {
-    if(self.viewControllers.count>0){
-        // 返回箭头
+    if (self.viewControllers.count > 0) {
         UIBarButtonItem *closeButton = [[UIBarButtonItem alloc] initWithImage:[MPImage(@"return") yd_originalRenderImage] style:UIBarButtonItemStylePlain target:self action:@selector(backAction:)];
         [viewController.navigationItem setLeftBarButtonItem:closeButton];
         viewController.hidesBottomBarWhenPushed = YES;
@@ -36,43 +31,61 @@
 }
 
 - (void)backAction:(id)sender {
+    [self.view endEditing:YES];
     [self popViewControllerAnimated:YES];
 }
 
 - (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
-    if ([navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)])
-    {
-        NSString * className = NSStringFromClass([navigationController.viewControllers.lastObject class]);
-        if (navigationController.viewControllers.count == 1)
-        {
-            //根视图控制器关闭手势返回
+    if ([navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        if (navigationController.viewControllers.count == 1) {
+            // 根视图：禁用手势并清空代理
             navigationController.interactivePopGestureRecognizer.enabled = NO;
             navigationController.interactivePopGestureRecognizer.delegate = nil;
-        }else
-        {
-            //其他的页面默认开启手势返回
+        } else {
+            // 非根视图：启用手势并恢复代理
             navigationController.interactivePopGestureRecognizer.enabled = YES;
+            navigationController.interactivePopGestureRecognizer.delegate = (id<UIGestureRecognizerDelegate>)self;
         }
-//        NSLog(@"**************************************1,%@",className);
+    }
+}
+
+- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    // 当即将显示的控制器不是当前控制器时（即正在执行pop），强制关闭键盘
+    if (navigationController.viewControllers.count < self.viewControllers.count) {
+        [self.view endEditing:YES];
     }
 }
 
 #pragma mark - UIGestureRecognizerDelegate
-//这个方法是在手势将要激活前调用：返回YES允许右滑手势的激活，返回NO不允许右滑手势的激活
-- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
-{
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    // 遍历触摸点的视图及其父视图，判断是否属于键盘相关视图
+    UIView *touchView = touch.view;
+    while (touchView) {
+        NSString *className = NSStringFromClass([touchView class]);
+        // 匹配常见的键盘视图类名
+        if ([className containsString:@"UIInput"] ||
+            [className containsString:@"Keyboard"] ||
+            [className containsString:@"UIPeripheralHostView"]) {
+            return NO;
+        }
+        touchView = touchView.superview;
+    }
+    return YES;
+}
+
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
     if (gestureRecognizer == self.interactivePopGestureRecognizer) {
-        //屏蔽调用rootViewController的滑动返回手势，避免右滑返回手势引起死机问题
+        // 根视图不允许右滑
         if (self.viewControllers.count < 2 ||
             self.visibleViewController == [self.viewControllers objectAtIndex:0]) {
             return NO;
         }
+        // 允许手势前强制关闭键盘，避免动画冲突
+        [self.view endEditing:YES];
     }
-    //这里就是非右滑手势调用的方法啦，统一允许激活
     return YES;
 }
-
 
 /*
 #pragma mark - Navigation

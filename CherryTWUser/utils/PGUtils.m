@@ -141,6 +141,10 @@
 
 + (id)jsonToObject:(NSString *)json
 {
+    if (!json || json.length == 0) {
+           NSLog(@"jsonToObject: data is nil or empty");
+           return nil;
+       }
     // string转data
     NSData *jsonData = [json dataUsingEncoding:NSUTF8StringEncoding];
     // json解析

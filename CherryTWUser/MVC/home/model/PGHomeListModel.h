@@ -10,6 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class PGHomeListUserModel;
 @interface PGHomeListModel : NSObject
 
 @property (nonatomic, assign) NSInteger isBusy;
@@ -55,6 +56,32 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString * school;
 @property (nonatomic, copy) NSString * hobby;
 @property (nonatomic, copy) NSString * job;
+
+@property (nonatomic, strong) PGHomeListUserModel * userInfo;
+
+@end
+
+@interface PGHomeListUserModel : NSObject
+
+@property (nonatomic, copy) NSString * age;
+///星座
+@property (nonatomic, copy) NSString * constellatioon;
+///职业
+@property (nonatomic, copy) NSString * profession;
+@property (nonatomic, copy) NSString * gender;
+@property (nonatomic, copy) NSString * height;
+@property (nonatomic, assign) NSInteger anchorId;
+///情感状态
+@property (nonatomic, copy) NSString * emotionState;
+@property (nonatomic, copy) NSString * location;
+@property (nonatomic, copy) NSString * hobby;
+@property (nonatomic, copy) NSString * personality;
+@property (nonatomic, copy) NSString * distance;
+@property (nonatomic, copy) NSString * lastLand;
+///在线状态
+@property (nonatomic, copy) NSString * onlineState;
+@property (nonatomic, assign) BOOL phoneAuth;
+@property (nonatomic, copy) NSString * commonPlace;
 
 @end
 

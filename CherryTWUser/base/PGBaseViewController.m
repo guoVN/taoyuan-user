@@ -11,7 +11,7 @@
 
 @interface PGBaseViewController ()<SVGAPlayerDelegate>
 
-@property (nonatomic, strong) id oldNavGesDelegate;
+//@property (nonatomic, strong) id oldNavGesDelegate;
 @property (nonatomic, strong) SVGAPlayer * svgaPlayer;
 @property (nonatomic, strong) SVGAParser * svgaParser;
 
@@ -43,16 +43,16 @@
     [self.naviView.titleBtn setImage:MPImage(@"curved") forState:UIControlStateNormal];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    self.oldNavGesDelegate = self.navigationController.interactivePopGestureRecognizer.delegate;
-    self.navigationController.interactivePopGestureRecognizer.delegate = (id)self;
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    self.navigationController.interactivePopGestureRecognizer.delegate = self.oldNavGesDelegate;
-}
+//- (void)viewWillAppear:(BOOL)animated {
+//    [super viewWillAppear:animated];
+//    self.oldNavGesDelegate = self.navigationController.interactivePopGestureRecognizer.delegate;
+//    self.navigationController.interactivePopGestureRecognizer.delegate = (id)self;
+//}
+//
+//- (void)viewWillDisappear:(BOOL)animated {
+//    [super viewWillDisappear:animated];
+//    self.navigationController.interactivePopGestureRecognizer.delegate = self.oldNavGesDelegate;
+//}
 
 - (void)pushViewController:(Class)controllerClass {
     [self.navigationController pushViewController:[[controllerClass alloc] init] animated:YES];

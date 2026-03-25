@@ -45,7 +45,9 @@
     [PGAPIService checkBindAnchorWithParameters:@{@"userId":[PGManager shareModel].userInfo.userid} Success:^(id  _Nonnull data) {
         weakself.bindStatusModel = [PGCheckBindAnchorModel mj_objectWithKeyValues:data[@"data"]];
         [weakself.dataArray removeAllObjects];
-        [weakself.dataArray addObject:weakself.bindStatusModel.anchorUser];
+        if (weakself.bindStatusModel.anchorUser != nil) {
+            [weakself.dataArray addObject:weakself.bindStatusModel.anchorUser];
+        }
         [weakself.tableView reloadData];
         if (weakself.bindStatusModel.bindStatus == 1) {
             weakself.searchBtn.backgroundColor = HEX(#999999);
@@ -99,8 +101,12 @@
         cell.bindBtn.backgroundColor = HEX(#999999);
         cell.bindBtn.enabled = NO;
     }
+    __weak typeof (cell) weakCell=cell;
     cell.refreshStatusBlock = ^{
-        [weakself loadData];
+        weakself.searchBtn.backgroundColor = HEX(#999999);
+        weakself.searchBtn.enabled = NO;
+        weakCell.bindBtn.backgroundColor = HEX(#999999);
+        weakCell.bindBtn.enabled = NO;
     };
     [cell layoutIfNeeded];
     return cell;

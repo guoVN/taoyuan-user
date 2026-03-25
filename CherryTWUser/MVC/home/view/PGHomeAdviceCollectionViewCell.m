@@ -22,14 +22,14 @@
     [self.headImg sd_setImageWithURL:[NSURL URLWithString:listModel.photoUrl] placeholderImage:MPImage(@"netFaild")];
     [self.headImg acs_radiusWithRadius:25 corner:UIRectCornerAllCorners];
     self.nameLabel.text = listModel.name;
-    self.onlineLabel.text = listModel.onlineState;
-    if ([listModel.onlineState isEqualToString:@"在线"]) {
+    self.onlineLabel.text = listModel.userInfo.onlineState;
+    if ([listModel.userInfo.onlineState isEqualToString:@"在线"]) {
         self.onlineView.backgroundColor = HEX(#5BF843);
         [self.onlineImg setImage:MPImage(@"onlineIcon")];
-    }else if ([listModel.onlineState isEqualToString:@"离线"]){
+    }else if ([listModel.userInfo.onlineState isEqualToString:@"离线"]){
         self.onlineView.backgroundColor = HEX(#F4F4F4);
         [self.onlineImg setImage:MPImage(@"")];
-    }else if ([listModel.onlineState isEqualToString:@"忙碌"]){
+    }else if ([listModel.userInfo.onlineState isEqualToString:@"忙碌"]){
         self.onlineView.backgroundColor = HEX(#FF0000);
         [self.onlineImg setImage:MPImage(@"busyIcon")];
     }
