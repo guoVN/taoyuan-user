@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24504"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -60,6 +60,18 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </view>
+                    <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D4w-c0-lov">
+                        <rect key="frame" x="260" y="25" width="20" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="20" id="Chr-Xl-npU"/>
+                            <constraint firstAttribute="height" constant="20" id="fYa-lL-bTt"/>
+                        </constraints>
+                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                        <state key="normal" backgroundImage="warn_icon"/>
+                        <connections>
+                            <action selector="faildBtnAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="vfC-gV-uTN"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="3M3-wy-KON" secondAttribute="bottom" id="3ik-Jm-pOt"/>
@@ -68,8 +80,10 @@
                     <constraint firstItem="tev-oU-eAC" firstAttribute="centerY" secondItem="bMx-Hr-Eoq" secondAttribute="centerY" id="NHG-h7-k1O"/>
                     <constraint firstAttribute="trailing" secondItem="bMx-Hr-Eoq" secondAttribute="trailing" constant="15" id="UkK-Qc-inh"/>
                     <constraint firstItem="bMx-Hr-Eoq" firstAttribute="leading" secondItem="3M3-wy-KON" secondAttribute="trailing" constant="10" id="VAW-cc-sKO"/>
+                    <constraint firstItem="3M3-wy-KON" firstAttribute="centerY" secondItem="D4w-c0-lov" secondAttribute="centerY" id="d4b-dG-yID"/>
                     <constraint firstItem="3M3-wy-KON" firstAttribute="trailing" secondItem="tev-oU-eAC" secondAttribute="trailing" constant="-6" id="daD-I3-NAL"/>
                     <constraint firstItem="bMx-Hr-Eoq" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="fhA-J1-dYv"/>
+                    <constraint firstItem="3M3-wy-KON" firstAttribute="leading" secondItem="D4w-c0-lov" secondAttribute="trailing" constant="10" id="oCG-kv-b4d"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
@@ -77,6 +91,7 @@
             <connections>
                 <outlet property="contentLabel" destination="3fW-Qq-Zqf" id="GWL-P5-xJf"/>
                 <outlet property="contentShowView" destination="3M3-wy-KON" id="lPx-qJ-Wzf"/>
+                <outlet property="faildBtn" destination="D4w-c0-lov" id="RJB-Uh-fWD"/>
                 <outlet property="headImg" destination="bMx-Hr-Eoq" id="aef-Lr-Wib"/>
             </connections>
             <point key="canvasLocation" x="113.74045801526717" y="15.492957746478874"/>
@@ -84,5 +99,6 @@
     </objects>
     <resources>
         <image name="triangleR" width="4.6666665077209473" height="7.6666665077209473"/>
+        <image name="warn_icon" width="12" height="12"/>
     </resources>
 </document>

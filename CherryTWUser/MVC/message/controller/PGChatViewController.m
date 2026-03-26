@@ -37,6 +37,8 @@
 @property (nonatomic, strong) PGAnchorPriceModel * priceModel;
 @property (nonatomic, strong) PGAnchorModel * anchorDetailModel;
 @property (nonatomic, strong) QMUIButton * varifyBtn;
+///发送的消息类型
+@property (nonatomic, copy) NSString * sendMsgType;
 
 @end
 
@@ -254,6 +256,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    WeakSelf(self)
     AgoraChatMessage * chatModel = self.dataArray[indexPath.section];
     AgoraChatTextMessageBody * textBody = (AgoraChatTextMessageBody *)chatModel.body;
     NSDictionary * msgDic = [PGUtils jsonToObject:textBody.text];
@@ -269,12 +272,20 @@
             PGRightImgTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"PGRightImgTableViewCell" forIndexPath:indexPath];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.msdDic = msgDic;
+            cell.faildBtn.alpha = chatModel.status == AgoraChatMessageStatusFailed ? 1 : 0;
+            cell.reSendMsgBlock = ^{
+                [weakself reSendMsgAction:chatModel];
+            };
             [cell layoutIfNeeded];
             return cell;
         }else if ([msgType isEqualToString:@"语音"] || [msgType isEqualToString:@"local_voice"]){
             PGRightAudioTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"PGRightAudioTableViewCell" forIndexPath:indexPath];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.msdDic = msgDic;
+            cell.faildBtn.alpha = chatModel.status == AgoraChatMessageStatusFailed ? 1 : 0;
+            cell.reSendMsgBlock = ^{
+                [weakself reSendMsgAction:chatModel];
+            };
             [cell layoutIfNeeded];
             return cell;
         }else{
@@ -282,12 +293,20 @@
                 PGRightImgTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"PGRightImgTableViewCell" forIndexPath:indexPath];
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 cell.msdDic = msgDic;
+                cell.faildBtn.alpha = chatModel.status == AgoraChatMessageStatusFailed ? 1 : 0;
+                cell.reSendMsgBlock = ^{
+                    [weakself reSendMsgAction:chatModel];
+                };
                 [cell layoutIfNeeded];
                 return cell;
             }else if ([[PGUtils getFileFormat:contentStr] isEqualToString:@"语音"]){
                 PGRightAudioTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"PGRightAudioTableViewCell" forIndexPath:indexPath];
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 cell.msdDic = msgDic;
+                cell.faildBtn.alpha = chatModel.status == AgoraChatMessageStatusFailed ? 1 : 0;
+                cell.reSendMsgBlock = ^{
+                    [weakself reSendMsgAction:chatModel];
+                };
                 [cell layoutIfNeeded];
                 return cell;
             }else{
@@ -295,6 +314,10 @@
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 cell.messageId = chatModel.messageId;
                 cell.msdDic = msgDic;
+                cell.faildBtn.alpha = chatModel.status == AgoraChatMessageStatusFailed ? 1 : 0;
+                cell.reSendMsgBlock = ^{
+                    [weakself reSendMsgAction:chatModel];
+                };
                 [cell layoutIfNeeded];
                 return cell;
             }
@@ -377,6 +400,7 @@
     WeakSelf(self)
     [PGAPIService uploadFileWithAudio:path Success:^(id  _Nonnull data) {
         NSArray * audioArr = data[@"data"];
+        weakself.sendMsgType = @"语音";
         [weakself sendMsgWith:audioArr.firstObject withType:@"文字"];
     } failure:^(NSInteger code, NSString * _Nonnull message) {
         [QMUITips showWithText:@"语音发送失败"];
@@ -402,6 +426,7 @@
             HMGiftView *view = [[HMGiftView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 332+SafeBottom) superView:mainView];
                 view.channelId = self.channelId;
                 view.sendGiftBlock = ^(NSString * _Nonnull giftName) {
+                    weakself.sendMsgType = @"礼物";
                     [weakself sendMsgWith:giftName withType:@"礼物"];
                 };
                 return view;
@@ -439,6 +464,7 @@
 {
     if ([PGManager shareModel].selfCoin < [PGManager shareModel].callCoin || [PGManager shareModel].selfCoin < 100) {
         [QMUITips showWithText:@"用户金币不足"];
+        [self.view endEditing:YES];
         [PGUtils goRechargeAlert];
         return;
     }
@@ -448,6 +474,17 @@
     }else if ([type isEqualToString:@"语音"]){
         sendType = @"1";
     }
+    
+    AgoraChatMessage *chatMessage = [self assemblyMsg:sendContent withType:type];
+    [self.dataArray addObject:chatMessage];
+    [self.tableView reloadData];
+    if ([self.sendMsgType isEqualToString:@"文字"]) {
+        self.chatInputView.inputField.text = @"";
+    }
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.01 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self dealTableView:NO];
+    });
+    
     WeakSelf(self)
     NSMutableDictionary * dic = [NSMutableDictionary dictionary];
     [dic setValue:self.channelId forKey:@"anchorId"];
@@ -459,14 +496,15 @@
     } failure:^(NSInteger code, NSString * _Nonnull message) {
         [QMUITips hideAllTips];
         [QMUITips showWithText:message];
+        [weakself msgSendFaild:chatMessage];
     }];
 }
-- (void)doSendMsgActionWith:(NSString *)sendContent withType:(NSString *)type
+- (AgoraChatMessage *)assemblyMsg:(NSString *)sendContent withType:(NSString *)type
 {
     BOOL isGift = [type isEqualToString:@"礼物"] ? true : false;
     NSDictionary * dic = @{@"type":type,@"content":sendContent,@"address":@"",@"bindId":@"",@"friendId":self.channelId,@"isGift":@(isGift),@"isReply":@"0",@"senderName":[PGManager shareModel].userInfo.nickName,@"senderPhoto":[PGManager shareModel].userInfo.photo,@"senderid":[PGManager shareModel].userInfo.userid};
     NSString * msgStr = [PGUtils objectToJson:dic];
-    WeakSelf(self)
+   
     AgoraChatTextMessageBody *textMessageBody = [[AgoraChatTextMessageBody alloc] initWithText:msgStr];
     // 消息接收方，单聊为对端用户的 ID，群聊为群组 ID，聊天室为聊天室 ID。
     NSString* conversationId = self.channelId;
@@ -479,6 +517,35 @@
     }};
     // 会话类型，单聊为 `AgoraChatTypeChat`，群聊为 `AgoraChatTypeGroupChat`，聊天室为 `AgoraChatTypeChatRoom`，默认为单聊。
     message.chatType = AgoraChatTypeChat;
+    
+    return message;
+}
+- (void)msgSendFaild:(AgoraChatMessage *)message
+{
+    message.status = AgoraChatMessageStatusFailed;
+    NSInteger index = [self.dataArray indexOfObject:message];
+    [self.dataArray replaceObjectAtIndex:index withObject:message];
+    [self.tableView reloadData];
+}
+- (void)reSendMsgAction:(AgoraChatMessage *)message
+{
+    [self.dataArray removeObject:message];
+    AgoraChatConversation *conversation = [AgoraChatClient.sharedClient.chatManager getConversationWithConvId:self.channelId];
+    AgoraChatError *error;
+    [conversation deleteMessageWithId:message.messageId error:&error];
+    AgoraChatTextMessageBody * textBody = (AgoraChatTextMessageBody *)message.body;
+    NSDictionary * msgDic = [PGUtils jsonToObject:textBody.text];
+    self.sendMsgType = msgDic[@"type"];
+    NSString * sendContent = msgDic[@"content"];
+    [self sendMsgCheckPre:sendContent withType:self.sendMsgType];
+}
+
+- (void)doSendMsgActionWith:(NSString *)sendContent withType:(NSString *)type
+{
+    WeakSelf(self)
+    BOOL isGift = [type isEqualToString:@"礼物"] ? true : false;
+    NSDictionary * dic = @{@"type":type,@"content":sendContent,@"address":@"",@"bindId":@"",@"friendId":self.channelId,@"isGift":@(isGift),@"isReply":@"0",@"senderName":[PGManager shareModel].userInfo.nickName,@"senderPhoto":[PGManager shareModel].userInfo.photo,@"senderid":[PGManager shareModel].userInfo.userid};
+    AgoraChatMessage *message = [self assemblyMsg:sendContent withType:type];
     // 发送消息。
     [[AgoraChatClient sharedClient].chatManager sendMessage:message
                                             progress:nil
@@ -514,15 +581,18 @@
                 [weakself presentViewController:nav animated:YES completion:nil];
             }else{
                 [weakself messageChargeAction:sendContent withType:type];
-                [weakself.dataArray addObject:message];
-                [weakself.tableView reloadData];
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.01 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    [weakself dealTableView:NO];
-                });
+//                [weakself.dataArray addObject:message];
+//                [weakself.tableView reloadData];
+//                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.01 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//                    [weakself dealTableView:NO];
+//                });
             }
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [weakself addMsgRecord:sendContent];
             });
+            weakself.sendMsgType = @"";
+        }else{
+            [weakself msgSendFaild:message];
         }
     }];
 }
@@ -651,16 +721,19 @@
         _chatInputView.delegate = self;
         _chatInputView.channelId = self.channelId;
         _chatInputView.sendBlock = ^(NSString * _Nonnull sendContent) {
+            weakself.sendMsgType = @"文字";
             [weakself sendMsgWith:sendContent withType:@"文字"];
-            weakself.chatInputView.inputField.text = @"";
         };
         _chatInputView.sendImgBlock = ^(NSString * _Nonnull imgUrl) {
+            weakself.sendMsgType = @"图片";
             [weakself sendMsgWith:imgUrl withType:@"文字"];
         };
         _chatInputView.sendVoiceCallBlock = ^{
+            weakself.sendMsgType = @"语音";
             [weakself sendMsgWith:@"" withType:@"语音"];
         };
         _chatInputView.sendVideoCallBlock = ^{
+            weakself.sendMsgType = @"视频通话";
             [weakself sendMsgWith:@"" withType:@"视频"];
         };
         _chatInputView.chooseGiftBlock = ^{

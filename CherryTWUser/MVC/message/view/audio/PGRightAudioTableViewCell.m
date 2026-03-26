@@ -147,5 +147,10 @@
     [self stopVoiceMessage];
 }
 
+- (IBAction)faildBtnAction:(id)sender {
+    if (self.reSendMsgBlock) {
+        self.reSendMsgBlock();
+    }
+}
 
 @end

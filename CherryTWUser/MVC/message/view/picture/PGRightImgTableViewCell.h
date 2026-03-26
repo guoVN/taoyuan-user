@@ -15,8 +15,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIImageView *headImg;
 @property (weak, nonatomic) IBOutlet UIImageView *conImg;
 @property (weak, nonatomic) IBOutlet UIButton *playBtn;
+@property (weak, nonatomic) IBOutlet UIButton *faildBtn;
 
 @property (nonatomic, strong) NSDictionary * msdDic;
+
+@property (nonatomic, copy) void(^reSendMsgBlock)(void);
 
 @end
 

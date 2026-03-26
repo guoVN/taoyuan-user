@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24504"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -73,12 +73,26 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </view>
+                    <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v4S-dT-k1f">
+                        <rect key="frame" x="164" y="53.666666666666664" width="20" height="19.999999999999993"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="TZw-ip-2ue"/>
+                            <constraint firstAttribute="width" constant="20" id="UVO-C5-avg"/>
+                        </constraints>
+                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                        <state key="normal" backgroundImage="warn_icon"/>
+                        <connections>
+                            <action selector="faildBtnAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="5Hb-VN-9Eu"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="Qwp-re-MfC" secondAttribute="trailing" constant="20" id="1a0-Fn-kHo"/>
+                    <constraint firstItem="P41-jt-OrI" firstAttribute="centerY" secondItem="v4S-dT-k1f" secondAttribute="centerY" id="2W1-Mo-0P1"/>
                     <constraint firstItem="P41-jt-OrI" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="CEy-H7-DnG"/>
                     <constraint firstItem="FMj-3K-9iw" firstAttribute="centerY" secondItem="Qwp-re-MfC" secondAttribute="centerY" id="ImC-dq-IAk"/>
                     <constraint firstItem="Qwp-re-MfC" firstAttribute="leading" secondItem="P41-jt-OrI" secondAttribute="trailing" constant="19" id="Nkx-We-a0R"/>
+                    <constraint firstItem="P41-jt-OrI" firstAttribute="leading" secondItem="v4S-dT-k1f" secondAttribute="trailing" constant="10" id="aoK-H8-161"/>
                     <constraint firstItem="P41-jt-OrI" firstAttribute="trailing" secondItem="FMj-3K-9iw" secondAttribute="trailing" constant="-6" id="led-s2-kV2"/>
                     <constraint firstItem="Qwp-re-MfC" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="qCq-j8-9tU"/>
                     <constraint firstAttribute="bottom" secondItem="P41-jt-OrI" secondAttribute="bottom" id="zr3-Bh-Ox0"/>
@@ -88,6 +102,7 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
                 <outlet property="conImg" destination="lGO-cC-iFE" id="RYk-AT-PLm"/>
+                <outlet property="faildBtn" destination="v4S-dT-k1f" id="LpF-CL-sMw"/>
                 <outlet property="headImg" destination="Qwp-re-MfC" id="52s-ik-L6B"/>
                 <outlet property="playBtn" destination="v8w-bx-DDc" id="Mbz-kf-gq7"/>
             </connections>
@@ -97,5 +112,6 @@
     <resources>
         <image name="shipin@2x" width="31" height="31"/>
         <image name="triangleR" width="4.6666665077209473" height="7.6666665077209473"/>
+        <image name="warn_icon" width="12" height="12"/>
     </resources>
 </document>

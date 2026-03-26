@@ -15,9 +15,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIImageView *headImg;
 @property (weak, nonatomic) IBOutlet UIView *contentShowView;
 @property (weak, nonatomic) IBOutlet UILabel *contentLabel;
+@property (weak, nonatomic) IBOutlet UIButton *faildBtn;
 
 @property (nonatomic, copy) NSString * messageId;
 @property (nonatomic, strong) NSDictionary * msdDic;
+
+@property (nonatomic, copy) void(^reSendMsgBlock)(void);
 
 @end
 

@@ -68,6 +68,18 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </view>
+                    <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q7P-tE-uUw">
+                        <rect key="frame" x="204" y="23" width="20" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="20" id="70i-x7-d0w"/>
+                            <constraint firstAttribute="height" constant="20" id="SJ3-KW-DYl"/>
+                        </constraints>
+                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                        <state key="normal" backgroundImage="warn_icon"/>
+                        <connections>
+                            <action selector="faildBtnAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="wgx-TL-5Fi"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstItem="g2Y-Fg-WBz" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="78" id="4y7-Aq-HrH"/>
@@ -76,8 +88,10 @@
                     <constraint firstItem="g2Y-Fg-WBz" firstAttribute="trailing" secondItem="Zmz-KU-eio" secondAttribute="trailing" constant="-6" id="DkO-tX-Hy6"/>
                     <constraint firstItem="g2Y-Fg-WBz" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="1" id="EcJ-AY-0SI"/>
                     <constraint firstAttribute="bottom" secondItem="g2Y-Fg-WBz" secondAttribute="bottom" id="UZi-xf-sDe"/>
+                    <constraint firstItem="g2Y-Fg-WBz" firstAttribute="leading" secondItem="q7P-tE-uUw" secondAttribute="trailing" constant="10" id="dAP-A8-hO0"/>
                     <constraint firstItem="Pho-zT-NZA" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="dGX-y6-qLe"/>
                     <constraint firstAttribute="trailing" secondItem="Pho-zT-NZA" secondAttribute="trailing" constant="20" id="rr0-Sp-E1B"/>
+                    <constraint firstItem="g2Y-Fg-WBz" firstAttribute="centerY" secondItem="q7P-tE-uUw" secondAttribute="centerY" id="sdI-d0-Pgu"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
@@ -86,6 +100,7 @@
                 <outlet property="audioImg" destination="bKW-tN-oZ6" id="loT-kS-dU3"/>
                 <outlet property="audioView" destination="g2Y-Fg-WBz" id="snf-a9-Y8n"/>
                 <outlet property="audioViewWC" destination="Xkj-dC-N2Q" id="TNm-vs-8wP"/>
+                <outlet property="faildBtn" destination="q7P-tE-uUw" id="Jhg-9r-Azb"/>
                 <outlet property="headImg" destination="Pho-zT-NZA" id="lUk-SG-W9u"/>
                 <outlet property="secondLabel" destination="BB9-2O-zlP" id="JVd-2q-IwI"/>
             </connections>
@@ -95,5 +110,6 @@
     <resources>
         <image name="rightAudio" width="13.666666984558105" height="18"/>
         <image name="triangleR" width="4.6666665077209473" height="7.6666665077209473"/>
+        <image name="warn_icon" width="12" height="12"/>
     </resources>
 </document>

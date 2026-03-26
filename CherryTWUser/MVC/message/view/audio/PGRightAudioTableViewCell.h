@@ -19,8 +19,11 @@ static NSString * const kShouldStopVoiceMessageNotification = @"kShouldStopVoice
 @property (weak, nonatomic) IBOutlet UILabel *secondLabel;
 @property (weak, nonatomic) IBOutlet UIView *audioView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *audioViewWC;
+@property (weak, nonatomic) IBOutlet UIButton *faildBtn;
 
 @property (nonatomic, strong) NSDictionary * msdDic;
+
+@property (nonatomic, copy) void(^reSendMsgBlock)(void);
 
 @end
 

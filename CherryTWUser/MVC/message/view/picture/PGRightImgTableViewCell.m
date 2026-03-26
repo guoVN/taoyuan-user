@@ -59,4 +59,10 @@
     [[PGUtils getCurrentVC] presentViewController:vc animated:YES completion:nil];
 }
 
+- (IBAction)faildBtnAction:(id)sender {
+    if (self.reSendMsgBlock) {
+        self.reSendMsgBlock();
+    }
+}
+
 @end
