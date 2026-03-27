@@ -54,7 +54,7 @@
                 self.contentLabel.attributedText = att;
             }
         }
-    }else if ([msgType isEqualToString:@"视频"] || [msgType isEqualToString:@"视频卡"] || [msgType isEqualToString:@"取消"] || [msgType isEqualToString:@"拒绝"] || [msgType isEqualToString:@"挂断"]){
+    }else if ([msgType isEqualToString:@"视频"] || [msgType isEqualToString:@"语音"] || [msgType isEqualToString:@"视频卡"] || [msgType isEqualToString:@"取消"] || [msgType isEqualToString:@"拒绝"] || [msgType isEqualToString:@"挂断"]){
         if ([msgType isEqualToString:@"取消"]) {
             contetStr = Localized(@"已取消");
         }else if ([msgType isEqualToString:@"拒绝"]){

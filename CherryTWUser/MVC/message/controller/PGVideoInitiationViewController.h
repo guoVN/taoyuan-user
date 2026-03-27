@@ -28,6 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) NSInteger callType;
 @property (nonatomic, strong) NSDictionary * dataDic;
 @property (nonatomic, copy) NSString * anchorName;
+@property (nonatomic, copy) NSString * anchorHeadStr;
 @property (nonatomic, strong) UIImage * anchorHeadImg;
 @property (nonatomic, assign) BOOL isVideoCard;
 ///是否音频通话

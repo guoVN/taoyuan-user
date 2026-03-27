@@ -17,6 +17,7 @@
                 <outlet property="hangBtn2" destination="kAo-2p-IDn" id="PHG-jM-m7m"/>
                 <outlet property="hangUpBtn1" destination="W33-dt-omh" id="s2U-Lk-vCU"/>
                 <outlet property="headImg" destination="gG2-cu-Y6H" id="y4Z-gc-uMr"/>
+                <outlet property="promptLabel" destination="Ccx-cm-ZTY" id="UgF-5a-99W"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>

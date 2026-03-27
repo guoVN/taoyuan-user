@@ -47,6 +47,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [IQKeyboardManager sharedManager].enable =NO;
+    [self registNoti];
     [self readMsg];
 }
 
@@ -68,16 +69,12 @@
 //    [self loadCallPrice];
 //    [self loadAnchorDetail];
     [self loadData];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardShow:) name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardHide:) name:UIKeyboardWillHideNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkMsg:) name:@"RefreshMsg" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateVideocallMsg:) name:@"RefreshVideoCallType" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateMsg:) name:@"refreshMsgContent" object:nil];
 }
 - (void)loadUI
 {
     self.view.backgroundColor = HEX(#FFFFFF);
     self.titleStr = self.friendName;
+    [self.naviView.backBtn addTarget:self action:@selector(backBtnAction) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.chatInputView];
     [self.chatInputView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.bottom.right.mas_equalTo(0);
@@ -95,6 +92,40 @@
         make.bottom.equalTo(self.chatInputView.mas_top).offset(-30);
         make.size.mas_equalTo(CGSizeMake(48, 48));
     }];
+    UIGestureRecognizer *popGesture = self.navigationController.interactivePopGestureRecognizer;
+    [popGesture addTarget:self action:@selector(handlePopGesture:)];
+}
+- (void)handlePopGesture:(UIScreenEdgePanGestureRecognizer *)gesture {
+    switch (gesture.state) {
+        case UIGestureRecognizerStateBegan:
+            // 侧滑开始
+            break;
+        case UIGestureRecognizerStateChanged:
+            // 侧滑中（可获取滑动进度）
+            break;
+        case UIGestureRecognizerStateEnded:
+            // 侧滑结束
+            [[NSNotificationCenter defaultCenter] removeObserver:self];
+            break;
+        case UIGestureRecognizerStateCancelled:
+            //取消
+            break;
+        default:
+            break;
+    }
+}
+- (void)backBtnAction
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self.navigationController popViewControllerAnimated:YES];
+}
+- (void)registNoti
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardHide:) name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkMsg:) name:@"RefreshMsg" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateVideocallMsg:) name:@"RefreshVideoCallType" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateMsg:) name:@"refreshMsgContent" object:nil];
 }
 - (void)dealloc
 {
@@ -476,14 +507,16 @@
     }
     
     AgoraChatMessage *chatMessage = [self assemblyMsg:sendContent withType:type];
-    [self.dataArray addObject:chatMessage];
-    [self.tableView reloadData];
-    if ([self.sendMsgType isEqualToString:@"文字"]) {
-        self.chatInputView.inputField.text = @"";
+    if ([sendType isEqualToString:@"3"]) {
+        [self.dataArray addObject:chatMessage];
+        [self.tableView reloadData];
+        if ([self.sendMsgType isEqualToString:@"文字"]) {
+            self.chatInputView.inputField.text = @"";
+        }
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.01 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self dealTableView:NO];
+        });
     }
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.01 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self dealTableView:NO];
-    });
     
     WeakSelf(self)
     NSMutableDictionary * dic = [NSMutableDictionary dictionary];
@@ -496,7 +529,9 @@
     } failure:^(NSInteger code, NSString * _Nonnull message) {
         [QMUITips hideAllTips];
         [QMUITips showWithText:message];
-        [weakself msgSendFaild:chatMessage];
+        if ([sendType isEqualToString:@"3"]) {
+            [weakself msgSendFaild:chatMessage];
+        }
     }];
 }
 - (AgoraChatMessage *)assemblyMsg:(NSString *)sendContent withType:(NSString *)type
@@ -592,7 +627,9 @@
             });
             weakself.sendMsgType = @"";
         }else{
-            [weakself msgSendFaild:message];
+            if ([type isEqualToString:@"文字"]) {
+                [weakself msgSendFaild:message];
+            }
         }
     }];
 }
@@ -729,7 +766,7 @@
             [weakself sendMsgWith:imgUrl withType:@"文字"];
         };
         _chatInputView.sendVoiceCallBlock = ^{
-            weakself.sendMsgType = @"语音";
+            weakself.sendMsgType = @"语音通话";
             [weakself sendMsgWith:@"" withType:@"语音"];
         };
         _chatInputView.sendVideoCallBlock = ^{

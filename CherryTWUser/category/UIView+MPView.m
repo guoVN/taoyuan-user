@@ -363,7 +363,7 @@ static const char YDGradientLayerKey = '\0';
 - (void)startRipple:(CGFloat)radius fromValue:(id)fromV toValue:(id)toV
 {
     CALayer * rippleLayer = [[CALayer alloc] init];
-    rippleLayer.backgroundColor = HEXAlpha(#FFFFFF, 0.08).CGColor;
+    rippleLayer.backgroundColor = HEXAlpha(#FFFFFF, 0.2).CGColor;
     rippleLayer.opacity = 0.0;
     rippleLayer.cornerRadius = radius;
     rippleLayer.frame = self.bounds;

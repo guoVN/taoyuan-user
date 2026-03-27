@@ -17,6 +17,7 @@
 @property (nonatomic, strong) UIView * headBackView;
 @property (nonatomic, strong) NSTimer * timer;
 @property (strong, nonatomic) AVAudioPlayer * audioPlayer;
+@property (weak, nonatomic) IBOutlet UILabel *promptLabel;
 
 @end
 
@@ -35,27 +36,20 @@
 {
     self.hangUpBtn1.alpha = self.callType == 1 ? 1 : 0;
     self.hangBtn2.alpha = self.answerBtn.alpha = self.callType == 3 ? 1 : 0;
+    self.promptLabel.text = self.callType == 1 ? @"请求中…" : @"对方请求中…";
     [self.headImg addBlurEffect:UIBlurEffectStyleLight withAlpha:0.8];
     [self.view addSubview:self.headBackView];
     [self.headBackView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.mas_equalTo(0);
-        make.top.mas_equalTo(STATUS_H_F+168);
+        make.centerX.equalTo(self.headImg.mas_centerX);
+        make.centerY.equalTo(self.headImg.mas_centerY);
         make.width.height.mas_equalTo(74);
     }];
     [self.headBackView startRipple:37 fromValue:@1.0 toValue:@2.1];
     [self.view bringSubviewToFront:self.headImg];
-    if (self.callType == 1) {
-        if (self.isVideoCard) {
-//            [self.bgImg sd_setImageWithURL:[NSURL URLWithString:self.dataDic[@"senderPhoto"]]];
-            [self.headImg sd_setImageWithURL:[NSURL URLWithString:self.dataDic[@"senderPhoto"]] placeholderImage:MPImage(@"netFaild")];
-        }else{
-//            self.bgImg.image = self.anchorHeadImg;
-            self.headImg.image = self.anchorHeadImg;
-        }
-    }else if (self.callType == 3) {
-//        [self.bgImg sd_setImageWithURL:[NSURL URLWithString:self.dataDic[@"senderPhoto"]]];
-        [self.headImg sd_setImageWithURL:[NSURL URLWithString:self.dataDic[@"senderPhoto"]] placeholderImage:MPImage(@"netFaild")];
+    if (!self.isAudio) {
+        [self.bgImg sd_setImageWithURL:[NSURL URLWithString:self.anchorHeadStr] placeholderImage:MPImage(@"")];
     }
+    [self.headImg sd_setImageWithURL:[NSURL URLWithString:self.anchorHeadStr] placeholderImage:MPImage(@"netFaild")];
     self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(vibrate) userInfo:nil repeats:YES];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         if (!self.isSelfClick) {
@@ -100,6 +94,8 @@
     }
     [att insertAttributedString:pp atIndex:0];
     self.priceLabel.attributedText = att;
+    
+    self.durationLabel.text = [NSString stringWithFormat:@"%ld币/min",self.isAudio == 1 ? model.voice/10 : model.video/10];
 }
 /// 创建音乐播放器
 - (void)creatAVAudioSessionObject{
@@ -186,7 +182,6 @@
 //    [self hangUpAction2:nil];
 }
 - (IBAction)hangUpAction1:(QMUIButton *)sender {
-    [self chargingMethod];
     sender.enabled = NO;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         sender.selected = YES;
@@ -201,7 +196,6 @@
     }];
 }
 - (IBAction)hangUpAction2:(QMUIButton *)sender {
-    [self chargingMethod];
     sender.enabled = NO;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         sender.selected = YES;
@@ -317,6 +311,7 @@
         _priceView = [[UIView alloc] init];
         _priceView.backgroundColor = HEXAlpha(#F5F5F5, 0.53f);
         [_priceView acs_radiusWithRadius:13 corner:UIRectCornerAllCorners];
+        _priceView.alpha = 0;
     }
     return _priceView;
 }

@@ -97,6 +97,7 @@
     self.vc.callType = self.callType;
     self.vc.dataDic = self.dataDic;
     self.vc.anchorName = self.anchorName;
+    self.vc.anchorHeadStr = self.anchorHeadStr;
     self.vc.anchorHeadImg = self.anchorHeadImg;
     self.vc.isVideoCard = self.isVideoCard;
     self.vc.priceModel = self.priceModel;
@@ -191,7 +192,11 @@
 }
 - (void)joinVideo
 {
-    [self.rtcKit joinChannelByToken:@"" channelId:self.channelId uid:0 mediaOptions:self.options joinSuccess:nil];
+    WeakSelf(self)
+    [self.rtcKit joinChannelByToken:@"" channelId:self.channelId uid:0 mediaOptions:self.options joinSuccess:^(NSString * _Nonnull channel, NSUInteger uid, NSInteger elapsed) {
+        [weakself sendMsgWith:@"接收" withType:@"接收"];
+        [weakself addMsgRecord:@"接听视频通话"];
+    }];
 }
 ///对方取消或拒绝
 - (void)otherCloseCall:(NSNotification *)noti
@@ -232,6 +237,7 @@
     if (self.realSeconds < [PGManager shareModel].videoFirstRecharTime) {
         [self chargingMethod];
     }
+    [self sendMsgWith:@"挂断" withType:@"挂断"];
     [self videoFinish];
     [self rtcDestory];
 }

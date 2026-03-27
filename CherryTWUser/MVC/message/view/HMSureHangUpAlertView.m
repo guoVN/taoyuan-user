@@ -38,9 +38,10 @@
         make.height.mas_equalTo(25);
     }];
     [self.contentLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(10);
+        make.right.mas_equalTo(-10);
         make.top.equalTo(self.titleLabel.mas_bottom).offset(15);
         make.centerX.mas_equalTo(0);
-        make.height.mas_equalTo(21);
     }];
     [self.sureBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(20);
