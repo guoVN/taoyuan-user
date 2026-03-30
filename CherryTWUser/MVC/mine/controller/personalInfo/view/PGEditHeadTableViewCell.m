@@ -47,7 +47,7 @@
                 }
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [weakself.headImg setImage:image];
-                    [weakself updateHeadImg];
+                    [weakself updateHeadImg:image];
                 });
             }
         };
@@ -55,20 +55,35 @@
     return _helper;
 }
 
-- (void)updateHeadImg
+- (void)updateHeadImg:(UIImage *)headIcon
 {
     WeakSelf(self)
     if (self.headImg.image != nil) {
         [QMUITips showLoading:@"头像上传中" inView:[PGUtils getCurrentVC].view];
-        [PGAPIService uploadFileWithImages:@[self.headImg.image] Success:^(id  _Nonnull data) {
-            [QMUITips hideAllTips];
+        [PGAPIService uploadFileWithImages:@[headIcon] Success:^(id  _Nonnull data) {
+//            [QMUITips hideAllTips];
             NSString * headImgStr = data[@"data"];
-            [weakself goUpdateAction:headImgStr];
+            [weakself shumeiCheck:headImgStr];
         } failure:^(NSInteger code, NSString * _Nonnull message) {
             [QMUITips hideAllTips];
             [QMUITips showWithText:@"上传失败"];
         }];
     }
+}
+- (void)shumeiCheck:(NSString *)headStr
+{
+    WeakSelf(self)
+    NSMutableDictionary * dic = [NSMutableDictionary dictionary];
+    [dic setValue:@"IMAGE" forKey:@"eventId"];
+    [dic setValue:headStr forKey:@"img"];
+    [dic setValue:[PGManager shareModel].userInfo.userid forKey:@"userid"];
+    [PGAPIService shumeiImgCheckWithParameters:dic Success:^(id  _Nonnull data) {
+//        [QMUITips hideAllTips];
+        [weakself goUpdateAction:headStr];
+    } failure:^(NSInteger code, NSString * _Nonnull message) {
+        [QMUITips hideAllTips];
+        [QMUITips showWithText:message];
+    }];
 }
 - (void)goUpdateAction:(NSString *)urlStr
 {
@@ -77,10 +92,12 @@
     [dic setValue:[PGManager shareModel].userInfo.userid forKey:@"userid"];
     [dic setValue:urlStr forKey:@"photo"];
      [PGAPIService updateHeadImgWithParameters:dic Success:^(id  _Nonnull data) {
+         [QMUITips hideAllTips];
          if (weakself.updateHeadBlock) {
              weakself.updateHeadBlock();
          }
      } failure:^(NSInteger code, NSString * _Nonnull message) {
+         [QMUITips hideAllTips];
          [QMUITips showWithText:message];
      }];
 }

@@ -237,7 +237,12 @@
     if (self.realSeconds < [PGManager shareModel].videoFirstRecharTime) {
         [self chargingMethod];
     }
-    [self sendMsgWith:@"挂断" withType:@"挂断"];
+    NSString * timeStr = self.videoTimeLabel.text;
+    if ([timeStr hasPrefix:@"00:"]) {
+        timeStr = [timeStr substringFromIndex:3];
+    }
+    timeStr = [NSString stringWithFormat:@"男端挂断传递时长#%@",timeStr];
+    [self sendMsgWith:timeStr withType:@"挂断"];
     [self videoFinish];
     [self rtcDestory];
 }
@@ -349,15 +354,24 @@
 {
     NSDictionary * dic = noti.userInfo;
     NSDictionary * dataDic = dic[@"data"];
+    NSString * contentStr = dataDic[@"content"];
+    NSArray * conArr = [contentStr componentsSeparatedByString:@"#"];
     AgoraChatMessage * msg = dic[@"msg"];
-    [self updateCallTime:dataDic message:msg];
+//    [self updateCallTime:dataDic message:msg];
+    NSString * timeStr = conArr.lastObject;
+    timeStr = [NSString stringWithFormat:@"%@:%@",Localized(@"通话时长"),timeStr];
+    [[NSUserDefaults standardUserDefaults] setValue:timeStr forKey:msg.messageId];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshMsgContent" object:nil userInfo:@{@"msg":msg}];
+    [PGManager shareModel].currentCallMsgId = @"";
+    [PGManager shareModel].currentCallConversationId = @"";
 }
 - (void)updateCallTime:(NSDictionary *)dic message:(AgoraChatMessage *)message
 {
     NSString * timeStr = self.videoTimeLabel.text;
-//    if ([timeStr hasPrefix:@"00:"]) {
-//        timeStr = [timeStr substringFromIndex:3];
-//    }
+    if ([timeStr hasPrefix:@"00:"]) {
+        timeStr = [timeStr substringFromIndex:3];
+    }
     timeStr = [NSString stringWithFormat:@"%@:%@",Localized(@"通话时长"),timeStr];
     [[NSUserDefaults standardUserDefaults] setValue:timeStr forKey:message.messageId];
     [[NSUserDefaults standardUserDefaults] synchronize];

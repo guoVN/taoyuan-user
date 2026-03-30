@@ -134,7 +134,16 @@
 - (void)updateMsg:(NSNotification *)noti
 {
     NSDictionary * dic = noti.userInfo;
+    BOOL isHiMsg = [dic[@"isHi"] integerValue] == 1 ? YES : NO;
     AgoraChatMessage * msg = dic[@"msg"];
+    if (isHiMsg) {
+        AgoraChatMessage * lastMsg = self.dataArray.lastObject;
+        if ((msg.timestamp-lastMsg.timestamp)>60) {
+            AgoraChatConversation *conversation = [AgoraChatClient.sharedClient.chatManager getConversationWithConvId:self.channelId];
+            AgoraChatError *error;
+            [conversation deleteAllMessages:&error];
+        }
+    }
     if ([msg.conversationId integerValue] == [self.channelId integerValue]) {
         for (AgoraChatMessage * mm in self.dataArray) {
             if ([mm.messageId isEqualToString:[PGManager shareModel].currentCallMsgId]) {

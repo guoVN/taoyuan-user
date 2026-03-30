@@ -303,7 +303,8 @@
         }
         
         if ([type isEqualToString:@"文字"]) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshMsgContent" object:nil userInfo:@{@"msg":message}];
+            NSString * isHiMsg = [msgDic[@"isReply"] integerValue] == 3 ? @"1" : @"0";
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshMsgContent" object:nil userInfo:@{@"msg":message,@"isHi":isHiMsg}];
         }else if([type isEqualToString:@"礼物"]){
             for (PGGiftListModel * giftModel in [PGManager shareModel].giftArray) {
                 if ([giftModel.name isEqualToString:contentStr]) {

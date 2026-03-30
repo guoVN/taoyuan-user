@@ -2213,4 +2213,23 @@
     }];
 }
 
+///数美图片检测
++ (void)shumeiImgCheckWithParameters:(NSDictionary *)parametersDic Success:(void (^)(id data))successBlock
+                          failure:(void (^)(NSInteger code, NSString* message))failureBlock
+{
+    NSString * urlStr = [NSString stringWithFormat:@"%@%@",[PGManager shareModel].baseUrl,@"api/shumei/checkPicReturnResult"];
+    NSDictionary * headerDic = [self getCommonHeaderOfSubclasses:parametersDic];
+    [[HMNetworking sharedClient] postForm:urlStr parameters:parametersDic headers:headerDic success:^(id  _Nullable responseObject) {
+        NSDictionary *responseDict = responseObject;
+        if([responseDict[@"code"] integerValue] == 0){
+            successBlock(responseDict);
+        }else{
+            NSString * msg = responseDict[@"msg"];
+            failureBlock([responseDict[@"code"] integerValue],msg);
+        }
+    } failure:^(NSError * _Nonnull error) {
+        failureBlock(50000,@"Network error");
+    }];
+}
+
 @end

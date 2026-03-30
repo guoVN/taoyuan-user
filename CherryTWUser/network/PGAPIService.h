@@ -403,6 +403,10 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)checkBindAnchorWithParameters:(NSDictionary *)parametersDic Success:(void (^)(id data))successBlock
                            failure:(void (^)(NSInteger code, NSString* message))failureBlock;
 
+///数美图片检测
++ (void)shumeiImgCheckWithParameters:(NSDictionary *)parametersDic Success:(void (^)(id data))successBlock
+                             failure:(void (^)(NSInteger code, NSString* message))failureBlock;
+
 @end
 
 NS_ASSUME_NONNULL_END
