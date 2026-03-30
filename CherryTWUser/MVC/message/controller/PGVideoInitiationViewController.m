@@ -37,7 +37,7 @@
     self.hangUpBtn1.alpha = self.callType == 1 ? 1 : 0;
     self.hangBtn2.alpha = self.answerBtn.alpha = self.callType == 3 ? 1 : 0;
     self.promptLabel.text = self.callType == 1 ? @"请求中…" : @"对方请求中…";
-    [self.headImg addBlurEffect:UIBlurEffectStyleLight withAlpha:0.8];
+//    [self.headImg addBlurEffect:UIBlurEffectStyleLight withAlpha:0.8];
     [self.view addSubview:self.headBackView];
     [self.headBackView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.headImg.mas_centerX);

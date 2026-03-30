@@ -21,6 +21,8 @@
 #import "HMProjectMenuView.h"
 #import "HMSureHangUpAlertView.h"
 
+static PGCallRechargeView *_sg_rechargeView = nil;
+
 @interface PGVideoCallViewController ()<AgoraRtcEngineDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView * localView;
@@ -381,17 +383,29 @@
 }
 #pragma mark===充值
 - (IBAction)goRechargeAction:(id)sender {
+    if (_sg_rechargeView) {
+        return;
+    }
     WeakSelf(self)
     self.isGoRecharge = YES;
     PGCallRechargeView * rechargeView = [[PGCallRechargeView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight)];
+    _sg_rechargeView = rechargeView;
     PGDiamondsListViewController * vc = [[PGDiamondsListViewController alloc] init];
     vc.isCallRecharge = YES;
     PGNavigationViewController * nav = [[PGNavigationViewController alloc] initWithRootViewController:vc];
     nav.view.frame = CGRectMake(0, 0, ScreenWidth, ScreenHeight-200);
     [nav.view acs_radiusWithRadius:18 corner:UIRectCornerTopLeft|UIRectCornerTopRight];
+    UIViewController *topVC = [self topViewController];
+    [topVC addChildViewController:nav];
     [rechargeView.backView addSubview:nav.view];
+    [nav didMoveToParentViewController:topVC];
     [rechargeView.backView bringSubviewToFront:rechargeView.closeBtn];
     rechargeView.refreshCoinBlock = ^{
+        // 关闭时 正确移除 子控制器
+        [nav willMoveToParentViewController:nil];          // 即将移除
+        [nav.view removeFromSuperview];                    // 移除视图
+        [nav removeFromParentViewController];              // 真正移除
+        _sg_rechargeView = nil;
         [PGUtils getUserInfo];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [weakself showRecharge];
@@ -401,6 +415,13 @@
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         self.isGoRecharge = NO;
     });
+}
+- (UIViewController *)topViewController {
+    UIViewController *topVC = [[[UIApplication sharedApplication] delegate] window].rootViewController;
+    while (topVC.presentedViewController) {
+        topVC = topVC.presentedViewController;
+    }
+    return topVC;
 }
 - (void)updateTimer
 {
@@ -429,6 +450,11 @@
 #pragma mark===扣费
 - (void)chargingMethod
 {
+    if (![[PGUtils getCurrentVC] isMemberOfClass:[PGVideoCallViewController class]]) {
+        self.isGoRecharge = NO;
+        [self rtcDestory];
+        return;
+    }
     if ([PGManager shareModel].selfCoin < [PGManager shareModel].callCoin) {
         [QMUITips showWithText:@"话费不足，通话中断"];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -465,11 +491,13 @@
 }
 - (void)showRecharge
 {
-    if ([PGManager shareModel].selfCoin < 2*[PGManager shareModel].callCoin) {
-//        self.rechargeView.alpha = 1;
-        [self goRechargeAction:nil];
-    }else{
-        self.rechargeView.alpha = 0;
+    if ([[PGUtils getCurrentVC] isMemberOfClass:[PGVideoCallViewController class]]) {
+        if ([PGManager shareModel].selfCoin < 2*[PGManager shareModel].callCoin) {
+            self.rechargeView.alpha = 1;
+//            [self goRechargeAction:nil];
+        }else{
+            self.rechargeView.alpha = 0;
+        }
     }
 }
 #pragma mark===视频结束

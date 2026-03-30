@@ -57,21 +57,24 @@
 }
 - (void)loadData
 {
-    WeakSelf(self)
     [QMUITips showLoadingInView:self.view];
     [PGAPIService diamondListWithParameters:@{@"packName":PackName} Success:^(id  _Nonnull data) {
         [QMUITips hideAllTips];
-        weakself.rechargeModel = [PGRechargeListModel mj_objectWithKeyValues:data[@"data"]];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            NSIndexPath *defaultIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-            [weakself.collectionView selectItemAtIndexPath:defaultIndexPath animated:NO scrollPosition:UICollectionViewScrollPositionNone];
-            [weakself collectionView:weakself.collectionView didSelectItemAtIndexPath:defaultIndexPath];
-        });
-        [weakself.collectionView reloadData];
+        self.rechargeModel = [PGRechargeListModel mj_objectWithKeyValues:data[@"data"]];
+        [self dealData];
     } failure:^(NSInteger code, NSString * _Nonnull message) {
         [QMUITips hideAllTips];
         [QMUITips showWithText:message];
     }];
+}
+- (void)dealData
+{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        NSIndexPath *defaultIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+        [self.collectionView selectItemAtIndexPath:defaultIndexPath animated:NO scrollPosition:UICollectionViewScrollPositionNone];
+        [self collectionView:self.collectionView didSelectItemAtIndexPath:defaultIndexPath];
+    });
+    [self.collectionView reloadData];
 }
 #pragma mark===UICollectionViewDelegate
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
@@ -83,6 +86,15 @@
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     PGDiamondsCollectionViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass(PGDiamondsCollectionViewCell.class) forIndexPath:indexPath];
     cell.coinModel = self.rechargeModel.coins[indexPath.row];
+    if (cell.coinModel == self.chooseModel) {
+        cell.backgroundColor = HEX(#FFF6F9);
+        cell.layer.borderColor = HEX(#FF6B97).CGColor;
+        cell.priceLabel.textColor = HEX(#FF6B97);
+    }else{
+        cell.backgroundColor = [UIColor clearColor];
+        cell.layer.borderColor = HEXAlpha(#000000, 0.1).CGColor;
+        cell.priceLabel.textColor = HEX(#999999);
+    }
     return cell;
 }
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
@@ -112,17 +124,7 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     self.chooseModel = self.rechargeModel.coins[indexPath.row];
-    PGDiamondsCollectionViewCell * cell = [collectionView cellForItemAtIndexPath:indexPath];
-    cell.backgroundColor = HEX(#FFF6F9);
-    cell.layer.borderColor = HEX(#FF6B97).CGColor;
-    cell.priceLabel.textColor = HEX(#FF6B97);
-}
-- (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    PGDiamondsCollectionViewCell * cell = [collectionView cellForItemAtIndexPath:indexPath];
-    cell.backgroundColor = [UIColor clearColor];
-    cell.layer.borderColor = HEXAlpha(#000000, 0.1).CGColor;
-    cell.priceLabel.textColor = HEX(#999999);
+    [self.collectionView reloadData];
 }
 
 - (IBAction)suerBtnAction:(id)sender {

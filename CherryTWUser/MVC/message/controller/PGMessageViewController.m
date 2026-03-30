@@ -90,12 +90,39 @@
     NSArray <AgoraChatConversation *>*conversations = [AgoraChatClient.sharedClient.chatManager getAllConversations:YES];
     NSInteger unreadCount = 0;
     NSMutableArray * userIdArr = [NSMutableArray array];
+    NSMutableArray<AgoraChatConversation *> * msgConversations = [NSMutableArray array];
     for (AgoraChatConversation *conversation in conversations) {
         if (![conversation.conversationId isEqualToString:@"99999999"]) {
             AgoraChatMessage * last = conversation.latestMessage;
             if (last.conversationId>0) {
                 unreadCount += conversation.unreadMessagesCount;
                 [userIdArr addObject:conversation.conversationId];
+                [msgConversations addObject:conversation];
+            }
+        }
+        NSArray<AgoraChatMessage *> *messages = [conversation loadMessagesStartFromId:0 count:10 searchDirection:0];
+        for (NSInteger i=messages.count-1; i>=0; i--) {
+            AgoraChatMessage * ch = messages[i];
+            AgoraChatTextMessageBody *textBody = (AgoraChatTextMessageBody *)ch.body;
+            NSDictionary * msgDic = [PGUtils jsonToObject:textBody.text];
+            if ([msgDic isKindOfClass:[NSNull class]]) {
+                break;
+            }
+            NSString * msgType = msgDic[@"type"];
+            if ([msgType isKindOfClass:[NSNull class]]) {
+                msgDic = [PGUtils jsonToObject:msgDic[@"content"]];
+            }
+            NSString * isHiMsg = [msgDic[@"isReply"] integerValue] == 3 ? @"1" : @"0";
+            if ([isHiMsg integerValue] == 1) {
+                if (i-1>=0) {
+                    AgoraChatMessage * up = messages[i-1];
+                    if (ch.timestamp/1000-up.timestamp/1000>60) {
+                        for (NSInteger j=0; j<=i-1; j++) {
+                            AgoraChatMessage * dd = messages[j];
+                            [conversation deleteMessageWithId:dd.messageId error:nil];
+                        }
+                    }
+                }
             }
         }
     }
@@ -116,7 +143,7 @@
     
     NSMutableArray * intimacyResultArr = [NSMutableArray array];
     NSInteger intimacyUnReadCount = 0;
-    for (AgoraChatConversation * imModel in conversations) {
+    for (AgoraChatConversation * imModel in msgConversations) {
         for (HMIntimacyListModel * intimacyModel in qinmiArray) {
             if ([intimacyModel.userid isEqualToString:imModel.conversationId]) {
                 [intimacyResultArr addObject:imModel];
@@ -127,7 +154,7 @@
     
     NSSet *smallSet = [NSSet setWithArray:intimacyResultArr];
     NSMutableArray *result = [NSMutableArray array];
-    for (id obj in conversations) {
+    for (id obj in msgConversations) {
         if (![smallSet containsObject:obj]) {
             [result addObject:obj];
         }

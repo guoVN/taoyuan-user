@@ -15,6 +15,7 @@
                 <outlet property="hangSenderBtn" destination="hRP-PB-tQN" id="WC2-SI-Ars"/>
                 <outlet property="localView" destination="Cbb-Gr-zlD" id="jnc-yq-PWH"/>
                 <outlet property="miantiBtn" destination="InK-jv-FQL" id="zxH-lZ-GdR"/>
+                <outlet property="rechargeView" destination="RQY-VC-Yj4" id="2ha-cb-big"/>
                 <outlet property="remoteView" destination="p5t-Lw-sRf" id="xTK-LD-XeS"/>
                 <outlet property="videoTimeLabel" destination="hbS-xd-Yki" id="zHq-C6-pOU"/>
                 <outlet property="view" destination="iN0-l3-epB" id="Tp2-k4-SWy"/>
@@ -41,6 +42,32 @@
                             <real key="value" value="10"/>
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
+                </view>
+                <view clipsSubviews="YES" alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RQY-VC-Yj4">
+                    <rect key="frame" x="49" y="464" width="295" height="54"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="当前余额即将耗尽，请立即充值&gt;&gt;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2hA-03-Xzx">
+                            <rect key="frame" x="26.333333333333329" y="17" width="242.33333333333337" height="20"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" red="0.89019607840000003" green="0.4823529412" blue="0.60784313729999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                    <constraints>
+                        <constraint firstItem="2hA-03-Xzx" firstAttribute="centerY" secondItem="RQY-VC-Yj4" secondAttribute="centerY" id="2uL-YW-gud"/>
+                        <constraint firstItem="2hA-03-Xzx" firstAttribute="centerX" secondItem="RQY-VC-Yj4" secondAttribute="centerX" id="6vT-3f-cZG"/>
+                        <constraint firstAttribute="height" constant="54" id="onX-Wd-sv8"/>
+                        <constraint firstAttribute="width" constant="295" id="yoj-bm-7bg"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="hCornerRadius">
+                            <real key="value" value="27"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                    <connections>
+                        <outletCollection property="gestureRecognizers" destination="2Db-Vg-LwI" appends="YES" id="C5s-Sr-Y2o"/>
+                    </connections>
                 </view>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00：00：00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hbS-xd-Yki">
                     <rect key="frame" x="16" y="118" width="135" height="40"/>
@@ -158,10 +185,12 @@
                 <constraint firstItem="MNY-i9-mV2" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="NJX-Nh-QNL"/>
                 <constraint firstItem="MNY-i9-mV2" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="TH3-x5-typ"/>
                 <constraint firstItem="hbS-xd-Yki" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="VKJ-4V-QrV"/>
+                <constraint firstItem="RQY-VC-Yj4" firstAttribute="top" secondItem="Cbb-Gr-zlD" secondAttribute="bottom" constant="116" id="cqn-aN-9iq"/>
                 <constraint firstItem="p5t-Lw-sRf" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="eUJ-J1-rno"/>
                 <constraint firstItem="Cbb-Gr-zlD" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="70" id="mLn-Ob-EDW"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="p5t-Lw-sRf" secondAttribute="trailing" id="mwj-jS-5Z7"/>
                 <constraint firstItem="MNY-i9-mV2" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="nKJ-X0-BxO"/>
+                <constraint firstItem="RQY-VC-Yj4" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="v7n-Oe-sBw"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="Cbb-Gr-zlD" secondAttribute="trailing" constant="15" id="vfF-mQ-Y26"/>
             </constraints>
             <point key="canvasLocation" x="13" y="20"/>

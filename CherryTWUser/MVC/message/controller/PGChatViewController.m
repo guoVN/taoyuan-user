@@ -138,10 +138,13 @@
     AgoraChatMessage * msg = dic[@"msg"];
     if (isHiMsg) {
         AgoraChatMessage * lastMsg = self.dataArray.lastObject;
-        if ((msg.timestamp-lastMsg.timestamp)>60) {
+        if ((msg.timestamp/1000-lastMsg.timestamp/1000)>60) {
             AgoraChatConversation *conversation = [AgoraChatClient.sharedClient.chatManager getConversationWithConvId:self.channelId];
             AgoraChatError *error;
-            [conversation deleteAllMessages:&error];
+            for (AgoraChatMessage * oldMsg in self.dataArray) {
+                [conversation deleteMessageWithId:oldMsg.messageId error:&error];
+            }
+            [self.dataArray removeAllObjects];
         }
     }
     if ([msg.conversationId integerValue] == [self.channelId integerValue]) {
