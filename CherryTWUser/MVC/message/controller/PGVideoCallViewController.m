@@ -331,7 +331,10 @@ static PGCallRechargeView *_sg_rechargeView = nil;
                                                  completion:^(AgoraChatMessage * _Nullable message, AgoraChatError * _Nullable error) {
         if (!error) {
             if ([type isEqualToString:@"挂断"]) {
-                [weakself updateCallTime:dic message:message];
+//                [weakself updateCallTime:dic message:message];
+                AgoraChatConversation *conversation = [AgoraChatClient.sharedClient.chatManager getConversationWithConvId:self.channelId];
+                AgoraChatError *error;
+                [conversation deleteMessageWithId:message.messageId error:&error];
             }else if ([type isEqualToString:@"接收"]){
                 AgoraChatConversation *conversation = [AgoraChatClient.sharedClient.chatManager getConversationWithConvId:self.channelId];
                 AgoraChatError *error;

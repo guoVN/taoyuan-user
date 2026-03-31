@@ -271,20 +271,19 @@
             break;
         }
         NSString * msgType = msgDic[@"type"];
-        if ([msgType isKindOfClass:[NSNull class]]) {
-            msgDic = [PGUtils jsonToObject:msgDic[@"content"]];
-        }
         RLMResults *results = [PGMessageListModel allObjects];
         RLMRealm *realm = [RLMRealm defaultRealm];
         PGMessageListModel * messageModel = [[PGMessageListModel alloc] init];
         messageModel.messageId = message.conversationId;
-        messageModel.avatar = msgDic[@"senderPhoto"];
-        messageModel.nickName = msgDic[@"senderName"];
-        messageModel.extendStr1 = msgDic[@"senderid"];
         if ([msgType isKindOfClass:[NSNull class]]) {
+            msgDic = [PGUtils jsonToObject:msgDic[@"content"]];
             messageModel.avatar = msgDic[@"avatar"];
             messageModel.nickName = msgDic[@"nickName"];
-            messageModel.extendStr1 = msgDic[@"anchorid"];
+            messageModel.extendStr1 = [NSString stringWithFormat:@"%@",msgDic[@"anchorid"]];
+        }else{
+            messageModel.avatar = msgDic[@"senderPhoto"];
+            messageModel.nickName = msgDic[@"senderName"];
+            messageModel.extendStr1 = [NSString stringWithFormat:@"%@",msgDic[@"senderid"]];
         }
         
         NSString * type = msgDic[@"type"];
@@ -292,7 +291,7 @@
             type = @"文字";
         }else if ([type containsString:@"voice"]){
             type = @"语音";
-        }else if ([type containsString:@"picture"] || [type containsString:@"photo"]){
+        }else if ([type containsString:@"picture"] || [type containsString:@"photo"]|| [type containsString:@"pic"]){
             type = @"图片";
         }else if ([type containsString:@"video"]){
             type = @"视频";
@@ -373,8 +372,12 @@
             if (!isSameID) {
                 [realm addObject:messageModel];
             }else{
-                sameModel.avatar = messageModel.avatar;
-                sameModel.nickName = messageModel.nickName;
+                if (messageModel.avatar.length>0) {
+                    sameModel.avatar = messageModel.avatar;
+                }
+                if (messageModel.nickName.length>0) {
+                    sameModel.nickName = messageModel.nickName;
+                }
             }
         }];
         

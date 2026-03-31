@@ -54,6 +54,23 @@
                 NSDictionary * dic = [PGUtils jsonToObject:msg];
                 NSString * contetStr = dic[@"content"];
                 NSString * messageType = dic[@"type"];
+                if ([messageType isKindOfClass:[NSNull class]]) {
+                    NSDictionary * dd = [PGUtils jsonToObject:contetStr];
+                    contetStr = dd[@"content"];
+                    NSString * type = dd[@"type"];
+                    if ([type containsString:@"word"]) {
+                        messageType = @"文字";
+                    }else if ([type containsString:@"voice"]){
+                        messageType = @"语音";
+                    }else if ([type containsString:@"picture"] || [type containsString:@"photo"] || [type containsString:@"pic"]){
+                        messageType = @"图片";
+                    }else if ([type containsString:@"video"]){
+                        messageType = @"视频";
+                    }else{
+                        messageType = @"文字";
+                    }
+                }
+                
                 if ([messageType isEqualToString:@"文字"]) {
                     if ([[PGUtils getFileFormat:contetStr] isEqualToString:@"图片"]) {
                         self.msgLabel.text = Localized(@"[图片]");
@@ -62,8 +79,9 @@
                     }else if ([[PGUtils getFileFormat:contetStr] isEqualToString:@"语音"]){
                         self.msgLabel.text = Localized(@"[语音]");
                     }else{
-                        NSArray * arr = [contetStr componentsSeparatedByString:@"!!@@##"];
-                        self.msgLabel.text = arr.firstObject;
+        //                NSArray * arr = [contetStr componentsSeparatedByString:@"!!@@##"];
+        //                self.msgLabel.text = arr.firstObject;
+                        self.msgLabel.text = contetStr;
                     }
                 }else if ([messageType isEqualToString:@"图片"] || [messageType isEqualToString:@"local_pic"]){
                     self.msgLabel.text = Localized(@"[图片]");
@@ -80,18 +98,19 @@
                 }else{
                     self.msgLabel.text = [NSString stringWithFormat:@"[通话%@]",messageType];
                 }
-            }
-            
-            RLMResults *results = [PGMessageListModel allObjects];
-            for (PGMessageListModel * mm in results) {
-                if ([mm.messageId integerValue] == [model.conversationId integerValue]) {
-                    [self.headImg sd_setImageWithURL:[NSURL URLWithString:mm.avatar] placeholderImage:MPImage(@"manDefault")];
-                    self.nameLabel.text = mm.nickName;
-                    if (mm.remarks.length>0) {
-                        self.nameLabel.text = [NSString stringWithFormat:@"%@-(%@)",mm.nickName,mm.remarks];
+                
+                RLMResults *results = [PGMessageListModel allObjects];
+                for (PGMessageListModel * mm in results) {
+                    if ([mm.messageId integerValue] == [model.conversationId integerValue]) {
+                        [self.headImg sd_setImageWithURL:[NSURL URLWithString:mm.avatar] placeholderImage:MPImage(@"manDefault")];
+                        self.nameLabel.text = mm.nickName;
+                        if ([mm.remarks isKindOfClass:[NSString class]]) {
+                            if (mm.remarks.length>0) {
+                                self.nameLabel.text = [NSString stringWithFormat:@"%@-(%@)",mm.nickName,mm.remarks];
+                            }
+                        }
                     }
                 }
-                
             }
         }
     }
