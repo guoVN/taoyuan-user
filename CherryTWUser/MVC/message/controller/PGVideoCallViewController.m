@@ -251,11 +251,9 @@ static PGCallRechargeView *_sg_rechargeView = nil;
 - (IBAction)cameraSwitchAction:(QMUIButton *)sender {
     sender.selected = !sender.selected;
     if (sender.selected) {
-        sender.backgroundColor = HEX(#18C912);
-        [self.rtcKit enableLocalVideo:NO];
+        [self.rtcKit muteLocalVideoStream:YES];
     }else{
-        sender.backgroundColor = HEX(#C4C4C4);
-        [self.rtcKit enableLocalVideo:YES];
+        [self.rtcKit muteLocalVideoStream:NO];
     }
 }
 - (IBAction)chooseGiftAction:(id)sender {
