@@ -211,24 +211,25 @@ static PGCallRechargeView *_sg_rechargeView = nil;
 }
 #pragma mark===主动挂断
 - (IBAction)hangUpAction:(QMUIButton *)sender {
-    WeakSelf(self)
-    [[PGManager shareModel].mainControlAlert closeView];
-    [PGManager shareModel].mainControlAlert = Dialog()
-        .wLevelSet(999)
-        .wTagSet(random()%100000)
-        .wTypeSet(DialogTypeMyView)
-        .wShowAnimationSet(AninatonZoomInCombin)
-        .wHideAnimationSet(AninatonZoomOut)
-        .wShadowCanTapSet(YES)
-        .wMyDiaLogViewSet(^UIView *(UIView *mainView) {
-            mainView.backgroundColor = [UIColor clearColor];
-            HMSureHangUpAlertView *view = [[HMSureHangUpAlertView alloc] initWithFrame:CGRectMake(0, 0, 305, 193) superView:mainView];
-                view.sureHangUpBlock = ^{
-                    [weakself doHangUp];
-                };
-                return view;
-            })
-        .wStart();
+//    WeakSelf(self)
+//    [[PGManager shareModel].mainControlAlert closeView];
+//    [PGManager shareModel].mainControlAlert = Dialog()
+//        .wLevelSet(999)
+//        .wTagSet(random()%100000)
+//        .wTypeSet(DialogTypeMyView)
+//        .wShowAnimationSet(AninatonZoomInCombin)
+//        .wHideAnimationSet(AninatonZoomOut)
+//        .wShadowCanTapSet(YES)
+//        .wMyDiaLogViewSet(^UIView *(UIView *mainView) {
+//            mainView.backgroundColor = [UIColor clearColor];
+//            HMSureHangUpAlertView *view = [[HMSureHangUpAlertView alloc] initWithFrame:CGRectMake(0, 0, 305, 193) superView:mainView];
+//                view.sureHangUpBlock = ^{
+//                    [weakself doHangUp];
+//                };
+//                return view;
+//            })
+//        .wStart();
+    [self doHangUp];
 }
 - (void)doHangUp
 {
@@ -329,10 +330,7 @@ static PGCallRechargeView *_sg_rechargeView = nil;
                                                  completion:^(AgoraChatMessage * _Nullable message, AgoraChatError * _Nullable error) {
         if (!error) {
             if ([type isEqualToString:@"挂断"]) {
-//                [weakself updateCallTime:dic message:message];
-                AgoraChatConversation *conversation = [AgoraChatClient.sharedClient.chatManager getConversationWithConvId:self.channelId];
-                AgoraChatError *error;
-                [conversation deleteMessageWithId:message.messageId error:&error];
+                [weakself updateCallTime:dic message:message];
             }else if ([type isEqualToString:@"接收"]){
                 AgoraChatConversation *conversation = [AgoraChatClient.sharedClient.chatManager getConversationWithConvId:self.channelId];
                 AgoraChatError *error;

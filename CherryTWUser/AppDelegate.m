@@ -340,7 +340,15 @@
                 return;
             }
             if ([type isEqualToString:@"挂断"]) {
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"updateMsgCallTime" object:nil userInfo:@{@"msg":message,@"data":msgDic}];
+                NSString * senderId = msgDic[@"senderid"];
+                NSString * friendId = msgDic[@"friendId"];
+                if ([senderId integerValue] == [friendId integerValue]) {
+                    AgoraChatConversation *conversation = [AgoraChatClient.sharedClient.chatManager getConversationWithConvId:message.conversationId];
+                    AgoraChatError *error;
+                    [conversation deleteMessageWithId:message.messageId error:&error];
+                }else{
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"updateMsgCallTime" object:nil userInfo:@{@"msg":message,@"data":msgDic}];
+                }
             }else{
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshMsgContent" object:nil userInfo:@{@"msg":message}];
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
