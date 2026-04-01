@@ -31,20 +31,38 @@
     attach.bounds = CGRectMake(0, -3, 15, 15);
     NSAttributedString * attrStringWithImage = [NSAttributedString attributedStringWithAttachment:attach];
     
-    NSString * chatStr = [NSString stringWithFormat:@"消息%ld/条",[detailModel.textChatCoin integerValue]/10];
+    NSTextAttachment * chatAttach = [[NSTextAttachment alloc] init];
+    UIImage * chatResultImg = MPImage(@"wordIcon");
+    chatAttach.image = chatResultImg;
+    chatAttach.bounds = CGRectMake(0, -3, 15, 15);
+    NSAttributedString * chatAttrStringWithImage = [NSAttributedString attributedStringWithAttachment:chatAttach];
+    NSString * chatStr = [NSString stringWithFormat:@" %ld/条",[detailModel.textChatCoin integerValue]/10];
     NSMutableAttributedString * chatAtt = [[NSMutableAttributedString alloc] initWithString:chatStr];
-    [chatAtt insertAttributedString:attrStringWithImage atIndex:chatStr.length-2];
+    [chatAtt insertAttributedString:chatAttrStringWithImage atIndex:0];
+    [chatAtt insertAttributedString:attrStringWithImage atIndex:chatStr.length-1];
     [self.videoPriceBtnOne setAttributedTitle:chatAtt forState:UIControlStateNormal];
     
-    NSString * voiceStr = [NSString stringWithFormat:@"语音%ld/min",[detailModel.voiceCoin integerValue]/10];
+    NSTextAttachment * voiceAttach = [[NSTextAttachment alloc] init];
+    UIImage * voiceResultImg = MPImage(@"voice");
+    voiceAttach.image = voiceResultImg;
+    voiceAttach.bounds = CGRectMake(0, -3, 15, 15);
+    NSAttributedString * voiceAttrStringWithImage = [NSAttributedString attributedStringWithAttachment:voiceAttach];
+    NSString * voiceStr = [NSString stringWithFormat:@" %ld/min",[detailModel.voiceCoin integerValue]/10];
     NSMutableAttributedString * voiceAtt = [[NSMutableAttributedString alloc] initWithString:voiceStr];
-    [voiceAtt insertAttributedString:attrStringWithImage atIndex:voiceStr.length-4];
+    [voiceAtt insertAttributedString:voiceAttrStringWithImage atIndex:0];
+    [voiceAtt insertAttributedString:attrStringWithImage atIndex:voiceStr.length-3];
     [self.videoPriceBtnTwo setAttributedTitle:voiceAtt forState:UIControlStateNormal];
     
-    NSString * videoStr = [NSString stringWithFormat:@"视频%ld/min",[detailModel.videoCoin integerValue]/10];
-    NSMutableAttributedString * vodeoAtt = [[NSMutableAttributedString alloc] initWithString:videoStr];
-    [vodeoAtt insertAttributedString:attrStringWithImage atIndex:videoStr.length-4];
-    [self.videoPriceBtnThree setAttributedTitle:vodeoAtt forState:UIControlStateNormal];
+    NSTextAttachment * videoAttach = [[NSTextAttachment alloc] init];
+    UIImage * videoResultImg = MPImage(@"videocall");
+    videoAttach.image = videoResultImg;
+    videoAttach.bounds = CGRectMake(0, -3, 15, 15);
+    NSAttributedString * videoAttrStringWithImage = [NSAttributedString attributedStringWithAttachment:videoAttach];
+    NSString * videoStr = [NSString stringWithFormat:@" %ld/min",[detailModel.videoCoin integerValue]/10];
+    NSMutableAttributedString * videoAtt = [[NSMutableAttributedString alloc] initWithString:videoStr];
+    [videoAtt insertAttributedString:videoAttrStringWithImage atIndex:0];
+    [videoAtt insertAttributedString:attrStringWithImage atIndex:videoStr.length-3];
+    [self.videoPriceBtnThree setAttributedTitle:videoAtt forState:UIControlStateNormal];
 }
 
 @end

@@ -168,7 +168,7 @@
     [PGAPIService sendGiftWithParameters:dic Success:^(id  _Nonnull data) {
         [QMUITips hideAllTips];
         [PGManager shareModel].selfCoin -= [PGManager shareModel].currentChooseGiftModel.coin;
-        weakself.diamondLabel.text = [NSString stringWithFormat:@"钻石余额：%.0f",[PGManager shareModel].selfCoin*0.1];
+        weakself.diamondLabel.text = [NSString stringWithFormat:@"糖币余额：%.0f",[PGManager shareModel].selfCoin*0.1];
         PGTabbarViewController * tabbar = (PGTabbarViewController *)[UIApplication sharedApplication].delegate.window.rootViewController;
         [tabbar showSvga:[PGManager shareModel].currentChooseGiftModel.dynamicPic];
         if (weakself.sendGiftBlock) {
@@ -231,7 +231,7 @@
         _diamondLabel = [[UILabel alloc] init];
         _diamondLabel.font = MPBoldFont(16);
         _diamondLabel.textColor = HEX(#FFFFFF);
-        _diamondLabel.text = [NSString stringWithFormat:@"钻石余额：%.0f",[PGManager shareModel].selfCoin*0.1];
+        _diamondLabel.text = [NSString stringWithFormat:@"糖币余额：%.0f",[PGManager shareModel].selfCoin*0.1];
     }
     return _diamondLabel;
 }

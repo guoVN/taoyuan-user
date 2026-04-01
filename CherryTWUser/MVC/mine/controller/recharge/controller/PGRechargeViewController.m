@@ -42,8 +42,10 @@
     if (self.isCallRecharge) {
         self.naviView.frame = CGRectMake(0, 0, ScreenWidth, 64);
         self.naviView.backBtn.alpha = 0;
-        [self.naviView.titleBtn mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.top.mas_equalTo(10);
+        [self.naviView.titleLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.top.mas_equalTo(5);
+            make.centerX.mas_equalTo(0);
+            make.height.mas_equalTo(44);
         }];
     }
     self.diamonsNumLabel.text = [NSString stringWithFormat:@"%.0f+%.0f",self.coinModel.coin*0.1,self.coinModel.giveCoin*0.1];

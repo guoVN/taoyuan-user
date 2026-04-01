@@ -126,7 +126,7 @@
         _titleLabel = [[UILabel alloc] init];
         _titleLabel.font = MPFont(18);
         _titleLabel.textColor = HEX(#000000);
-        _titleLabel.text = Localized(@"钻石余额");
+        _titleLabel.text = Localized(@"糖币余额");
     }
     return _titleLabel;
 }

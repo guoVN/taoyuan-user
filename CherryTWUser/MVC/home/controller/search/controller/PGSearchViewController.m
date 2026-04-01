@@ -49,7 +49,7 @@
     }
     WeakSelf(self)
     NSMutableDictionary * dic = [NSMutableDictionary dictionary];
-    [dic setValue:self.searchField.text forKey:@"anchorId"];
+    [dic setValue:self.searchField.text forKey:@"keyWord"];
     [QMUITips showLoadingInView:self.view];
     [PGAPIService searchAnchorWithParameters:dic Success:^(id  _Nonnull data) {
         [QMUITips hideAllTips];
@@ -58,10 +58,15 @@
         if (detailModel != nil) {
             [weakself.dataArray addObject:detailModel];
         }
+        weakself.tableView.emptyDataSetSource = weakself;
+        weakself.tableView.emptyDataSetDelegate = weakself;
         [weakself.tableView reloadData];
     } failure:^(NSInteger code, NSString * _Nonnull message) {
         [QMUITips hideAllTips];
         [QMUITips showWithText:message];
+        weakself.tableView.emptyDataSetSource = weakself;
+        weakself.tableView.emptyDataSetDelegate = weakself;
+        [weakself.tableView reloadData];
     }];
 }
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -154,8 +159,6 @@
         _tableView.estimatedRowHeight = 200;
         _tableView.delegate = self;
         _tableView.dataSource = self;
-        _tableView.emptyDataSetSource = self;
-        _tableView.emptyDataSetDelegate = self;
         _tableView.showsVerticalScrollIndicator = NO;
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _tableView.backgroundColor = [UIColor clearColor];

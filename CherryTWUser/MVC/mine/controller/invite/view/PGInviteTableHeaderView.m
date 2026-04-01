@@ -33,9 +33,9 @@
 - (void)setIncomeModel:(PGInviteInComeModel *)incomeModel
 {
     _incomeModel = incomeModel;
-    self.leftTitleLabel.text = @"今日钻石奖励";
+    self.leftTitleLabel.text = @"今日糖币奖励";
     self.leftNumLabel.text = [NSString stringWithFormat:@"%.0f",incomeModel.todayInviterSum*0.1];
-    self.rightTitleLabel.text = @"昨日钻石奖励";
+    self.rightTitleLabel.text = @"昨日糖币奖励";
     self.rightNumLabel.text = [NSString stringWithFormat:@"%.0f",incomeModel.yesterdayInviterSum*0.1];
 }
 - (void)setFriendModel:(PGInviteInFriendModel *)friendModel

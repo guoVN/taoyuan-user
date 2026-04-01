@@ -511,7 +511,7 @@
 + (void)searchAnchorWithParameters:(NSDictionary *)parametersDic Success:(void (^)(id data))successBlock
                           failure:(void (^)(NSInteger code, NSString* message))failureBlock
 {
-    NSString * urlStr = [NSString stringWithFormat:@"%@%@",[PGManager shareModel].baseUrl,@"app/api/user/search"];
+    NSString * urlStr = [NSString stringWithFormat:@"%@%@",[PGManager shareModel].baseUrl,@"app/api/user/searchKeyWord"];
     NSDictionary * headerDic = [self getCommonHeaderOfSubclasses:parametersDic];
     [[HMNetworking sharedClient] get:urlStr parameters:parametersDic headers:headerDic success:^(id  _Nullable responseObject) {
         NSDictionary *responseDict = responseObject;
@@ -990,7 +990,7 @@
     }];
 }
 
-/// 钻石列表
+/// 糖币列表
 + (void)diamondListWithParameters:(NSDictionary *)parametersDic Success:(void (^)(id data))successBlock
                           failure:(void (^)(NSInteger code, NSString* message))failureBlock
 {
@@ -2158,7 +2158,7 @@
 + (void)checkAnchorByIdWithParameters:(NSDictionary *)parametersDic Success:(void (^)(id data))successBlock
                            failure:(void (^)(NSInteger code, NSString* message))failureBlock
 {
-    NSString * urlStr = [NSString stringWithFormat:@"%@%@",[PGManager shareModel].baseUrl,@"api/userBindAnchor/getAnchorUserById"];
+    NSString * urlStr = [NSString stringWithFormat:@"%@%@",[PGManager shareModel].baseUrl,@"api/userBindAnchor/getAnchorUserByKeyWord"];
     NSMutableDictionary * headerDic = [NSMutableDictionary dictionaryWithDictionary:[self getCommonHeaderOfSubclasses:parametersDic]];
     [headerDic setValue:@"application/json" forKey:@"Content-Type"];
     [[HMNetworking sharedClient] get:urlStr parameters:parametersDic headers:headerDic success:^(id  _Nullable responseObject) {

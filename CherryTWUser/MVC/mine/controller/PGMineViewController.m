@@ -161,8 +161,10 @@
     PGMineTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"PGMineTableViewCell" forIndexPath:indexPath];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     NSDictionary * dic = self.dataArray[indexPath.row];
+    cell.descLabel.text = @"";
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
+            cell.descLabel.text = [NSString stringWithFormat:@"糖币余额：%.0f",[PGManager shareModel].selfCoin*0.1];
             [cell acs_radiusWithRadius:20 corner:UIRectCornerTopLeft|UIRectCornerTopRight];
         }else if (indexPath.row == self.dataArray.count-2){
             [cell acs_radiusWithRadius:20 corner:UIRectCornerBottomLeft|UIRectCornerBottomRight];

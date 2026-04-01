@@ -290,11 +290,11 @@
         if ([type containsString:@"word"]) {
             type = @"文字";
         }else if ([type containsString:@"voice"]){
-            type = @"语音";
+            type = @"文字";
         }else if ([type containsString:@"picture"] || [type containsString:@"photo"]|| [type containsString:@"pic"]){
-            type = @"图片";
+            type = @"文字";
         }else if ([type containsString:@"video"]){
-            type = @"视频";
+            type = @"文字";
         }
         NSString * contentStr = msgDic[@"content"];
         if ([contentStr containsString:@"!@#!@#"]) {///视频聊天发消息时用
@@ -389,7 +389,7 @@
             }
         }];
         
-        if ([type isEqualToString:@"文字"] || [type isEqualToString:@"视频"] || [type isEqualToString:@"礼物"]) {
+        if ([type isEqualToString:@"文字"] || [type isEqualToString:@"视频"] || [type isEqualToString:@"礼物"] || [type isEqualToString:@"语音"]) {
             UNMutableNotificationContent *content = [[UNMutableNotificationContent alloc] init];
             content.title = messageModel.nickName;
             if ([type isEqualToString:@"视频"]){

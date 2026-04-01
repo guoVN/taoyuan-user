@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24504"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -40,13 +40,21 @@
                             <constraint firstAttribute="height" constant="16" id="oeB-zy-W8Z"/>
                         </constraints>
                     </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="leR-6g-wds">
+                        <rect key="frame" x="334" y="25" width="0.0" height="0.0"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstItem="p0r-qP-xKl" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="1qa-v7-aWp"/>
                     <constraint firstAttribute="trailing" secondItem="N6B-Fs-bhK" secondAttribute="trailing" constant="15" id="FCH-sq-COs"/>
+                    <constraint firstItem="leR-6g-wds" firstAttribute="centerY" secondItem="p0r-qP-xKl" secondAttribute="centerY" id="GxA-7n-dDF"/>
                     <constraint firstItem="p0r-qP-xKl" firstAttribute="leading" secondItem="1ht-1N-8wb" secondAttribute="trailing" constant="12" id="Sgk-9p-upB"/>
                     <constraint firstAttribute="bottom" secondItem="p0r-qP-xKl" secondAttribute="bottom" constant="15" id="fVO-aV-bhG"/>
                     <constraint firstItem="p0r-qP-xKl" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="hpb-sz-yo8"/>
+                    <constraint firstItem="N6B-Fs-bhK" firstAttribute="leading" secondItem="leR-6g-wds" secondAttribute="trailing" constant="10" id="hzP-Ne-NTI"/>
                     <constraint firstItem="N6B-Fs-bhK" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="m8f-n0-HBn"/>
                     <constraint firstItem="1ht-1N-8wb" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="pod-QE-TOL"/>
                     <constraint firstItem="1ht-1N-8wb" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="xQw-ra-AgN"/>
@@ -55,6 +63,7 @@
             <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
+                <outlet property="descLabel" destination="leR-6g-wds" id="s99-Np-sLi"/>
                 <outlet property="iconImg" destination="1ht-1N-8wb" id="oTK-up-ZSJ"/>
                 <outlet property="titleLabel" destination="p0r-qP-xKl" id="sQC-kg-xt2"/>
             </connections>

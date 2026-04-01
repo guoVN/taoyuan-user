@@ -38,7 +38,8 @@
 - (void)snapSubView
 {
     [self.closeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.top.mas_equalTo(10);
+        make.top.mas_equalTo(5);
+        make.left.mas_equalTo(10);
         make.width.height.mas_equalTo(44);
     }];
 }

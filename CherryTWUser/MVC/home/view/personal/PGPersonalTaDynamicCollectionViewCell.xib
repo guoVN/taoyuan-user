@@ -36,10 +36,10 @@
                         <rect key="frame" x="0.0" y="151" width="186" height="26"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j9I-gZ-0IA">
-                                <rect key="frame" x="2" y="1" width="182" height="24"/>
+                                <rect key="frame" x="2" y="-1.3333333333333428" width="182" height="28.666666666666668"/>
                                 <string key="text">你过得好不好别人未
 必知道，但是你.....</string>
-                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -47,8 +47,8 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="j9I-gZ-0IA" firstAttribute="leading" secondItem="44O-2t-Wr0" secondAttribute="leading" constant="2" id="Alg-CV-Yjd"/>
+                            <constraint firstItem="j9I-gZ-0IA" firstAttribute="centerY" secondItem="44O-2t-Wr0" secondAttribute="centerY" id="H1W-Cr-lrO"/>
                             <constraint firstAttribute="trailing" secondItem="j9I-gZ-0IA" secondAttribute="trailing" constant="2" id="ki2-PE-MgP"/>
-                            <constraint firstItem="j9I-gZ-0IA" firstAttribute="top" secondItem="44O-2t-Wr0" secondAttribute="top" constant="1" id="oRH-3v-hV7"/>
                             <constraint firstAttribute="height" constant="26" id="uPX-u9-kjk"/>
                         </constraints>
                     </view>

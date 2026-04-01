@@ -174,7 +174,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)dynamicPraiseWithParameters:(NSDictionary *)parametersDic Success:(void (^)(id data))successBlock
                           failure:(void (^)(NSInteger code, NSString* message))failureBlock;
 
-/// 钻石列表
+/// 糖币列表
 + (void)diamondListWithParameters:(NSDictionary *)parametersDic Success:(void (^)(id data))successBlock
                           failure:(void (^)(NSInteger code, NSString* message))failureBlock;
 

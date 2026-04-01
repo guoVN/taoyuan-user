@@ -18,26 +18,26 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Qwp-re-MfC">
-                        <rect key="frame" x="317" y="0.0" width="38" height="38"/>
+                        <rect key="frame" x="315" y="0.0" width="40" height="40"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="38" id="KUy-lp-DYK"/>
-                            <constraint firstAttribute="width" constant="38" id="n7O-yq-9cR"/>
+                            <constraint firstAttribute="height" constant="40" id="KUy-lp-DYK"/>
+                            <constraint firstAttribute="width" constant="40" id="n7O-yq-9cR"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="hCornerRadius">
-                                <real key="value" value="6"/>
+                                <real key="value" value="20"/>
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </imageView>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="triangleR" translatesAutoresizingMaskIntoConstraints="NO" id="FMj-3K-9iw">
-                        <rect key="frame" x="294" y="14" width="10" height="10"/>
+                        <rect key="frame" x="292" y="15" width="10" height="10"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="10" id="Ld0-jk-iTh"/>
                             <constraint firstAttribute="width" constant="10" id="YZ4-gL-KSd"/>
                         </constraints>
                     </imageView>
                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P41-jt-OrI">
-                        <rect key="frame" x="194" y="0.0" width="104" height="127"/>
+                        <rect key="frame" x="192" y="0.0" width="104" height="127"/>
                         <subviews>
                             <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="lGO-cC-iFE">
                                 <rect key="frame" x="0.0" y="0.0" width="104" height="127"/>
@@ -74,7 +74,7 @@
                         </userDefinedRuntimeAttributes>
                     </view>
                     <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v4S-dT-k1f">
-                        <rect key="frame" x="164" y="53.666666666666664" width="20" height="19.999999999999993"/>
+                        <rect key="frame" x="162" y="53.666666666666664" width="20" height="19.999999999999993"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="20" id="TZw-ip-2ue"/>
                             <constraint firstAttribute="width" constant="20" id="UVO-C5-avg"/>

@@ -534,7 +534,7 @@
     alertView.type = 5;
     [alertView.tipsImg setImage:MPImage(@"ku")];
     alertView.titleLabel.text = @"温馨提示";
-    alertView.contentLabel.text = @"您的钻石不够啦，请充值钻石哦～";
+    alertView.contentLabel.text = @"您的糖币不够啦，请充值糖币哦～";
     [alertView.sureBtn setTitle:@"去充值" forState:UIControlStateNormal];
     [[UIApplication sharedApplication].delegate.window addSubview:alertView];
 }

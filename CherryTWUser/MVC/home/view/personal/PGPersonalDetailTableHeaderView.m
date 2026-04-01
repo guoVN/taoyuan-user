@@ -44,7 +44,7 @@
     }];
     [self.onlineImg mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(self.headImg.mas_right).offset(-13);
-        make.bottom.equalTo(self.headImg.mas_bottom).offset(0);
+        make.bottom.equalTo(self.headImg.mas_bottom).offset(-2);
         make.width.height.mas_equalTo(12);
     }];
     [self.contentStackView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -53,7 +53,7 @@
         make.height.mas_equalTo(20);
     }];
     [self.followBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.size.mas_equalTo(CGSizeMake(43, 20));
+        make.size.mas_equalTo(CGSizeMake(60, 24));
     }];
     [self.lineStackView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.contentStackView.mas_bottom).offset(3);
@@ -71,7 +71,7 @@
     self.nameLabel.text = detailModel.nickName;
     self.grayView.alpha = 0;
     if ([detailModel.onlineState isEqualToString:@"在线"]) {
-        [self.onlineImg setImage:MPImage(@"onlineIcon")];
+        [self.onlineImg setImage:MPImage(@"online_icon")];
     }else if ([detailModel.onlineState isEqualToString:@"忙碌"]){
         [self.onlineImg setImage:MPImage(@"busyIcon")];
     }else{
@@ -126,6 +126,8 @@
     if (!_onlineImg) {
         _onlineImg = [[UIImageView alloc] init];
         [_onlineImg setImage:MPImage(@"")];
+        _onlineImg.layer.cornerRadius = 6;
+        _onlineImg.layer.masksToBounds = YES;
     }
     return _onlineImg;
 }
@@ -144,7 +146,7 @@
 {
     if (!_nameLabel) {
         _nameLabel = [[UILabel alloc] init];
-        _nameLabel.font = MPSemiboldFont(14);
+        _nameLabel.font = MPSemiboldFont(16);
         _nameLabel.textColor = HEX(#000000);
         _nameLabel.text = @"昵称";
     }
@@ -162,7 +164,7 @@
         [_followBtn setTitle:Localized(@"+ 关注") forState:UIControlStateNormal];
         [_followBtn setTitle:Localized(@"已关注") forState:UIControlStateSelected];
         [_followBtn setTitleColor:HEX(#FFFFFF) forState:UIControlStateNormal];
-        _followBtn.titleLabel.font = MPSemiboldFont(10);
+        _followBtn.titleLabel.font = MPSemiboldFont(14);
         _followBtn.layer.cornerRadius = 10;
         _followBtn.layer.masksToBounds = YES;
         [_followBtn addTarget:self action:@selector(followBtnAction) forControlEvents:UIControlEventTouchUpInside];

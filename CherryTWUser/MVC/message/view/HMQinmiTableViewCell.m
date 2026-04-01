@@ -96,7 +96,8 @@
                 }else if ([messageType isEqualToString:@"视频卡"]){
                     self.msgLabel.text = Localized(@"[视频通话]");
                 }else{
-                    self.msgLabel.text = [NSString stringWithFormat:@"[通话%@]",messageType];
+//                    self.msgLabel.text = [NSString stringWithFormat:@"[通话%@]",messageType];
+                    self.msgLabel.text = Localized(@"[视频通话]");
                 }
                 
                 RLMResults *results = [PGMessageListModel allObjects];

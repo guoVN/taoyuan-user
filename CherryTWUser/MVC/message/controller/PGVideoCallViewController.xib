@@ -44,7 +44,7 @@
                     </userDefinedRuntimeAttributes>
                 </view>
                 <view clipsSubviews="YES" alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RQY-VC-Yj4">
-                    <rect key="frame" x="49" y="464" width="295" height="54"/>
+                    <rect key="frame" x="49" y="618" width="295" height="54"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="当前余额即将耗尽，请立即充值&gt;&gt;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2hA-03-Xzx">
                             <rect key="frame" x="26.333333333333329" y="17" width="242.33333333333337" height="20"/>
@@ -185,8 +185,8 @@
                 <constraint firstItem="MNY-i9-mV2" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="NJX-Nh-QNL"/>
                 <constraint firstItem="MNY-i9-mV2" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="TH3-x5-typ"/>
                 <constraint firstItem="hbS-xd-Yki" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="VKJ-4V-QrV"/>
-                <constraint firstItem="RQY-VC-Yj4" firstAttribute="top" secondItem="Cbb-Gr-zlD" secondAttribute="bottom" constant="116" id="cqn-aN-9iq"/>
                 <constraint firstItem="p5t-Lw-sRf" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="eUJ-J1-rno"/>
+                <constraint firstItem="MNY-i9-mV2" firstAttribute="top" secondItem="RQY-VC-Yj4" secondAttribute="bottom" constant="60" id="kg9-BP-DrZ"/>
                 <constraint firstItem="Cbb-Gr-zlD" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="70" id="mLn-Ob-EDW"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="p5t-Lw-sRf" secondAttribute="trailing" id="mwj-jS-5Z7"/>
                 <constraint firstItem="MNY-i9-mV2" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="nKJ-X0-BxO"/>

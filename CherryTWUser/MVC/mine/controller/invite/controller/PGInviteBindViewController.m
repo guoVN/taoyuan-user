@@ -11,7 +11,7 @@
 #import "PGAnchorModel.h"
 #import "PGCheckBindAnchorModel.h"
 
-@interface PGInviteBindViewController ()<UITableViewDataSource,UITableViewDelegate,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
+@interface PGInviteBindViewController ()<UITableViewDataSource,UITableViewDelegate,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate,QMUITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *searchView;
 @property (weak, nonatomic) IBOutlet QMUITextField *searchField;
@@ -33,6 +33,7 @@
 - (void)loadUI
 {
     self.titleStr = @"邀请绑定";
+    self.searchField.delegate = self;
     [self.view addSubview:self.tableView];
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.bottom.right.mas_equalTo(0);
@@ -63,7 +64,7 @@
     }
     [self.view endEditing:YES];
     WeakSelf(self)
-    [PGAPIService checkAnchorByIdWithParameters:@{@"id":self.searchField.text} Success:^(id  _Nonnull data) {
+    [PGAPIService checkAnchorByIdWithParameters:@{@"keyWord":self.searchField.text} Success:^(id  _Nonnull data) {
         [QMUITips hideAllTips];
         PGAnchorModel * model = [PGAnchorModel mj_objectWithKeyValues:data[@"data"]];
         [weakself.dataArray removeAllObjects];
@@ -76,6 +77,7 @@
         [QMUITips showWithText:message];
         weakself.tableView.emptyDataSetSource = weakself;
         weakself.tableView.emptyDataSetDelegate = weakself;
+        [weakself.tableView reloadData];
     }];
 }
 
@@ -153,6 +155,14 @@
 - (BOOL)emptyDataSetShouldAllowScroll:(UIScrollView *)scrollView{
     return YES;
 }
+
+#pragma mark===QMUITextFieldDelegate
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [self searchBtnAction:self.searchBtn];
+    return YES;
+}
+
 #pragma mark-======创建表视图
 - (UITableView *)tableView{
     if(!_tableView){

@@ -600,7 +600,7 @@
     if (!_lockBtn) {
         _lockBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth-30, 50)];
         _lockBtn.backgroundColor = HEX(#FF6B97);
-//        [_lockBtn setTitle:Localized(@"3钻石，解锁Ta的聊天框") forState:UIControlStateNormal];
+//        [_lockBtn setTitle:Localized(@"3糖币，解锁Ta的聊天框") forState:UIControlStateNormal];
         [_lockBtn setTitleColor:HEX(#FFFFFF) forState:UIControlStateNormal];
         _lockBtn.titleLabel.font = MPMediumFont(18);
         _lockBtn.layer.backgroundColor = [UIColor colorWithRed:255/255.0 green:107/255.0 blue:151/255.0 alpha:1].CGColor;

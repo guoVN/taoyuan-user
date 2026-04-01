@@ -218,7 +218,7 @@
         return;
     }
     if ([PGManager shareModel].selfCoin < [PGManager shareModel].callCoin) {
-        [QMUITips showWithText:@"钻石余额不足，请充值"];
+        [QMUITips showWithText:@"糖币余额不足，请充值"];
         [PGUtils goRechargeAlert];
         return;
     }
