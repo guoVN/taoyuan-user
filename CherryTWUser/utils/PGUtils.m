@@ -504,7 +504,7 @@
             return @"图片";
         }else if ([extension containsString:@"mp4"] || [extension containsString:@"avi"] || [extension containsString:@"mov"] || [extension containsString:@"rmvb"] || [extension containsString:@"3gp"]){
             return @"视频";
-        }else if ([extension containsString:@"mp3"] || [extension containsString:@"wav"] || [extension containsString:@"wma"] || [extension containsString:@"ogg"] || [extension containsString:@"ape"] || [extension containsString:@"m4a"]){
+        }else if ([extension containsString:@"mp3"] || [extension containsString:@"wav"] || [extension containsString:@"wma"] || [extension containsString:@"ogg"] || [extension containsString:@"ape"] || [extension containsString:@"m4a"] || [extension containsString:@"audio"]){
             return @"语音";
         }else{
             return @"文字";

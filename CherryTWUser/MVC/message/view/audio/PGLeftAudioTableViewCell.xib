@@ -18,7 +18,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7Wc-nm-aNB">
-                        <rect key="frame" x="20" y="0.0" width="40" height="40"/>
+                        <rect key="frame" x="15" y="0.0" width="40" height="40"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="40" id="22K-kw-Gyf"/>
                             <constraint firstAttribute="height" constant="40" id="e3e-VC-cHK"/>
@@ -30,14 +30,14 @@
                         </userDefinedRuntimeAttributes>
                     </imageView>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="triangle" translatesAutoresizingMaskIntoConstraints="NO" id="8JX-AB-WJs">
-                        <rect key="frame" x="73" y="15" width="10" height="10"/>
+                        <rect key="frame" x="59" y="15" width="10" height="10"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="10" id="XkG-aD-1VT"/>
                             <constraint firstAttribute="height" constant="10" id="pMK-OO-YeV"/>
                         </constraints>
                     </imageView>
                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EOp-9e-1Xu">
-                        <rect key="frame" x="79" y="1" width="64" height="79"/>
+                        <rect key="frame" x="65" y="1" width="64" height="79"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="leftAudio" translatesAutoresizingMaskIntoConstraints="NO" id="nLN-FY-87B">
                                 <rect key="frame" x="10" y="30.666666666666671" width="14" height="18"/>
@@ -72,9 +72,9 @@
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="EOp-9e-1Xu" secondAttribute="bottom" id="G17-gF-FKb"/>
                     <constraint firstItem="EOp-9e-1Xu" firstAttribute="leading" secondItem="8JX-AB-WJs" secondAttribute="trailing" constant="-4" id="Of3-ve-ZqD"/>
-                    <constraint firstItem="7Wc-nm-aNB" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="cpq-Qy-h51"/>
+                    <constraint firstItem="7Wc-nm-aNB" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="cpq-Qy-h51"/>
                     <constraint firstItem="7Wc-nm-aNB" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="edc-Va-jKx"/>
-                    <constraint firstItem="EOp-9e-1Xu" firstAttribute="leading" secondItem="7Wc-nm-aNB" secondAttribute="trailing" constant="19" id="hVk-6E-tBa"/>
+                    <constraint firstItem="EOp-9e-1Xu" firstAttribute="leading" secondItem="7Wc-nm-aNB" secondAttribute="trailing" constant="10" id="hVk-6E-tBa"/>
                     <constraint firstItem="EOp-9e-1Xu" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="1" id="j27-i5-2vE"/>
                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="EOp-9e-1Xu" secondAttribute="trailing" constant="78" id="ts0-Dk-xN4"/>
                     <constraint firstItem="8JX-AB-WJs" firstAttribute="centerY" secondItem="7Wc-nm-aNB" secondAttribute="centerY" id="vq5-fS-cBB"/>
