@@ -50,7 +50,7 @@
                                     <constraint firstAttribute="height" constant="31" id="rPj-FP-49U"/>
                                 </constraints>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal" image="shipin@2x"/>
+                                <state key="normal" image="playIcon"/>
                                 <connections>
                                     <action selector="playBtnAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="JJ7-0M-U2D"/>
                                 </connections>
@@ -95,7 +95,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="shipin@2x" width="31" height="31"/>
+        <image name="playIcon" width="22.333333969116211" height="22.333333969116211"/>
         <image name="triangle" width="4.6666665077209473" height="7.6666665077209473"/>
     </resources>
 </document>

@@ -66,9 +66,11 @@
     WeakSelf(self)
     [PGAPIService checkAnchorByIdWithParameters:@{@"keyWord":self.searchField.text} Success:^(id  _Nonnull data) {
         [QMUITips hideAllTips];
-        PGAnchorModel * model = [PGAnchorModel mj_objectWithKeyValues:data[@"data"]];
+        NSArray * items = [PGAnchorModel mj_objectArrayWithKeyValuesArray:data[@"data"]];
         [weakself.dataArray removeAllObjects];
-        [weakself.dataArray addObject:model];
+        if (items.count>0) {
+            [weakself.dataArray addObjectsFromArray:items];
+        }
         weakself.tableView.emptyDataSetSource = weakself;
         weakself.tableView.emptyDataSetDelegate = weakself;
         [weakself.tableView reloadData];
@@ -159,6 +161,9 @@
 #pragma mark===QMUITextFieldDelegate
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
+    if (self.bindStatusModel.bindStatus == 1) {
+        return NO;
+    }
     [self searchBtnAction:self.searchBtn];
     return YES;
 }

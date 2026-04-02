@@ -28,6 +28,7 @@
 - (void)setMsdDic:(NSDictionary *)msdDic
 {
     _msdDic = msdDic;
+    WeakSelf(self)
     [self.headImg sd_setImageWithURL:[NSURL URLWithString:self.friendHead]];
     NSString * contentStr = msdDic[@"content"];
     [self.conImg sd_setImageWithURL:[NSURL URLWithString:contentStr] placeholderImage:MPImage(@"netFaild")];
@@ -35,8 +36,11 @@
    self.playBtn.alpha = [mseeageType isEqualToString:@"视频"] ? 1 : 0;
    if ([[PGUtils getFileFormat:contentStr] isEqualToString:@"视频"]) {
        self.playBtn.alpha = 1;
-       NSArray * videoArr = [contentStr componentsSeparatedByString:@";"];
-       [self.conImg sd_setImageWithURL:[NSURL URLWithString:videoArr.firstObject]];
+//       NSArray * videoArr = [contentStr componentsSeparatedByString:@";"];
+//       [self.conImg sd_setImageWithURL:[NSURL URLWithString:videoArr.firstObject]];
+       [[PGManager shareModel] getVideoThumbnailAsync:[NSURL URLWithString:contentStr] completion:^(UIImage *thumbnail) {
+           [weakself.conImg setImage:thumbnail];
+       }];
    }else{
        self.playBtn.alpha = 0;
    }

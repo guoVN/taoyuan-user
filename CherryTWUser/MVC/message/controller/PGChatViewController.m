@@ -627,7 +627,9 @@
                 nav.modalPresentationStyle = 0;
                 [weakself presentViewController:nav animated:YES completion:nil];
             }else{
-                [weakself messageChargeAction:sendContent withType:type];
+                if (![type isEqualToString:@"礼物"]) {
+                    [weakself messageChargeAction:sendContent withType:type];
+                }
 //                [weakself.dataArray addObject:message];
 //                [weakself.tableView reloadData];
 //                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.01 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{

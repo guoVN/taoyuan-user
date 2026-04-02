@@ -53,10 +53,10 @@
     [QMUITips showLoadingInView:self.view];
     [PGAPIService searchAnchorWithParameters:dic Success:^(id  _Nonnull data) {
         [QMUITips hideAllTips];
-        PGHomeListModel * detailModel = [PGHomeListModel mj_objectWithKeyValues:data[@"data"]];
+        NSArray * items = [PGHomeListModel mj_objectArrayWithKeyValuesArray:data[@"data"]];
         [weakself.dataArray removeAllObjects];
-        if (detailModel != nil) {
-            [weakself.dataArray addObject:detailModel];
+        if (items.count>0) {
+            [weakself.dataArray addObjectsFromArray:items];
         }
         weakself.tableView.emptyDataSetSource = weakself;
         weakself.tableView.emptyDataSetDelegate = weakself;

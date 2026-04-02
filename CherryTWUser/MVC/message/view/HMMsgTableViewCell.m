@@ -45,11 +45,11 @@
             if ([type containsString:@"word"]) {
                 messageType = @"文字";
             }else if ([type containsString:@"voice"]){
-                messageType = @"语音";
+                messageType = @"文字";
             }else if ([type containsString:@"picture"] || [type containsString:@"photo"] || [type containsString:@"pic"]){
-                messageType = @"图片";
+                messageType = @"文字";
             }else if ([type containsString:@"video"]){
-                messageType = @"视频";
+                messageType = @"文字";
             }else{
                 messageType = @"文字";
             }
