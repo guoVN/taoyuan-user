@@ -92,14 +92,7 @@
     NSMutableArray * userIdArr = [NSMutableArray array];
     NSMutableArray<AgoraChatConversation *> * msgConversations = [NSMutableArray array];
     for (AgoraChatConversation *conversation in conversations) {
-        if (![conversation.conversationId isEqualToString:@"99999999"]) {
-            AgoraChatMessage * last = conversation.latestMessage;
-            if (last.conversationId>0) {
-                unreadCount += conversation.unreadMessagesCount;
-                [userIdArr addObject:conversation.conversationId];
-                [msgConversations addObject:conversation];
-            }
-        }
+    
         NSArray<AgoraChatMessage *> *messages = [conversation loadMessagesStartFromId:0 count:10 searchDirection:0];
         for (NSInteger i=messages.count-1; i>=0; i--) {
             AgoraChatMessage * ch = messages[i];
@@ -123,6 +116,15 @@
                         }
                     }
                 }
+            }
+        }
+        ///招呼覆盖后重新计算未读
+        if (![conversation.conversationId isEqualToString:@"99999999"]) {
+            AgoraChatMessage * last = conversation.latestMessage;
+            if (last.conversationId>0) {
+                unreadCount += conversation.unreadMessagesCount;
+                [userIdArr addObject:conversation.conversationId];
+                [msgConversations addObject:conversation];
             }
         }
     }
