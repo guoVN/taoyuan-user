@@ -57,7 +57,7 @@
                         <constraints>
                             <constraint firstAttribute="width" constant="64" id="Eva-gu-gxs"/>
                             <constraint firstItem="nLN-FY-87B" firstAttribute="centerY" secondItem="EOp-9e-1Xu" secondAttribute="centerY" id="Qxq-u7-ofB"/>
-                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="38" id="SEK-F4-W7h"/>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="SEK-F4-W7h"/>
                             <constraint firstItem="nuE-gK-70w" firstAttribute="centerY" secondItem="EOp-9e-1Xu" secondAttribute="centerY" id="cwt-Vz-Y94"/>
                             <constraint firstItem="nuE-gK-70w" firstAttribute="leading" secondItem="nLN-FY-87B" secondAttribute="trailing" constant="2" id="kmw-8u-8MF"/>
                             <constraint firstAttribute="trailing" secondItem="nuE-gK-70w" secondAttribute="trailing" constant="20" id="tMy-jl-U1R"/>

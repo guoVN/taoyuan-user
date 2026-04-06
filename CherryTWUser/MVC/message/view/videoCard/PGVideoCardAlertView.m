@@ -167,7 +167,7 @@
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         sender.selected = YES;
     });
-    if ([PGManager shareModel].selfCoin < [PGManager shareModel].callCoin || [PGManager shareModel].selfCoin < 100) {
+    if ([PGManager shareModel].selfCoin < [PGManager shareModel].callCoin) {
         [QMUITips showWithText:@"用户金币不足"];
         [PGUtils goRechargeAlert];
         return;

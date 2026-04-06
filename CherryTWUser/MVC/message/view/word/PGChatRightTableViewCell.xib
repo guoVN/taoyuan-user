@@ -51,7 +51,7 @@
                             <constraint firstItem="3fW-Qq-Zqf" firstAttribute="leading" secondItem="3M3-wy-KON" secondAttribute="leading" constant="10" id="6BY-nU-qMy"/>
                             <constraint firstItem="3fW-Qq-Zqf" firstAttribute="top" secondItem="3M3-wy-KON" secondAttribute="top" constant="10" id="o4O-Jl-Bgu"/>
                             <constraint firstAttribute="bottom" secondItem="3fW-Qq-Zqf" secondAttribute="bottom" constant="10" id="qTu-7X-TQO"/>
-                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="38" id="rra-gS-cew"/>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="rra-gS-cew"/>
                             <constraint firstAttribute="trailing" secondItem="3fW-Qq-Zqf" secondAttribute="trailing" constant="10" id="x7s-jF-dKU"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>

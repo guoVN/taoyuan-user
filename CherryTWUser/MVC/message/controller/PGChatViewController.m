@@ -66,8 +66,14 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self loadUI];
-//    [self loadCallPrice];
-//    [self loadAnchorDetail];
+    dispatch_group_t group = dispatch_group_create();
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_group_async(group, queue, ^{
+        [self loadCallPrice];
+    });
+    dispatch_group_async(group, queue, ^{
+        [self loadAnchorDetail];
+    });
     [self loadData];
 }
 - (void)loadUI
@@ -241,7 +247,6 @@
     NSMutableDictionary * dic = [NSMutableDictionary dictionary];
     [dic setValue:[PGManager shareModel].userInfo.userid forKey:@"userid"];
     [dic setValue:self.channelId forKey:@"anchorid"];
-    [QMUITips showLoadingInView:self.view];
     [PGAPIService anchorDetailWithParameters:dic Success:^(id  _Nonnull data) {
         [QMUITips hideAllTips];
         id aa = data[@"data"];
@@ -250,6 +255,8 @@
         }else{
             PGAnchorModel * model = [PGAnchorModel mj_objectWithKeyValues:data[@"data"]];
             [PGManager shareModel].callCoin = [model.videoCoin integerValue];
+            [PGManager shareModel].voiceCoin = [model.voiceCoin integerValue];
+            [PGManager shareModel].chatCoin = [model.textChatCoin integerValue];
         }
         weakself.anchorDetailModel = [PGAnchorModel mj_objectWithKeyValues:data[@"data"]];
     } failure:^(NSInteger code, NSString * _Nonnull message) {
@@ -505,17 +512,31 @@
 }
 - (void)sendMsgCheckPre:(NSString *)sendContent withType:(NSString *)type
 {
-    if ([PGManager shareModel].selfCoin < [PGManager shareModel].callCoin || [PGManager shareModel].selfCoin < 100) {
-        [QMUITips showWithText:@"用户金币不足"];
-        [self.view endEditing:YES];
-        [PGUtils goRechargeAlert];
-        return;
-    }
     NSString * sendType = @"3";
     if ([type isEqualToString:@"视频"]) {
         sendType = @"2";
     }else if ([type isEqualToString:@"语音"]){
         sendType = @"1";
+    }
+    
+    if ([sendType integerValue] == 1) {
+        if ([PGManager shareModel].selfCoin < [PGManager shareModel].voiceCoin) {
+            [self.view endEditing:YES];
+            [PGUtils goRechargeAlert];
+            return;
+        }
+    }else if ([sendType integerValue] == 2){
+        if ([PGManager shareModel].selfCoin < [PGManager shareModel].callCoin) {
+            [self.view endEditing:YES];
+            [PGUtils goRechargeAlert];
+            return;
+        }
+    }else if ([sendType integerValue] == 3){
+        if ([PGManager shareModel].selfCoin < [PGManager shareModel].chatCoin) {
+            [self.view endEditing:YES];
+            [PGUtils goRechargeAlert];
+            return;
+        }
     }
     
     AgoraChatMessage *chatMessage = [self assemblyMsg:sendContent withType:type];

@@ -160,7 +160,7 @@
         [QMUITips hideAllTips];
         [QMUITips showWithText:message];
         if ([message containsString:@"金币不足"]) {
-            [weakself removeFromSuperview];
+            [[PGManager shareModel].mainControlAlert closeView];
             [PGUtils goRechargeAlert];
         }
     }];

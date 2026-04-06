@@ -51,7 +51,7 @@
                             <constraint firstAttribute="trailing" secondItem="ggt-HH-Enk" secondAttribute="trailing" constant="10" id="7hp-du-O8b"/>
                             <constraint firstItem="ggt-HH-Enk" firstAttribute="leading" secondItem="eo2-8w-AGb" secondAttribute="leading" constant="10" id="MwM-yZ-fTy"/>
                             <constraint firstItem="ggt-HH-Enk" firstAttribute="top" secondItem="eo2-8w-AGb" secondAttribute="top" constant="10" id="Uis-gp-amF"/>
-                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="38" id="udT-IW-UxD"/>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="udT-IW-UxD"/>
                             <constraint firstAttribute="bottom" secondItem="ggt-HH-Enk" secondAttribute="bottom" constant="10" id="x06-30-uiH"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>

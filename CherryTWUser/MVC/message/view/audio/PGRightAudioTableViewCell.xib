@@ -60,7 +60,7 @@
                             <constraint firstAttribute="width" constant="64" id="Xkj-dC-N2Q"/>
                             <constraint firstItem="bKW-tN-oZ6" firstAttribute="centerY" secondItem="g2Y-Fg-WBz" secondAttribute="centerY" id="iFV-8i-xrw"/>
                             <constraint firstItem="BB9-2O-zlP" firstAttribute="centerY" secondItem="g2Y-Fg-WBz" secondAttribute="centerY" id="rWc-8n-j52"/>
-                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="38" id="y5o-Nf-VP5"/>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="y5o-Nf-VP5"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="hCornerRadius">

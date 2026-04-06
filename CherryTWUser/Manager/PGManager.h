@@ -47,6 +47,10 @@ typedef void(^finishChooseVideoBlock)(UIImage * coverImg,NSURL * videoUrl);
 @property (nonatomic, assign) NSInteger videoFirstRecharTime;
 ///当前拨打视频扣费价格
 @property (nonatomic, assign) NSInteger callCoin;
+///当前拨打音频扣费价格
+@property (nonatomic, assign) NSInteger voiceCoin;
+///当前聊天文字扣费价格
+@property (nonatomic, assign) NSInteger chatCoin;
 ///当前通话主播id
 @property (nonatomic, copy) NSString * currentCallChannelId;
 ///用户的金币

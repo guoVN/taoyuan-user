@@ -108,8 +108,8 @@
                                 <constraint firstAttribute="height" constant="52" id="fsL-ww-FK2"/>
                             </constraints>
                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                            <state key="normal" image="closeCamera"/>
-                            <state key="selected" image="openCamera"/>
+                            <state key="normal" image="openCamera"/>
+                            <state key="selected" image="closeCamera"/>
                             <connections>
                                 <action selector="cameraSwitchAction:" destination="-1" eventType="touchUpInside" id="ea8-lw-uLV"/>
                             </connections>
