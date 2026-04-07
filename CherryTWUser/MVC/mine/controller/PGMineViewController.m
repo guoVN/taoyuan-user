@@ -23,7 +23,6 @@
 #import "PGInviteBindViewController.h"
 //view
 #import "PGMineTableViewCell.h"
-#import "PGRechargeAlertView.h"
 
 @interface PGMineViewController ()<UITableViewDataSource,UITableViewDelegate>
 
@@ -45,27 +44,21 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [PGUtils getUserInfo];
-    [self loadData];
-    [self loadFansAndFollow];
-    
-//    WeakSelf(self)
-//    [[PGManager shareModel].mainControlAlert closeView];
-//    [PGManager shareModel].mainControlAlert = Dialog()
-//        .wLevelSet(999)
-//        .wTagSet(random()%100000)
-//        .wTypeSet(DialogTypeMyView)
-//        .wShowAnimationSet(AninatonCurverOn)
-//        .wHideAnimationSet(AninatonCurverOff)
-//        .wPointSet(CGPointMake(0, ScreenHeight-429-SafeBottom))
-//        .wShadowCanTapSet(YES)
-//        .wMyDiaLogViewSet(^UIView *(UIView *mainView) {
-//            mainView.backgroundColor = [UIColor clearColor];
-//            PGRechargeAlertView *view = [[PGRechargeAlertView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 429+SafeBottom) superView:mainView];
-//                
-//                return view;
-//            })
-//        .wStart();
+    dispatch_group_t group = dispatch_group_create();
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_group_async(group, queue, ^{
+        [PGUtils getUserInfo];
+    });
+    dispatch_group_async(group, queue, ^{
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [self loadData];
+        });
+    });
+    dispatch_group_async(group, queue, ^{
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [self loadFansAndFollow];
+        });
+    });
 }
 
 - (void)viewDidLoad {

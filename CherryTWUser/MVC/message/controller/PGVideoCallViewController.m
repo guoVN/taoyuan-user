@@ -26,6 +26,8 @@ static PGCallRechargeView *_sg_rechargeView = nil;
 @interface PGVideoCallViewController ()<AgoraRtcEngineDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView * localView;
+@property (weak, nonatomic) IBOutlet UIView *localCoverView;
+@property (weak, nonatomic) IBOutlet UIImageView *localCoverImg;
 @property (weak, nonatomic) IBOutlet UIImageView * remoteView;
 @property (nonatomic, strong) AgoraRtcEngineKit * rtcKit;
 @property (weak, nonatomic) IBOutlet QMUIButton *cameraSwitchBtn;
@@ -93,6 +95,7 @@ static PGCallRechargeView *_sg_rechargeView = nil;
     self.hours = 0;
     self.minutes = 0;
     self.seconds = 0;
+    [self.localCoverImg sd_setImageWithURL:[NSURL URLWithString:[PGManager shareModel].userInfo.photo] placeholderImage:MPImage(@"default_man")];
     self.vc = [[PGVideoInitiationViewController alloc] init];
     self.vc.isAudio = self.isAudio;
     self.vc.channelId = self.channelId;
@@ -251,11 +254,8 @@ static PGCallRechargeView *_sg_rechargeView = nil;
 }
 - (IBAction)cameraSwitchAction:(QMUIButton *)sender {
     sender.selected = !sender.selected;
-    if (sender.selected) {
-        [self.rtcKit muteLocalVideoStream:YES];
-    }else{
-        [self.rtcKit muteLocalVideoStream:NO];
-    }
+    [self.rtcKit enableLocalVideo:!sender.selected];
+    self.localCoverView.alpha = sender.selected;
 }
 - (IBAction)chooseGiftAction:(id)sender {
     WeakSelf(self)
