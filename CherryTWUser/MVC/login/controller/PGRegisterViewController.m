@@ -25,6 +25,8 @@
 - (void)loadUI
 {
     self.sendCodeBtn.delegate = self;
+    UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+    self.inviteCodeField.text = pasteboard.string;
 }
 #pragma mark MPCountDownButtonDelegate
 - (void)countDownFinish:(PGCountDownButton *)button {
