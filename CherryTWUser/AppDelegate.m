@@ -599,10 +599,12 @@
 - (void)getDomain
 {
     if (self.isPreEv) {
-        self.addressArr = @[@"https://a.vom2x5nf.com/test",@"https://a.31k4owma.com/test",@"https://a.bt9o7q51.com/test"];
-        self.addressArr = [PGUtils getRadomArr:self.addressArr];
-        NSString * reqUrl = self.addressArr.firstObject;
-        [self doPreDomainRequest:reqUrl withArr:self.addressArr];
+//        self.addressArr = @[@"https://a.vom2x5nf.com/test",@"https://a.31k4owma.com/test",@"https://a.bt9o7q51.com/test"];
+//        self.addressArr = [PGUtils getRadomArr:self.addressArr];
+//        NSString * reqUrl = self.addressArr.firstObject;
+//        [self doPreDomainRequest:reqUrl withArr:self.addressArr];
+        [PGManager shareModel].baseUrl = @"http://main.stelor.cn/chatserver/";
+        [self toMain];
     }else{
         // mt.huayuan123.com
         [PGManager shareModel].baseUrl = @"http://newtest1.hainanyihong.cn/chatserver/";

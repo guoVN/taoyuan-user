@@ -14,10 +14,17 @@
 //OssUploadUtils.authServerUrl = "https://o.hnstylor.cn"
 //OssUploadUtils.downloadUrl = "http://cdn.hnstylor.cn"
 
+#if DEBUG
 static NSString *const BucketName = @"ynty";
 static NSString *const EndPoint = @"oss-cn-shenzhen.aliyuncs.com";
 static NSString *kTempFolder = @"user";
 static NSString *rootUrl = @"https://cdn.hnstylor.cn/";
+#else
+static NSString *const BucketName = @"ashenwo-new";
+static NSString *const EndPoint = @"oss-cn-shanghai.aliyuncs.com";
+static NSString *kTempFolder = @"user";
+static NSString *rootUrl = @"http://cdn.hnstylor.cn/";
+#endif
 
 + (void)asyncUploadImage:(UIImage *)image progress:(HMUploadImageManageProgressBlock)progressBlock complete:(void(^)(NSArray<NSString *> *names,UploadImageState state))complete
 {
