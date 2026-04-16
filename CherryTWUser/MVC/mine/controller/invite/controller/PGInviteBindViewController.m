@@ -104,6 +104,7 @@
     if (self.bindStatusModel.bindStatus == 1) {
         cell.bindBtn.backgroundColor = HEX(#999999);
         cell.bindBtn.enabled = NO;
+        [cell.bindBtn setTitle:@"已绑定" forState:UIControlStateNormal];
     }
     __weak typeof (cell) weakCell=cell;
     cell.refreshStatusBlock = ^{
@@ -111,6 +112,7 @@
         weakself.searchBtn.enabled = NO;
         weakCell.bindBtn.backgroundColor = HEX(#999999);
         weakCell.bindBtn.enabled = NO;
+        [weakCell.bindBtn setTitle:@"已绑定" forState:UIControlStateNormal];
     };
     [cell layoutIfNeeded];
     return cell;

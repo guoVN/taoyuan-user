@@ -153,10 +153,23 @@
     if (sendStr.length == 0) {
         return;
     }
-    if (self.sendBlock) {
-        self.sendBlock(sendStr);
-//        self.inputField.text = @"";
-    }
+//    if (self.sendBlock) {
+//        self.sendBlock(sendStr);
+////        self.inputField.text = @"";
+//    }
+    WeakSelf(self)
+    NSMutableDictionary * dic = [NSMutableDictionary dictionary];
+    [dic setValue:sendStr forKey:@"content"];
+    [dic setValue:self.channelId forKey:@"recipientid"];
+    [dic setValue:[PGManager shareModel].userInfo.userid forKey:@"userid"];
+    [PGAPIService shumeiWordCheckWithParameters:dic Success:^(id  _Nonnull data) {
+        if (weakself.sendBlock) {
+            weakself.sendBlock(sendStr);
+    //        self.inputField.text = @"";
+        }
+    } failure:^(NSInteger code, NSString * _Nonnull message) {
+        
+    }];
 }
 - (void)albumBtnAction
 {
@@ -410,9 +423,23 @@
         [photoArr addObject:str];
     }
     NSString * imgStr = [photoArr componentsJoinedByString:@","];
-    if (self.sendImgBlock) {
-        self.sendImgBlock(imgStr);
-    }
+//    if (self.sendImgBlock) {
+//        self.sendImgBlock(imgStr);
+//    }
+    WeakSelf(self)
+    NSMutableDictionary * dic = [NSMutableDictionary dictionary];
+    [dic setValue:@"IMAGE" forKey:@"eventId"];
+    [dic setValue:imgStr forKey:@"img"];
+    [dic setValue:[PGManager shareModel].userInfo.userid forKey:@"userid"];
+    [PGAPIService shumeiImgCheckWithParameters:dic Success:^(id  _Nonnull data) {
+        [QMUITips hideAllTips];
+        if (weakself.sendImgBlock) {
+            weakself.sendImgBlock(imgStr);
+        }
+    } failure:^(NSInteger code, NSString * _Nonnull message) {
+        [QMUITips hideAllTips];
+        [QMUITips showWithText:message];
+    }];
 }
 
 #pragma mark===懒加载

@@ -48,10 +48,10 @@
     
 #if DEBUG
     self.isPreEv = NO;
-    [WXApi registerApp:WeiXinPayKey universalLink:@"https://ms.sysywl.top/"];
+    [WXApi registerApp:WeiXinPayKey universalLink:@"https://main.stelor.cn/app/"];
 #else
     self.isPreEv = YES;
-    [WXApi registerApp:WeiXinPayKey universalLink:@"https://ms.sysywl.top/"];
+    [WXApi registerApp:WeiXinPayKey universalLink:@"https://main.stelor.cn/app/"];
 #endif
     self.appCation = application;
     self.requestDomainCount = 0;
@@ -603,7 +603,7 @@
 //        self.addressArr = [PGUtils getRadomArr:self.addressArr];
 //        NSString * reqUrl = self.addressArr.firstObject;
 //        [self doPreDomainRequest:reqUrl withArr:self.addressArr];
-        [PGManager shareModel].baseUrl = @"http://main.stelor.cn/chatserver/";
+        [PGManager shareModel].baseUrl = @"https://main.stelor.cn/chatserver/";
         [self toMain];
     }else{
         // mt.huayuan123.com

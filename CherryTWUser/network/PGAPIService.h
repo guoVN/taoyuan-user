@@ -407,6 +407,10 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)shumeiImgCheckWithParameters:(NSDictionary *)parametersDic Success:(void (^)(id data))successBlock
                              failure:(void (^)(NSInteger code, NSString* message))failureBlock;
 
+///数美文字检测
++ (void)shumeiWordCheckWithParameters:(NSDictionary *)parametersDic Success:(void (^)(id data))successBlock
+                          failure:(void (^)(NSInteger code, NSString* message))failureBlock;
+
 @end
 
 NS_ASSUME_NONNULL_END

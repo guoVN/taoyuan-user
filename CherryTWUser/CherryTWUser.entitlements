@@ -4,8 +4,7 @@
 <dict>
 	<key>com.apple.developer.associated-domains</key>
 	<array>
-		<string>applinks:ms.sysywl.top</string>
-		<string>applinks:ls.hainanjunfeng.com</string>
+		<string>applinks:main.stelor.cn</string>
 	</array>
 </dict>
 </plist>

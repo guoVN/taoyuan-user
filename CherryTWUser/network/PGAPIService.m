@@ -2232,4 +2232,25 @@
     }];
 }
 
+///数美文字检测
++ (void)shumeiWordCheckWithParameters:(NSDictionary *)parametersDic Success:(void (^)(id data))successBlock
+                          failure:(void (^)(NSInteger code, NSString* message))failureBlock
+{
+    NSString * urlStr = [NSString stringWithFormat:@"%@%@",[PGManager shareModel].baseUrl,@"api/message/validate"];
+    NSDictionary * headerDic = [self getCommonHeaderOfSubclasses:parametersDic];
+    [[HMNetworking sharedClient] postForm:urlStr parameters:parametersDic headers:headerDic success:^(id  _Nullable responseObject) {
+        NSDictionary *responseDict = responseObject;
+        if([responseDict[@"code"] integerValue] == 0){
+            successBlock(responseDict);
+        }else{
+            NSString * msg = responseDict[@"msg"];
+            NSString * message = responseDict[@"message"];
+            failureBlock([responseDict[@"code"] integerValue],msg.length>0?msg:message);
+        }
+    } failure:^(NSError * _Nonnull error) {
+        failureBlock(50000,@"Network error");
+    }];
+}
+
+
 @end

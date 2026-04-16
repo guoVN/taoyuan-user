@@ -146,18 +146,18 @@
 }
 - (void)shumeiThumbCheck:(NSString *)imgStr video:(NSURL *)videoUrl
 {
-    [self uploadVideo:videoUrl withThumb:imgStr];
-//    WeakSelf(self)
-//    NSMutableDictionary * dic = [NSMutableDictionary dictionary];
-//    [dic setValue:@"IMAGE" forKey:@"eventId"];
-//    [dic setValue:imgStr forKey:@"img"];
-//    [dic setValue:[HMManager shareModel].userInfo.userid forKey:@"userid"];
-//    [HMNetService shumeiImgCheckWithParameters:dic Success:^(id  _Nonnull data) {
-//        [weakself uploadVideo:videoUrl withThumb:imgStr];
-//    } failure:^(NSInteger code, NSString * _Nonnull message) {
-//        [QMUITips hideAllTips];
-//        [QMUITips showWithText:message];
-//    }];
+//    [self uploadVideo:videoUrl withThumb:imgStr];
+    WeakSelf(self)
+    NSMutableDictionary * dic = [NSMutableDictionary dictionary];
+    [dic setValue:@"IMAGE" forKey:@"eventId"];
+    [dic setValue:imgStr forKey:@"img"];
+    [dic setValue:[PGManager shareModel].userInfo.userid forKey:@"userid"];
+    [PGAPIService shumeiImgCheckWithParameters:dic Success:^(id  _Nonnull data) {
+        [weakself uploadVideo:videoUrl withThumb:imgStr];
+    } failure:^(NSInteger code, NSString * _Nonnull message) {
+        [QMUITips hideAllTips];
+        [QMUITips showWithText:message];
+    }];
 }
 - (void)uploadVideo:(NSURL *)videoUrl withThumb:(NSString *)imgStr
 {

@@ -136,19 +136,19 @@
         [photoArr addObject:str];
     }
     NSString * imgStr = [photoArr componentsJoinedByString:@","];
-    [self doUploadAction:imgStr];
-//    WeakSelf(self)
-//    NSMutableDictionary * dic = [NSMutableDictionary dictionary];
-//    [dic setValue:@"IMAGE" forKey:@"eventId"];
-//    [dic setValue:imgStr forKey:@"img"];
-//    [dic setValue:[HMManager shareModel].userInfo.userid forKey:@"userid"];
-//    [HMNetService shumeiImgCheckWithParameters:dic Success:^(id  _Nonnull data) {
-//        [QMUITips hideAllTips];
-//        [weakself doUploadAction:imgStr];
-//    } failure:^(NSInteger code, NSString * _Nonnull message) {
-//        [QMUITips hideAllTips];
-//        [QMUITips showWithText:message];
-//    }];
+//    [self doUploadAction:imgStr];
+    WeakSelf(self)
+    NSMutableDictionary * dic = [NSMutableDictionary dictionary];
+    [dic setValue:@"IMAGE" forKey:@"eventId"];
+    [dic setValue:imgStr forKey:@"img"];
+    [dic setValue:[PGManager shareModel].userInfo.userid forKey:@"userid"];
+    [PGAPIService shumeiImgCheckWithParameters:dic Success:^(id  _Nonnull data) {
+        [QMUITips hideAllTips];
+        [weakself doUploadAction:imgStr];
+    } failure:^(NSInteger code, NSString * _Nonnull message) {
+        [QMUITips hideAllTips];
+        [QMUITips showWithText:message];
+    }];
 }
 - (void)doUploadAction:(NSString *)imgStr
 {
