@@ -206,8 +206,8 @@
     NSDictionary * dic = orderDic;
     PayReq * request = [[PayReq alloc]init];
     request.partnerId = dic[@"mch_id"];//商户号
-    request.prepayId =  dic[@"prepayId"];//微信返回的支付交
-    request.package =  dic[@"package"];//扩展字段
+    request.prepayId = dic[@"prepayId"];//微信返回的支付交
+    request.package = @"Sign=WXPay";//dic[@"package"];//扩展字段
     request.nonceStr=  dic[@"nonceStr"];//随机字符串
     request.timeStamp = (UInt32)[dic[@"timeStamp"] integerValue];//时间戳
     request.sign = dic[@"paySign"];//签名
