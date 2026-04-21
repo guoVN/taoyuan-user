@@ -171,7 +171,7 @@
     NSMutableDictionary * dic = [NSMutableDictionary dictionary];
     [dic setValue:[PGManager shareModel].userInfo.userid forKey:@"userId"];
     [dic setValue:@"充值" forKey:@"category"];
-    [dic setValue:self.aliPayType == 1 ? @"ALPN" : @"CXZN" forKey:@"payType"];
+    [dic setValue:self.aliPayType == 1 ? @"ZN" : @"ALPN" forKey:@"payType"];
     if ([self.currentPayType isEqualToString:@"WE_CHAT"]) {
         [dic setValue:self.aliPayType == 1 ? @"WN" : @"WXPN" forKey:@"payType"];
     }
