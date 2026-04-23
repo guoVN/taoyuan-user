@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface PGBindPhoneViewController : PGBaseViewController
 
+@property (nonatomic, copy) void(^refreshBlock)(void);
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -46,22 +46,52 @@
 }
 - (void)getSmsCode
 {
-//    if(self.accountField.text.length == 0){
-//        [QMUITips showWithText:Localized(@"Please enter your email")];
-//        return;
-//    }
+    if(self.phoneField.text.length == 0){
+        [QMUITips showWithText:Localized(@"请输入手机号")];
+        return;
+    }
     WeakSelf(self)
-//    NSDictionary * dic = @{@"account":self.accountField.text};
-//    [MPAPIService sendMsgCodeWithParameters:dic Success:^(id  _Nonnull data) {
-//        weakself.sendCodeBtn.enabled = NO;
+    NSString * timeStampString = [PGUtils getCurrentTimeStamp];
+    NSMutableDictionary * dic = [NSMutableDictionary dictionary];
+    [dic setValue:self.phoneField.text forKey:@"phone"];
+    NSString * sign = [PGParameterSignTool encoingPameterSignWithDic:[NSMutableDictionary dictionaryWithDictionary:dic] andTimeSta:timeStampString];
+    [dic setValue:sign forKey:@"sign"];
+    [dic setValue:@"ppyh" forKey:@"packName"];
+    [PGAPIService sendMsgCodeWithParameters:dic Success:^(id  _Nonnull data) {
+        weakself.sendCodeBtn.enabled = NO;
         [weakself.sendCodeBtn beginCountDown];
-//    } failure:^(NSInteger code, NSString * _Nonnull message) {
-//        [QMUITips showError:message];
-//    }];
+    } failure:^(NSInteger code, NSString * _Nonnull message) {
+        [QMUITips showError:message];
+    }];
    
 }
 - (IBAction)sureBtnAction:(id)sender {
-    
+    if(self.phoneField.text.length == 0){
+        [QMUITips showWithText:Localized(@"请输入手机号")];
+        return;
+    }
+    if(self.codeField.text.length == 0){
+        [QMUITips showWithText:Localized(@"请输入验证码")];
+        return;
+    }
+    NSMutableDictionary * dic = [NSMutableDictionary dictionary];
+    [dic setValue:self.phoneField.text forKey:@"phone"];
+    [dic setValue:self.codeField.text forKey:@"verifyCode"];
+    [dic setValue:[PGManager shareModel].userInfo.userid forKey:@"userid"];
+    WeakSelf(self)
+    [QMUITips showLoadingInView:self.view];
+    [PGAPIService bindUserPhoneWithParameters:dic Success:^(id  _Nonnull data) {
+        [QMUITips hideAllTips];
+        [PGManager shareModel].userInfo.phone = weakself.phoneField.text;
+        [QMUITips showWithText:@"绑定成功"];
+        if (weakself.refreshBlock) {
+            weakself.refreshBlock();
+        }
+        [weakself.navigationController popViewControllerAnimated:YES];
+    } failure:^(NSInteger code, NSString * _Nonnull message) {
+        [QMUITips hideAllTips];
+        [QMUITips showWithText:message];
+    }];
 }
 
 /*

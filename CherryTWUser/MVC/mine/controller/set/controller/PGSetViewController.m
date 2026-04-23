@@ -69,6 +69,7 @@
                         @{@"name":@"注销账号",@"value":@""},
                         @{@"name":@"当前版本",@"value":[NSString stringWithFormat:@"%@",[[[NSBundle mainBundle]infoDictionary] objectForKey:@"CFBundleShortVersionString"]]}
                        ] mutableCopy];
+    [self.tableView reloadData];
 }
 - (void)loadInviteCode
 {
@@ -175,7 +176,13 @@
         HMBlackListViewController * vc = [[HMBlackListViewController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
     }else if ([title isEqualToString:@"绑定手机号"]){
+        if ([PGManager shareModel].userInfo.phone.length>0) {
+            return;
+        }
         PGBindPhoneViewController * vc = [[PGBindPhoneViewController alloc] init];
+        vc.refreshBlock = ^{
+            [weakself loadData];
+        };
         [self.navigationController pushViewController:vc animated:YES];
     }
 }
