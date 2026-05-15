@@ -26,7 +26,13 @@
 {
     self.sendCodeBtn.delegate = self;
     UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
-    self.inviteCodeField.text = pasteboard.string;
+    if ([self isValidSUString:pasteboard.string]) {
+        self.inviteCodeField.text = pasteboard.string;
+    }
+}
+- (BOOL)isValidSUString:(NSString *)string {
+    if (string.length != 8) return NO;
+    return [string hasPrefix:@"SU"];
 }
 #pragma mark MPCountDownButtonDelegate
 - (void)countDownFinish:(PGCountDownButton *)button {
